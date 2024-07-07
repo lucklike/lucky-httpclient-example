@@ -1,0 +1,12 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 8888
+
+lucky:
+  http-client:
+    logger:
+      packages:
+        - io.github.lucklike.luckyclient.api
+
+lucky-server: http://localhost:8864
+
