@@ -1,4 +1,4 @@
-package io.github.lucklike.luckyclient.api;
+package io.github.lucklike.luckyclient.api.server;
 
 import com.luckyframework.httpclient.proxy.annotations.DomainName;
 

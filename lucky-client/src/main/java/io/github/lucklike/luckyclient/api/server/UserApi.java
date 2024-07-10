@@ -1,10 +1,9 @@
-package io.github.lucklike.luckyclient.api;
+package io.github.lucklike.luckyclient.api.server;
 
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.RespSelect;
 import io.github.lucklike.entity.request.User;
-import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 
 /**
