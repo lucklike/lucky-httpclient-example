@@ -1,0 +1,20 @@
+io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
+  url: https://spark-api-open.xf-yun.com/{version}/chat
+  method: POST
+  path:
+    version: v1
+  header:
+    Authorization: Bearer dfa83ce6cd5f556d7b2a0da18d6c4060:ZWM2ZTA0Y2ExNDczNDA3ZThiMjYyMDI5
+
+  completions:
+    sse: /completions
+    reed-timeout: 30000
+    body:
+      json:
+        model: generalv3
+        stream: true
+        messages:
+          - role: user
+            content: "#{content}"
+    sse-listener:
+      class-name: io.github.lucklike.luckyclient.api.spark.SparkCompletionsEventListener
