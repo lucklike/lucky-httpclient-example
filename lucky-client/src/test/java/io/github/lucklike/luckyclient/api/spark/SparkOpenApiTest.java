@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * @author fukang
@@ -18,6 +19,7 @@ public class SparkOpenApiTest {
 
     @Test
     void idCardOcrTest() {
-        System.out.println(sparkOpenApi.idCardOcr("file:/Users/fukang/Desktop/WechatIMG6044.jpg"));
+        Map<String, Object> idCardInfo = sparkOpenApi.idCardOcr("file:D:/id/card/20240712093345.jpg");
+        System.out.println(idCardInfo);
     }
 }

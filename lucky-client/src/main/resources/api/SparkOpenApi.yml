@@ -1,26 +1,28 @@
 io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
-  url: https://spark-api-open.xf-yun.com/{version}/chat
   method: POST
   spring-el-import:
     root:
-      appId: ca865d28
+      appId: "#{#sm4('80a79d2a48ae6f9e2f74a0765e64e5a9')}"
+      completions_app_key: "#{#sm4('bb42a310a6e1522f93c6d9415a86ac2ba58eb345a17afb49275639fc34e35c5980097781df3b0e52d5b9af3b2f1efdf4')}"
+      completions_api_secret: "#{#sm4('d0a1ec7014d601a52d5e489278d91988c01cfae00a26df03bbd0359933a2d3cb80097781df3b0e52d5b9af3b2f1efdf4')}"
+      id_card_app_key: "#{#sm4('2622b4fe9e1a6ba9c5038c2c4c9f1648bf24263f2a407392ccb4bdbdd542659980097781df3b0e52d5b9af3b2f1efdf4')}"
+    fun:
+      - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
     pack:
       - java.util
       - cn.hutool.crypto.digest
-  path:
-    version: v1
+  resp-convert:
+    condition:
+      - assertion: "#{$status$ != 200}"
+        exception: "讯飞火星API调用失败，异常的HTTP状态码：#{$status$}"
 
 
   #------------------------------------------【SSE】讯飞火星-大模型问答------------------------------------------------#
   completions:
-    sse: /completions
+    sse: https://spark-api-open.xf-yun.com/v1/chat/completions
     reed-timeout: 30000
-    spring-el-import:
-      root:
-        appKey: dfa83ce6cd5f556d7b2a0da18d6c4060
-        APISecret: ZWM2ZTA0Y2ExNDczNDA3ZThiMjYyMDI5
     header:
-      Authorization: "Bearer #{appKey}:#{APISecret}"
+      Authorization: "Bearer #{completions_app_key}:#{completions_api_secret}"
     body:
       json:
         model: generalv3
@@ -36,7 +38,6 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
     url: https://webapi.xfyun.cn/v1/service/v1/ocr/idcard
     spring-el-import:
       root:
-        appKey: e1431c7b9abea73727f3d01f534c4bd2
         currTime: "#{(new Date().getTime() / 1000).toString()}"
         param: >-
           {
@@ -49,8 +50,12 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
       X-Appid: "#{appId}"
       X-CurTime: "#{currTime}"
       X-Param: "#{base64Param}"
-      X-CheckSum: "#{T(DigestUtil).md5Hex(appKey + currTime + base64Param)}"
+      X-CheckSum: "#{T(DigestUtil).md5Hex(id_card_app_key + currTime + base64Param)}"
     form:
       image: "#{#base64(#resource(path))}"
-#    interceptor:
-#      class-name: io.github.lucklike.luckyclient.api.spark.SparkOpenApi$IdCardOcrInterceptor
+    resp-convert:
+      result: "#{$body$.data}"
+      condition:
+        - assertion: "#{$body$.code != '0'}"
+          exception: "【身份证识别】讯飞火星API调用失败，异常的CODE状态码：[#{$body$.code}]: #{$body$.error_msg}"
+

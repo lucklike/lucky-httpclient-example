@@ -1,0 +1,29 @@
+io.github.lucklike.luckyclient.api.transdog.TranslationApi:
+  url: https://www.fanyigou.com
+  method: POST
+  spring-el-import:
+    root:
+      sm4AppId: a94edf938ecd3a2a8ca013bd800b52ad
+      sm4PrivateKey: b2482869665723323117ea6d00de9818833788eecce62cbfe88f6baeb23eb08ef59031af1aece287fe54e8b6c383eb3f
+      appId: "#{#sm4(sm4AppId)}"
+      privateKey: "#{#sm4(sm4PrivateKey)}"
+    fun:
+      - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
+  resp-convert:
+    result: "#{$body$.data.transResult}"
+    condition:
+      - assertion: "#{$status$ != 200}"
+        exception: "翻译狗API调用失败，异常的HTTP状态码：#{$status$}"
+      - assertion: "#{$body$.code != 0}"
+        exception: "翻译狗API调用失败，异常的CODE状态码：[#{$body$.code}]: #{$body$.msg}"
+
+
+  trans:
+    url: /TranslateApi/api/trans
+    query:
+      from: zh
+      to: en
+      text: "#{text}"
+      appid: "#{appId}"
+      nonce_str: "#{#nonceStr()}"
+      token: "#{#token($query$, privateKey)}"

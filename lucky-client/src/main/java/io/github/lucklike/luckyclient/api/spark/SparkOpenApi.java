@@ -2,6 +2,8 @@ package io.github.lucklike.luckyclient.api.spark;
 
 import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
 
+import java.util.Map;
+
 @LocalConfigHttpClient
 public interface SparkOpenApi {
 
@@ -18,6 +20,6 @@ public interface SparkOpenApi {
      * @param path 身份证图片路径
      * @return 识别后的文本内容
      */
-    String idCardOcr(String path);
+    Map<String, Object> idCardOcr(String path);
 
 }
