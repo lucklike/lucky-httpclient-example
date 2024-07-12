@@ -34,7 +34,7 @@ public class SparkCompletionsEventListener implements EventListener {
                     }
 
                     output = output.substring(0, j) + "\n" + output.substring(j);
-                    length ++;
+                    length++;
                     j += l;
                 }
 

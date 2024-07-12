@@ -17,7 +17,7 @@ io.github.lucklike.luckyclient.api.transdog.TranslationApi:
       - assertion: "#{$body$.code != 0}"
         exception: "翻译狗API调用失败，异常的CODE状态码：[#{$body$.code}]: #{$body$.msg}"
 
-
+  #------------------------------------翻译狗-中译英API--------------------------------------------#
   trans:
     url: /TranslateApi/api/trans
     query:
