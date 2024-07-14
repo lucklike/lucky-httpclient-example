@@ -10,7 +10,6 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
       - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
     pack:
       - java.util
-      - cn.hutool.crypto.digest
   resp-convert:
     condition:
       - assertion: "#{$status$ != 200}"
@@ -50,7 +49,7 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
       X-Appid: "#{appId}"
       X-CurTime: "#{currTime}"
       X-Param: "#{base64Param}"
-      X-CheckSum: "#{T(DigestUtil).md5Hex(id_card_app_key + currTime + base64Param)}"
+      X-CheckSum: "#{#md5(id_card_app_key + currTime + base64Param)}"
     form:
       image: "#{#base64(#resource(path))}"
     resp-convert:
@@ -58,4 +57,31 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
       condition:
         - assertion: "#{$body$.code != '0'}"
           exception: "【身份证识别】讯飞火星API调用失败，异常的CODE状态码：[#{$body$.code}]: #{$body$.error_msg}"
+
+  imageGenerate:
+    spring-el-import:
+      root:
+        url: https://spark-api.cn-huabei-1.xf-yun.com/v2.1/tti
+        APIKey: dfa83ce6cd5f556d7b2a0da18d6c4060
+        APISecret: ZWM2ZTA0Y2ExNDczNDA3ZThiMjYyMDI5
+      fun:
+        - io.github.lucklike.luckyclient.api.spark.AuthUtils
+    url: "#{#getUrl(url, 'POST', APISecret, APIKey)}"
+    method: POST
+    body:
+      json:
+        header:
+          app_id: "#{appId}"
+        parameter:
+          chat:
+            domain: general,
+            width: 512,
+            height: 512
+        payload:
+          message:
+            text:
+              - role: user
+                content: "#{content}"
+
+
 

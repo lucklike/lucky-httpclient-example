@@ -22,4 +22,7 @@ public interface SparkOpenApi {
      */
     Map<String, Object> idCardOcr(String path);
 
+
+    String imageGenerate(String content);
+
 }
