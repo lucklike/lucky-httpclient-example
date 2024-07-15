@@ -4,6 +4,9 @@ server:
 
 lucky:
   http-client:
+    http-executor: jdk
+
+    #日志相关的配置
     logger:
       packages:
         - io.github.lucklike.luckyclient.api

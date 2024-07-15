@@ -1,8 +1,6 @@
 package io.github.lucklike.luckyclient.api.spark;
 
-import com.luckyframework.common.Console;
 import com.luckyframework.common.StringUtils;
-import com.luckyframework.httpclient.proxy.configapi.EncoderUtils;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -21,63 +19,38 @@ import java.util.TimeZone;
  */
 public class AuthUtils {
 
-    /**
-     * 获取RFC1123格式的时间字符串
-     *
-     * @return RFC1123格式的时间字符串
-     */
-    private static String rfc1123Date() {
-        SimpleDateFormat sdf3 = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
-        sdf3.setTimeZone(TimeZone.getTimeZone("GMT"));
-        return sdf3.format(new Date());
-    }
+    // 鉴权方法
+    public static String getAuthUrl(String hostUrl, String apiKey, String apiSecret) throws Exception {
+        URL url = new URL(hostUrl);
+        // 时间
+        SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
+        format.setTimeZone(TimeZone.getTimeZone("GMT"));
+        String date = format.format(new Date());
+        // date="Thu, 12 Oct 2023 03:05:28 GMT";
+        // 拼接
+        String preStr = "host: " + url.getHost() + "\n" + "date: " + date + "\n" + "POST " + url.getPath() + " HTTP/1.1";
+        // System.err.println(preStr);
+        // SHA256加密
+        Mac mac = Mac.getInstance("hmacsha256");
+        SecretKeySpec spec = new SecretKeySpec(apiSecret.getBytes(StandardCharsets.UTF_8), "hmacsha256");
+        mac.init(spec);
 
-    private static String getTemp(String host, String path, String method, String date) {
-        return "host: " + host + "\n" +
-                "date: " + date + "\n" +
-                method + " " + path + " HTTP/1.1";
-    }
+        byte[] hexDigits = mac.doFinal(preStr.getBytes(StandardCharsets.UTF_8));
+        // Base64加密
+        String sha = Base64.getEncoder().encodeToString(hexDigits);
+        // System.err.println(sha);
+        // 拼接
+        String authorization = String.format("api_key=\"%s\", algorithm=\"%s\", headers=\"%s\", signature=\"%s\"", apiKey, "hmac-sha256", "host date request-line", sha);
+        // 拼接地址
 
-    private static String getSignature(String host, String path, String method, String date, String APISecret) throws Exception {
-        String temp = getTemp(host, path, method, date);
-        String signature = hmacSha256(APISecret, temp);
-        Console.println("temp\n: {}\nsignature: {}", temp, signature);
-        return signature;
-    }
+        String urlStr = StringUtils.format("https://{}?authorization={}&date={}&host={}",
+                url.getHost() + url.getPath(),
+                Base64.getEncoder().encodeToString(authorization.getBytes(StandardCharsets.UTF_8)),
+                date,
+                url.getHost()
+        );
 
-    private static String getAuthorization(String host, String path, String method, String date, String APISecret, String ApiKey) throws Exception {
-        String authorizationTemp = "api_key=\"{}\", algorithm=\"hmac-sha256\", headers=\"host date request-line\", signature=\"{}\"";
-        String authorizationOrigin = StringUtils.format(authorizationTemp, ApiKey, getSignature(host, path, method, date, APISecret));
-        Console.println("authorization_origin: {}", authorizationOrigin);
-        return EncoderUtils.base64(authorizationOrigin);
-    }
-
-    public static String getUrl(String urlStr, String method, String APISecret, String ApiKey) throws Exception {
-        URL url = new URL(urlStr);
-        String vTemp = "{\"authorization\": \"{}\", \"date\": \"{}\", \"host\": \"{}\"}";
-        String v = StringUtils.format(vTemp, getAuthorization(url.getHost(), url.getPath(), method, rfc1123Date(), APISecret, ApiKey), rfc1123Date(), url.getHost());
-        Console.println("v: {}", v);
-        return url.toExternalForm() + "?authorization=" + EncoderUtils.base64(v);
-    }
-
-    private static String hmacSha256(String APISecret, String message) {
-        try {
-            // 获取HmacSHA256算法实例
-            Mac sha256Hmac = Mac.getInstance("HmacSHA256");
-            // 创建一个密钥规范
-            SecretKeySpec secretKey = new SecretKeySpec(APISecret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-            // 初始化Mac对象
-            sha256Hmac.init(secretKey);
-
-            // 计算签名
-            byte[] hmacBytes = sha256Hmac.doFinal(message.getBytes(StandardCharsets.UTF_8));
-            // 将签名转换为Base64编码的字符串
-
-            // 输出签名
-            return Base64.getEncoder().encodeToString(hmacBytes);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to generate HMAC-SHA256", e);
-        }
+        return urlStr;
     }
 
 

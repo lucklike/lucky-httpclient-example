@@ -1,9 +1,14 @@
 package io.github.lucklike.luckyclient.api.spark;
 
+import cn.hutool.core.codec.Base64;
+import com.luckyframework.common.NanoIdUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.FileCopyUtils;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -24,8 +29,11 @@ public class SparkOpenApiTest {
     }
 
     @Test
-    void imageGenerateTest() {
-        String imaged = sparkOpenApi.imageGenerate("帮我画一副山水画");
-        System.out.println(imaged);
+    void imageGenerateTest() throws IOException {
+        String imageBase64 = sparkOpenApi.imageGenerate("宇宙黑洞");
+        String fileName = NanoIdUtils.randomNanoId() + ".jpg";;
+        File file = new File("D:/test/" + fileName);
+        FileCopyUtils.copy(Base64.decode(imageBase64), file);
+        System.out.println(file.getAbsolutePath());
     }
 }

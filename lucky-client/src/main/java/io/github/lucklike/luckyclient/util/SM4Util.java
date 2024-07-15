@@ -233,11 +233,7 @@ public class SM4Util {
 
 
     public static void main(String[] args) throws Exception {
-        Console.println("appId: {}", encryptEcb("ca865d28"));
-        Console.println("completions-appKey: {}", encryptEcb("dfa83ce6cd5f556d7b2a0da18d6c4060"));
-        Console.println("APISecret: {}", encryptEcb("ZWM2ZTA0Y2ExNDczNDA3ZThiMjYyMDI5"));
 
-        Console.println("idCard-appKey: {}", encryptEcb("e1431c7b9abea73727f3d01f534c4bd2"));
         //test1();
     }
 

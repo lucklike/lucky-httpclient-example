@@ -3,11 +3,17 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
   spring-el-import:
     root:
       appId: "#{#sm4('80a79d2a48ae6f9e2f74a0765e64e5a9')}"
-      completions_app_key: "#{#sm4('bb42a310a6e1522f93c6d9415a86ac2ba58eb345a17afb49275639fc34e35c5980097781df3b0e52d5b9af3b2f1efdf4')}"
+      #大模型
+      completions_api_key: "#{#sm4('bb42a310a6e1522f93c6d9415a86ac2ba58eb345a17afb49275639fc34e35c5980097781df3b0e52d5b9af3b2f1efdf4')}"
       completions_api_secret: "#{#sm4('d0a1ec7014d601a52d5e489278d91988c01cfae00a26df03bbd0359933a2d3cb80097781df3b0e52d5b9af3b2f1efdf4')}"
-      id_card_app_key: "#{#sm4('2622b4fe9e1a6ba9c5038c2c4c9f1648bf24263f2a407392ccb4bdbdd542659980097781df3b0e52d5b9af3b2f1efdf4')}"
+      #身份证识别
+      id_card_api_key: "#{#sm4('2622b4fe9e1a6ba9c5038c2c4c9f1648bf24263f2a407392ccb4bdbdd542659980097781df3b0e52d5b9af3b2f1efdf4')}"
+      #图像生成
+      image_generate_api_key: "#{#sm4('bb42a310a6e1522f93c6d9415a86ac2ba58eb345a17afb49275639fc34e35c5980097781df3b0e52d5b9af3b2f1efdf4')}"
+      image_generate_api_secret: "#{#sm4('d0a1ec7014d601a52d5e489278d91988c01cfae00a26df03bbd0359933a2d3cb80097781df3b0e52d5b9af3b2f1efdf4')}"
     fun:
       - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
+      - io.github.lucklike.luckyclient.api.spark.AuthUtils
     pack:
       - java.util
   resp-convert:
@@ -21,7 +27,7 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
     sse: https://spark-api-open.xf-yun.com/v1/chat/completions
     reed-timeout: 30000
     header:
-      Authorization: "Bearer #{completions_app_key}:#{completions_api_secret}"
+      Authorization: "Bearer #{completions_api_key}:#{completions_api_secret}"
     body:
       json:
         model: generalv3
@@ -49,7 +55,7 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
       X-Appid: "#{appId}"
       X-CurTime: "#{currTime}"
       X-Param: "#{base64Param}"
-      X-CheckSum: "#{#md5(id_card_app_key + currTime + base64Param)}"
+      X-CheckSum: "#{#md5(id_card_api_key + currTime + base64Param)}"
     form:
       image: "#{#base64(#resource(path))}"
     resp-convert:
@@ -58,15 +64,12 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
         - assertion: "#{$body$.code != '0'}"
           exception: "【身份证识别】讯飞火星API调用失败，异常的CODE状态码：[#{$body$.code}]: #{$body$.error_msg}"
 
+  #------------------------------------------讯飞火星-图片生成------------------------------------------------#
   imageGenerate:
     spring-el-import:
       root:
         url: https://spark-api.cn-huabei-1.xf-yun.com/v2.1/tti
-        APIKey: dfa83ce6cd5f556d7b2a0da18d6c4060
-        APISecret: ZWM2ZTA0Y2ExNDczNDA3ZThiMjYyMDI5
-      fun:
-        - io.github.lucklike.luckyclient.api.spark.AuthUtils
-    url: "#{#getUrl(url, 'POST', APISecret, APIKey)}"
+    url: "#{#getAuthUrl(url, image_generate_api_key, image_generate_api_secret)}"
     method: POST
     body:
       json:
@@ -74,14 +77,19 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
           app_id: "#{appId}"
         parameter:
           chat:
-            domain: general,
-            width: 512,
+            domain: general
+            width: 512
             height: 512
         payload:
           message:
             text:
               - role: user
                 content: "#{content}"
+    resp-convert:
+      condition:
+        - assertion: "#{$body$.header.code != 0}"
+          exception: "【图片生成】讯飞火星API调用失败，异常的CODE状态码：[#{$body$.header.code}]: #{$body$.header.message}"
+      result: "#{$body$.payload.choices.text[0].content}"
 
 
 

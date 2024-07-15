@@ -23,6 +23,12 @@ public interface SparkOpenApi {
     Map<String, Object> idCardOcr(String path);
 
 
+    /**
+     * 科大讯飞-图片生成
+     *
+     * @param content 图片的描述信息
+     * @return 根据描述信息生成的图片
+     */
     String imageGenerate(String content);
 
 }
