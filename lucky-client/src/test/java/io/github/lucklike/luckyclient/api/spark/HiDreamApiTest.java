@@ -9,28 +9,27 @@ import org.springframework.util.FileCopyUtils;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author fukang
  * @version 1.0.0
- * @date 2024/7/12 01:18
+ * @date 2024/7/15 23:33
  */
 @SpringBootTest
-public class SparkOpenApiTest {
+public class HiDreamApiTest {
 
     @Resource
-    private SparkOpenApi sparkOpenApi;
+    private HiDreamApi hiDreamApi;
 
     @Test
-    void idCardOcrTest() {
-        Map<String, Object> idCardInfo = sparkOpenApi.idCardOcr("file:/Users/fukang/Desktop/WechatIMG6146.jpg");
-        System.out.println(idCardInfo);
+    void createTaskTest() {
+        String taskId = hiDreamApi.createTask("太阳系", 2);
+        System.out.println(taskId);
     }
 
     @Test
-    void imageGenerateTest() throws IOException {
-        String imageBase64 = sparkOpenApi.imageGenerate("宇宙大爆炸");
+    void queryTaskTest() throws IOException {
+        String imageBase64 = hiDreamApi.queryTask("240716000723840141098315");
         String fileName = NanoIdUtils.randomNanoId() + ".jpg";;
         File file = new File("/Users/fukang/Desktop/" + fileName);
         FileCopyUtils.copy(Base64.decode(imageBase64), file);

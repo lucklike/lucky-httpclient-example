@@ -3,10 +3,8 @@ io.github.lucklike.luckyclient.api.transdog.TranslationApi:
   method: POST
   spring-el-import:
     root:
-      sm4AppId: a94edf938ecd3a2a8ca013bd800b52ad
-      sm4PrivateKey: b2482869665723323117ea6d00de9818833788eecce62cbfe88f6baeb23eb08ef59031af1aece287fe54e8b6c383eb3f
-      appId: "#{#sm4(sm4AppId)}"
-      privateKey: "#{#sm4(sm4PrivateKey)}"
+      appId: ${transDog.trans.appId}
+      privateKey: ${transDog.trans.privateKey}
     fun:
       - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
   resp-convert:

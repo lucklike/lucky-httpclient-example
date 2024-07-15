@@ -2,7 +2,7 @@ io.github.lucklike.luckyclient.api.gitee.GiteeApi:
   url: https://gitee.com/
   method: GET
   query:
-    access_token: 75d1c08826e454781b5cc72458f7af72
+    access_token: ${Gitee.access_token}
 
   #---------------------------------Gitee-获取关注了某个创库的所有用户信息--------------------------------------#
   stargazers:

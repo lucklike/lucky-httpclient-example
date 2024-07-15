@@ -13,3 +13,9 @@ lucky:
 
 lucky-server: http://localhost:8864
 
+spring:
+  config:
+    import:
+       - optional:classpath:api-info.yml
+
+

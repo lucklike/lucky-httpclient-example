@@ -1,0 +1,68 @@
+io.github.lucklike.luckyclient.api.spark.HiDreamApi:
+  spring-el-import:
+    root:
+      createUrl: https://cn-huadong-1.xf-yun.com/v1/private/s3fd61810/create
+      queryUrl: https://cn-huadong-1.xf-yun.com/v1/private/s3fd61810/query
+      APPID: ${spark.appId}
+      APISecret: ${spark.HiDream.APISecret}
+      APIKey: ${spark.HiDream.APIKey}
+    fun:
+      - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
+      - io.github.lucklike.luckyclient.api.spark.AuthUtils
+  method: POST
+  resp-convert:
+    condition:
+      - assertion: "#{$status$ != 200}"
+        exception: "讯飞火星API调用失败，异常的HTTP状态码[#{$status$}]: #{$body$.header.message}"
+
+  createTask:
+    url: "#{#getAuthUrl(createUrl, APIKey, APISecret)}"
+    body:
+      json:
+        header:
+          app_id: "#{APPID}"
+          status: 3
+          channel: default
+          callback_url: default
+        parameter:
+          oig:
+            result:
+              encoding: utf8
+              compress: gzip
+              format: json
+        payload:
+          oig:
+            encoding: utf8
+            compress: raw
+            format: json
+            status: 3
+            text: >-
+              #{#base64('
+              image: []
+              prompt: "#{prompt}"
+              aspect_ratio: 1:1
+              negative_prompt: ""
+              img_count: "#{count}"
+              resolution: 2k
+              ')}
+
+    resp-convert:
+      condition:
+        - assertion: "#{$body$.header.code != 0}"
+          exception: "【图片生成(HiDream)】讯飞火星API调用失败，创建任务失败，异常的CODE状态码：[#{$body$.header.code}]: #{$body$.header.message}"
+      result: "#{$body$.header.task_id}"
+
+  queryTask:
+    url: "#{#getAuthUrl(queryUrl, APIKey, APISecret)}"
+    body:
+      json:
+        header:
+          app_id: "#{APPID}"
+          task_id: "#{taskId}"
+    resp-convert:
+      condition:
+        - assertion: "#{$body$.header.code != 0}"
+          exception: "【图片生成(HiDream)】讯飞火星API调用失败，任务查询异常，异常的CODE状态码：[#{$body$.header.code}]: #{$body$.header.message}"
+        - assertion: "#{$body$.header.task_status != 4}"
+          exception: "【图片生成(HiDream)】讯飞火星API调用失败，任务状态异常，异常的任务状态码：[#{$body$.header.task_status}]"
+      result: "#{$body$.payload.result.text}"

@@ -1,6 +1,5 @@
 package io.github.lucklike.luckyclient.util;
 
-import com.luckyframework.common.Console;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.pqc.math.linearalgebra.ByteUtils;
 import org.bouncycastle.util.encoders.Hex;
@@ -215,6 +214,7 @@ public class SM4Util {
 
     /**
      * 加密成带有固定前缀{@link #SM4_STR_PREFIX}的密文
+     *
      * @param data 明文
      * @return 带有固定前缀{@link #SM4_STR_PREFIX}的密文
      * @throws Exception 解密失败抛出的异常
@@ -233,7 +233,6 @@ public class SM4Util {
 
 
     public static void main(String[] args) throws Exception {
-
         //test1();
     }
 

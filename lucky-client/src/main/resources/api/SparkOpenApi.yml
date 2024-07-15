@@ -2,15 +2,15 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
   method: POST
   spring-el-import:
     root:
-      appId: "#{#sm4('80a79d2a48ae6f9e2f74a0765e64e5a9')}"
+      appId: ${spark.appId}
       #大模型
-      completions_api_key: "#{#sm4('bb42a310a6e1522f93c6d9415a86ac2ba58eb345a17afb49275639fc34e35c5980097781df3b0e52d5b9af3b2f1efdf4')}"
-      completions_api_secret: "#{#sm4('d0a1ec7014d601a52d5e489278d91988c01cfae00a26df03bbd0359933a2d3cb80097781df3b0e52d5b9af3b2f1efdf4')}"
+      completions_api_key: ${spark.completions.APIKey}
+      completions_api_secret: ${spark.completions.APISecret}
       #身份证识别
-      id_card_api_key: "#{#sm4('2622b4fe9e1a6ba9c5038c2c4c9f1648bf24263f2a407392ccb4bdbdd542659980097781df3b0e52d5b9af3b2f1efdf4')}"
+      id_card_api_key: ${spark.idCard.APIKey}
       #图像生成
-      image_generate_api_key: "#{#sm4('bb42a310a6e1522f93c6d9415a86ac2ba58eb345a17afb49275639fc34e35c5980097781df3b0e52d5b9af3b2f1efdf4')}"
-      image_generate_api_secret: "#{#sm4('d0a1ec7014d601a52d5e489278d91988c01cfae00a26df03bbd0359933a2d3cb80097781df3b0e52d5b9af3b2f1efdf4')}"
+      image_generate_api_key: ${spark.imageGenerate.APIKey}
+      image_generate_api_secret: ${spark.imageGenerate.APISecret}
     fun:
       - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
       - io.github.lucklike.luckyclient.api.spark.AuthUtils
@@ -19,13 +19,12 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
   resp-convert:
     condition:
       - assertion: "#{$status$ != 200}"
-        exception: "讯飞火星API调用失败，异常的HTTP状态码：#{$status$}"
+        exception: "讯飞火星API调用失败，异常的HTTP状态码[#{$status$}]: #{$body$.header.message}"
 
 
   #------------------------------------------【SSE】讯飞火星-大模型问答------------------------------------------------#
   completions:
     sse: https://spark-api-open.xf-yun.com/v1/chat/completions
-    reed-timeout: 30000
     header:
       Authorization: "Bearer #{completions_api_key}:#{completions_api_secret}"
     body:
