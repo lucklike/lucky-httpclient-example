@@ -5,20 +5,18 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
       appId: ${spark.appId}
       #大模型
       completion:
+        url: https://spark-api-open.xf-yun.com/v1/chat/completions
         APIKey: ${spark.completions.APIKey}
         APISecret: ${spark.completions.APISecret}
       #身份证识别
       idCard:
+        url: https://webapi.xfyun.cn/v1/service/v1/ocr/idcard
         APIKey: ${spark.idCard.APIKey}
       #图像生成
       image:
+        url: https://spark-api.cn-huabei-1.xf-yun.com/v2.1/tti
         APIKey: ${spark.imageGenerate.APIKey}
         APISecret: ${spark.imageGenerate.APISecret}
-      list:
-        - APIKey: 1234
-          APISecret: ${spark.imageGenerate.APISecret}
-        - APIKey: 5678
-          APISecret: ${spark.imageGenerate.APIKey}
     fun:
       - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
       - io.github.lucklike.luckyclient.api.spark.AuthUtils
@@ -32,7 +30,7 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
 
   #------------------------------------------【SSE】讯飞火星-大模型问答------------------------------------------------#
   completions:
-    sse: https://spark-api-open.xf-yun.com/v1/chat/completions
+    sse: "#{completion.url}"
     header:
       Authorization: "Bearer #{completion.APIKey}:#{completion.APISecret}"
     body:
@@ -47,7 +45,7 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
 
   #------------------------------------------讯飞火星-身份证识别------------------------------------------------#
   idCardOcr:
-    url: https://webapi.xfyun.cn/v1/service/v1/ocr/idcard
+    url: "#{idCard.url}"
     spring-el-import:
       root:
         currTime: "#{(new Date().getTime() / 1000).toString()}"
@@ -73,10 +71,7 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
 
   #------------------------------------------讯飞火星-图片生成------------------------------------------------#
   imageGenerate:
-    spring-el-import:
-      root:
-        url: https://spark-api.cn-huabei-1.xf-yun.com/v2.1/tti
-    url: "#{#getAuthUrl(url, image.APIKey, image.APISecret)}"
+    url: "#{#getAuthUrl(image.url, image.APIKey, image.APISecret)}"
     method: POST
     body:
       json:

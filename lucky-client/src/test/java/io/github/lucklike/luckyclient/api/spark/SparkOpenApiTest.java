@@ -30,8 +30,9 @@ public class SparkOpenApiTest {
 
     @Test
     void imageGenerateTest() throws IOException {
-        String imageBase64 = sparkOpenApi.imageGenerate("宇宙大爆炸");
-        String fileName = NanoIdUtils.randomNanoId() + ".jpg";
+        String content = "邪恶的摇粒绒";
+        String imageBase64 = sparkOpenApi.imageGenerate(content);
+        String fileName = content + "_" +NanoIdUtils.randomNanoId(3) + ".jpg";
         File file = new File("D:/test/" + fileName);
         FileCopyUtils.copy(Base64.decode(imageBase64), file);
         System.out.println(file.getAbsolutePath());
