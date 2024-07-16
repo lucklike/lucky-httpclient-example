@@ -1,11 +1,14 @@
-# 应用服务 WEB 访问端口
+spring:
+  config:
+    import:
+      - optional:classpath:api-info.yml
+
 server:
   port: 8888
 
 lucky:
   http-client:
     http-executor: jdk
-
     #日志相关的配置
     logger:
       packages:
@@ -13,9 +16,5 @@ lucky:
 
 lucky-server: http://localhost:8864
 
-spring:
-  config:
-    import:
-       - optional:classpath:api-info.yml
 
 
