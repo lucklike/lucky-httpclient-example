@@ -1,5 +1,6 @@
 package io.github.lucklike.luckyclient.api.spark;
 
+import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
 
 import java.util.Map;
@@ -12,6 +13,7 @@ public interface SparkOpenApi {
      *
      * @param content 提问内容
      */
+    @PrintLogProhibition
     void completions(String content);
 
     /**
