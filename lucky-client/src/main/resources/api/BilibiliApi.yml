@@ -1,0 +1,9 @@
+io.github.lucklike.luckyclient.api.simple.BilibiliApi:
+  redirect:
+    enable: true
+  resp-convert:
+    condition:
+      - assertion: "#{$status$ != 200}"
+        exception: "【bilibili】API接口返回异常，异常响应码：[#{$status$}]"
+  index:
+    url: http://www.bilibili.com
