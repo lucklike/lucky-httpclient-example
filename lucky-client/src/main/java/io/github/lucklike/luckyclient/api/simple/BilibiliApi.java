@@ -5,5 +5,5 @@ import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
 @LocalConfigHttpClient
 public interface BilibiliApi {
 
-    String index();
+    String index(String test);
 }
