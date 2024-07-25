@@ -1,0 +1,32 @@
+#快瞳API接口配置
+io.github.lucklike.luckyclient.api.kuaitong.KuaiTongApi:
+  url: https://ai.inspirvision.cn/s/api
+  method: POST
+  interceptor:
+    - bean-name: kuaiTongAutoAddTokenInterceptor
+  resp-convert:
+    condition:
+      - assertion: "#{$status$ != 200}"
+        exception: "调用快瞳API接口异常: ['#{$status$}': #{$body$.message}] ,[#{$reqMethod$}] #{$url$}"
+    result: "#{$body$.data}"
+
+  #----------------------------------【快瞳】-获取Token的接口---------------------------------#
+  getAccessToken:
+    url: /getAccessToken
+    method: GET
+    query:
+      accessKey: ${kuaiTong.accessKey}
+      accessSecret: ${kuaiTong.accessSecret}
+    interceptor-prohibit:
+      - io.github.lucklike.luckyclient.api.kuaitong.KuaiTongApi$KuaiTongAutoAddTokenInterceptor
+
+  #----------------------------------【快瞳】-身份证识别接口---------------------------------#
+  identityCardOcr: &idCardOcr
+    url: /ocr/identityCard
+    multi-file:
+      file: "#{idCardPath}"
+
+  #----------------------【快瞳】-身份证识别接口直接返回Response对象用于重试----------------------#
+  identityCardOcrReturnResponse:
+    convert-prohibit: true
+    <<: *idCardOcr

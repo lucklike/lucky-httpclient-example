@@ -31,6 +31,8 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
   #------------------------------------------【SSE】讯飞火星-大模型问答------------------------------------------------#
   completions:
     sse: "#{completion.url}"
+    logger:
+      enable: false
     header:
       Authorization: "Bearer #{completion.APIKey}:#{completion.APISecret}"
     body:
