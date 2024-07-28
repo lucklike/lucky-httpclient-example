@@ -1,0 +1,112 @@
+io.github.lucklike.luckyclient.api.spark.SpeechApi:
+  spring-el-import:
+    root:
+      url: https://api-dx.xf-yun.com/v1/private/dts_create
+      q_url: https://api-dx.xf-yun.com/v1/private/dts_query
+      appId: ${spark.appId}
+      APIKey: ${spark.Speech.APIKey}
+      APISecret: ${spark.Speech.APISecret}
+
+    fun:
+      - io.github.lucklike.luckyclient.api.spark.AuthUtils
+  logger:
+    enable: true
+  resp-convert:
+    condition:
+      - assertion: "#{$body$.header.code != 0}"
+        exception: "create task failed, code = #{$body$.header.code}, message = #{$body$.header.message}"
+
+  #----------------------------------------科大讯飞语音合成-创建任务（回调版）----------------------------------------------------#
+  createTask:
+    url: "#{#getAuthUrl(url, APIKey, APISecret)}"
+    method: POST
+    body:
+      json:
+        header:
+          app_id: "#{appId}"
+          callback_url: https://34524668fckw.vicp.fun/api/speech/callback
+          request_id: "#{#UUID()}"
+        parameter:
+          dts:
+            vcn: x4_lingxiaozhen_eclives
+            speed: 50
+            volume: 50
+            pitch: 50
+            bgs: 0
+            reg: 0
+            rdn: 0
+            rhy: 0
+            scn: 0
+            pybuf:
+              encoding: utf8
+              compress: raw
+              format: plain
+            audio:
+              encoding: lame
+              sample_rate: 16000
+              channels: 1
+              bit_depth: 16
+        payload:
+          text:
+            encoding: utf8
+            compress: raw
+            format: plain
+            text: "#{#base64(#resource(filePath))}"
+
+  #----------------------------------------科大讯飞语音合成-创建任务----------------------------------------------------#
+  create:
+    url: "#{#getAuthUrl(url, APIKey, APISecret)}"
+    method: POST
+    body:
+      json:
+        header:
+          app_id: "#{appId}"
+          request_id: "#{#UUID()}"
+        parameter:
+          dts:
+            vcn: x4_wangqianqian
+            speed: 50
+            volume: 50
+            pitch: 50
+            bgs: 0
+            reg: 0
+            rdn: 0
+            rhy: 0
+            scn: 0
+            pybuf:
+              encoding: utf8
+              compress: raw
+              format: plain
+            audio:
+              encoding: lame
+              sample_rate: 16000
+              channels: 1
+              bit_depth: 16
+        payload:
+          text:
+            encoding: utf8
+            compress: raw
+            format: plain
+            text: "#{#base64(#resource(filePath))}"
+    resp-convert:
+      result: "#{$body$.header.task_id}"
+      condition:
+        - assertion: "#{$body$.header.code != 0}"
+          exception: "create task failed, code = #{$body$.header.code}, message = #{$body$.header.message}"
+
+  #----------------------------------------科大讯飞语音合成-查询任务----------------------------------------------------#
+  queryTask:
+    url: "#{#getAuthUrl(q_url, APIKey, APISecret)}"
+    method: POST
+    body:
+      json:
+        header:
+          app_id: "#{appId}"
+          task_id: "#{task_id}"
+    retry:
+      enable: true
+      max-count: 15
+      wait-millis: 5000
+      expression: "#{$body$.header.code !=0 or $body$.header.task_status != '5'}"
+    resp-convert:
+      result: "#{{url: #_base64($body$.payload.audio.audio), type: $body$.payload.audio.encoding}}"

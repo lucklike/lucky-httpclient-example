@@ -10,7 +10,7 @@ import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
 import com.luckyframework.httpclient.proxy.annotations.StaticForm;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.Throws;
-import com.luckyframework.httpclient.proxy.configapi.EncoderUtils;
+import com.luckyframework.httpclient.proxy.configapi.CommonFunctions;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import com.luckyframework.httpclient.proxy.sse.Sse;
 import io.github.lucklike.httpclient.annotation.HttpClient;
@@ -21,7 +21,7 @@ import java.util.Map;
 @HttpClient
 @SpELImport(
     root = {"appId=${spark.appId}"},
-    fun = {FanYiGouFunction.class, AuthUtils.class, EncoderUtils.class},
+    fun = {FanYiGouFunction.class, AuthUtils.class, CommonFunctions.class},
     pack = {"java.util"}
 )
 public interface AnnSparkOpenApi {
@@ -50,7 +50,7 @@ public interface AnnSparkOpenApi {
      * @param path 身份证图片路径
      * @return 识别后的文本内容
      */
-    @SpELImport({
+    @SpELImport(root= {
         "currTime=#{(new Date().getTime() / 1000).toString()}",
         "param={\"engine_type\":\"idcard\",\"head_portrait\": \"0\",\"crop_image\": \"0\"}",
         "base64Param=#{#base64(param)}",
@@ -82,7 +82,7 @@ public interface AnnSparkOpenApi {
      * @param content 图片的描述信息
      * @return 根据描述信息生成的图片
      */
-    @SpELImport({
+    @SpELImport(root={
         "url=https://spark-api.cn-huabei-1.xf-yun.com/v2.1/tti",
         "APIKey=${spark.imageGenerate.APIKey}",
         "APISecret=${spark.imageGenerate.APISecret}"
