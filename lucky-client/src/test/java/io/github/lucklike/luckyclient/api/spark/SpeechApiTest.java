@@ -26,6 +26,6 @@ public class SpeechApiTest {
         System.out.println(mp4Map);
         MultipartFile file = speechApi.getFile(mp4Map.get("url").toString());
         file.setFileName(StringUtils.format("{}.mp3", task_id));
-        file.progressBarCopy("/Users/fukang/Lucky/lucky-httpclient-example/lucky-client/src/main/resources/");
+        file.progressBarCopy("D:\\Lucky\\lucky-httpclient-example\\lucky-client\\src\\main\\resources");
     }
 }

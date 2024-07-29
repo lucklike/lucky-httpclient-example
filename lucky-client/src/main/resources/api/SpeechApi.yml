@@ -8,6 +8,7 @@ io.github.lucklike.luckyclient.api.spark.SpeechApi:
       APISecret: ${spark.Speech.APISecret}
 
     fun:
+      - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
       - io.github.lucklike.luckyclient.api.spark.AuthUtils
   logger:
     enable: true

@@ -20,8 +20,6 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
     fun:
       - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
       - io.github.lucklike.luckyclient.api.spark.AuthUtils
-    pack:
-      - java.util
   resp-convert:
     condition:
       - assertion: "#{$status$ != 200}"
@@ -37,7 +35,7 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
       Authorization: "Bearer #{completion.APIKey}:#{completion.APISecret}"
     body:
       json:
-        model: generalv3
+        model: general
         stream: true
         messages:
           - role: user
@@ -50,7 +48,7 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
     url: "#{idCard.url}"
     spring-el-import:
       root:
-        currTime: "#{(new Date().getTime() / 1000).toString()}"
+        currTime: "#{#timeSec()}"
         param: >-
           {
             "engine_type":"idcard",
