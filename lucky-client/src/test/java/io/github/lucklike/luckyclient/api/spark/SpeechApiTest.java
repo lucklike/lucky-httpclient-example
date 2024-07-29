@@ -2,6 +2,7 @@ package io.github.lucklike.luckyclient.api.spark;
 
 import com.luckyframework.common.StringUtils;
 import com.luckyframework.io.MultipartFile;
+import io.github.lucklike.luckyclient.util.OSProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,6 +18,9 @@ import java.util.Map;
 public class SpeechApiTest {
 
     @Resource
+    private OSProperties osProperties;
+
+    @Resource
     private SpeechApi speechApi;
 
     @Test
@@ -26,6 +30,6 @@ public class SpeechApiTest {
         System.out.println(mp4Map);
         MultipartFile file = speechApi.getFile(mp4Map.get("url").toString());
         file.setFileName(StringUtils.format("{}.mp3", task_id));
-        file.progressBarCopy("D:\\Lucky\\lucky-httpclient-example\\lucky-client\\src\\main\\resources");
+        file.progressBarCopy(osProperties.get("resources"));
     }
 }

@@ -58,6 +58,9 @@ io.github.lucklike.luckyclient.api.spark.SpeechApi:
   create:
     url: "#{#getAuthUrl(url, APIKey, APISecret)}"
     method: POST
+    retry:
+      enable: true
+      max-count: 3
     body:
       json:
         header:
