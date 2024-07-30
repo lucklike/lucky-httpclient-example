@@ -20,7 +20,7 @@ public class OSProperties implements Map<String, String> {
         put("resources", "/Users/fukang/Lucky/lucky-httpclient-example/lucky-client/src/main/resources/");
     }};
 
-    private Map<String, String> finalMap;
+    private final Map<String, String> finalMap;
 
     {
         String osName = System.getProperty("os.name");
