@@ -6,10 +6,12 @@ io.github.lucklike.luckyclient.api.spark.SpeechApi:
       appId: ${spark.appId}
       APIKey: ${spark.Speech.APIKey}
       APISecret: ${spark.Speech.APISecret}
-
+      param:
+        create: "#{#read('classpath:param-temp/SpeechCreate.json')}"
     fun:
       - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
       - io.github.lucklike.luckyclient.api.spark.AuthUtils
+
   logger:
     enable: true
   resp-convert:
@@ -21,77 +23,29 @@ io.github.lucklike.luckyclient.api.spark.SpeechApi:
   createTask:
     url: "#{#getAuthUrl(url, APIKey, APISecret)}"
     method: POST
+    spring-el-import:
+      root:
+        app_id: "#{appId}"
+        request_id: "#{#UUID()}"
+        callback_url: https://34524668fckw.vicp.fun/api/speech/callback
+        text: "#{#base64(#resource(filePath))}"
     body:
-      json:
-        header:
-          app_id: "#{appId}"
-          callback_url: https://34524668fckw.vicp.fun/api/speech/callback
-          request_id: "#{#UUID()}"
-        parameter:
-          dts:
-            vcn: x4_lingxiaozhen_eclives
-            speed: 50
-            volume: 50
-            pitch: 50
-            bgs: 0
-            reg: 0
-            rdn: 0
-            rhy: 0
-            scn: 0
-            pybuf:
-              encoding: utf8
-              compress: raw
-              format: plain
-            audio:
-              encoding: lame
-              sample_rate: 16000
-              channels: 1
-              bit_depth: 16
-        payload:
-          text:
-            encoding: utf8
-            compress: raw
-            format: plain
-            text: "#{#base64(#resource(filePath))}"
+      json: "#{param.create}"
 
   #----------------------------------------科大讯飞语音合成-创建任务----------------------------------------------------#
   create:
     url: "#{#getAuthUrl(url, APIKey, APISecret)}"
     method: POST
+    spring-el-import:
+      root:
+        app_id: "#{appId}"
+        request_id: "#{#nanoid()}"
+        text: "#{#base64(#resource(filePath))}"
     retry:
       enable: true
       max-count: 3
     body:
-      json:
-        header:
-          app_id: "#{appId}"
-          request_id: "#{#UUID()}"
-        parameter:
-          dts:
-            vcn: x4_wangqianqian
-            speed: 50
-            volume: 50
-            pitch: 50
-            bgs: 0
-            reg: 0
-            rdn: 0
-            rhy: 0
-            scn: 0
-            pybuf:
-              encoding: utf8
-              compress: raw
-              format: plain
-            audio:
-              encoding: lame
-              sample_rate: 16000
-              channels: 1
-              bit_depth: 16
-        payload:
-          text:
-            encoding: utf8
-            compress: raw
-            format: plain
-            text: "#{#base64(#resource(filePath))}"
+      json: "#{param.create}"
     resp-convert:
       result: "#{$body$.header.task_id}"
       condition:

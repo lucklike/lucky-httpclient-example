@@ -1,7 +1,6 @@
 package io.github.lucklike.luckyclient.api.transdog;
 
 import cn.hutool.crypto.digest.DigestUtil;
-import com.luckyframework.common.NanoIdUtils;
 import com.luckyframework.common.StringUtils;
 import com.luckyframework.httpclient.proxy.spel.FunctionAlias;
 import io.github.lucklike.httpclient.annotation.SpELFunction;
@@ -43,10 +42,4 @@ public class FanYiGouFunction {
     public static String sm4(String s) throws Exception {
         return SM4Util.decryptEcb(s);
     }
-
-    @FunctionAlias("nonceStr")
-    public static String nonceStr() {
-        return NanoIdUtils.randomNanoId();
-    }
-
 }

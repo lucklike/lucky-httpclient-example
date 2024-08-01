@@ -1,0 +1,39 @@
+{
+  "header": {
+    "app_id": "#{app_id}",
+    "callback_url": "#{callback_url == null ? '' : callback_url}",
+    "request_id": "#{request_id}"
+  },
+  "parameter": {
+    "dts": {
+      "vcn": "x4_wangqianqian",
+      "speed": 50,
+      "volume": 50,
+      "pitch": 50,
+      "bgs": 0,
+      "reg": 0,
+      "rdn": 0,
+      "rhy": 0,
+      "scn": 0,
+      "pybuf": {
+        "encoding": "utf8",
+        "compress": "raw",
+        "format": "plain"
+      },
+      "audio": {
+        "encoding": "lame",
+        "sample_rate": 16000,
+        "channels": 1,
+        "bit_depth": 16
+      }
+    }
+  },
+  "payload": {
+    "text": {
+      "encoding": "utf8",
+      "compress": "raw",
+      "format": "plain",
+      "text": "#{text}"
+    }
+  }
+}

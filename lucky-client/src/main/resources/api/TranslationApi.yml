@@ -23,5 +23,5 @@ io.github.lucklike.luckyclient.api.transdog.TranslationApi:
       to: en
       text: "#{text}"
       appid: "#{appId}"
-      nonce_str: "#{#nonceStr()}"
+      nonce_str: "#{#nanoid()}"
       token: "#{#token($query$, privateKey)}"

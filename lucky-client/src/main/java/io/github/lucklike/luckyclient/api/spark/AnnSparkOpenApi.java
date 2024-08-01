@@ -10,7 +10,6 @@ import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
 import com.luckyframework.httpclient.proxy.annotations.StaticForm;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.Throws;
-import com.luckyframework.httpclient.proxy.configapi.CommonFunctions;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import com.luckyframework.httpclient.proxy.sse.Sse;
 import io.github.lucklike.httpclient.annotation.HttpClient;
@@ -21,7 +20,7 @@ import java.util.Map;
 @HttpClient
 @SpELImport(
     root = {"appId=${spark.appId}"},
-    fun = {FanYiGouFunction.class, AuthUtils.class, CommonFunctions.class},
+    fun = {FanYiGouFunction.class, AuthUtils.class},
     pack = {"java.util"}
 )
 public interface AnnSparkOpenApi {
