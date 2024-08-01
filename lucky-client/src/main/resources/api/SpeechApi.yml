@@ -30,7 +30,7 @@ io.github.lucklike.luckyclient.api.spark.SpeechApi:
         callback_url: https://34524668fckw.vicp.fun/api/speech/callback
         text: "#{#base64(#resource(filePath))}"
     body:
-      json: "#{param.create}"
+      json: "``#{param.create}``"
 
   #----------------------------------------科大讯飞语音合成-创建任务----------------------------------------------------#
   create:
@@ -45,7 +45,7 @@ io.github.lucklike.luckyclient.api.spark.SpeechApi:
       enable: true
       max-count: 3
     body:
-      json: "#{param.create}"
+      json: "``#{param.create}``"
     resp-convert:
       result: "#{$body$.header.task_id}"
       condition:
