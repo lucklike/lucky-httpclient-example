@@ -8,13 +8,15 @@ server:
 
 lucky:
   http-client:
+
     http-executor: jdk
     #日志相关的配置
     logger:
       packages:
         - io.github.lucklike.luckyclient.api
 
-lucky-server: http://localhost:8864
+
+lucky-server: https://localhost
 
 
 

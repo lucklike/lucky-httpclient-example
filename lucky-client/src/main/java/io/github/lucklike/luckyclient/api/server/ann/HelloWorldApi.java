@@ -1,4 +1,4 @@
-package io.github.lucklike.luckyclient.api.server;
+package io.github.lucklike.luckyclient.api.server.ann;
 
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import io.github.lucklike.entity.response.Result;

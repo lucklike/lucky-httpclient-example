@@ -1,5 +1,6 @@
 package io.github.lucklike.luckyclient.api.server;
 
+import io.github.lucklike.luckyclient.api.server.ann.HelloWorldApi;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

@@ -1,0 +1,24 @@
+io.github.lucklike.luckyclient.api.server.configapi.UserApi:
+  url: ${lucky-server}/user
+  ssl:
+    enable: true
+
+  resp-convert:
+    condition:
+      - assertion: "#{$status$ != 200}"
+        exception: "API调用失败，状态码：#{$status$}"
+
+  postUser:
+    url: post
+    method: POST
+    body:
+      json: "#{#json(p0)}"
+    resp-convert:
+      result: "#{$body$.data}"
+      condition:
+        - assertion: "#{$body$.code!= 200}"
+          exception: "API调用失败，code: #{$body$.code}, message: #{$body$.message}"
+
+  getUser:
+    url: get
+    method: GET

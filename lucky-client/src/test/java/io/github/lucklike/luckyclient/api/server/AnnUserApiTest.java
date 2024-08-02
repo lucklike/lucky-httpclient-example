@@ -1,7 +1,7 @@
 package io.github.lucklike.luckyclient.api.server;
 
 import io.github.lucklike.entity.request.User;
-import io.github.lucklike.luckyclient.api.server.configapi.UserApi;
+import io.github.lucklike.luckyclient.api.server.ann.AnnUserApi;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,10 +13,10 @@ import javax.annotation.Resource;
  * @date 2024/7/9 01:47
  */
 @SpringBootTest
-public class UserApiTest {
+public class AnnUserApiTest {
 
     @Resource
-    private UserApi api;
+    private AnnUserApi api;
 
     @Test
     void postUserTest() {
