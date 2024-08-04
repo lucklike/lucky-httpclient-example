@@ -9,11 +9,25 @@ server:
 lucky:
   http-client:
 
-    http-executor: jdk
+    http-executor: http_client
     #日志相关的配置
     logger:
       packages:
         - io.github.lucklike.luckyclient.api
+
+    ssl:
+      key-stores:
+        - id: test
+          protocol: TLSv1.2
+          key-store-type: PKCS12
+          key-store-password: ClientKeyStore@2024
+          cert-password: ClientKeyStore@2024
+          key-store-file: classpath:ssl/client.p12
+        - id: test2
+          key-store-type: PKCS12
+          key-store-password: ServerKeyStore@2024
+          key-store-file: classpath:ssl/server.p12
+
 
 
 lucky-server: https://localhost

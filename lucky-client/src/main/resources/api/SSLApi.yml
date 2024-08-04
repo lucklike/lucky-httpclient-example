@@ -1,0 +1,14 @@
+io.github.lucklike.luckyclient.api.ssl.SSLApi:
+  url: https://localhost:8888/SpringBoot2Demo
+  ssl:
+    enable: true
+    ssl-context:
+      protocol: TLSv1.2
+      key-store-type: PKCS12
+      key-store-password: ClientKeyStore@2024
+      cert-password: ClientKeyStore@2024
+      key-store-file: classpath:ssl/client.p12
+
+  test:
+    url: /demo/current
+    method: GET

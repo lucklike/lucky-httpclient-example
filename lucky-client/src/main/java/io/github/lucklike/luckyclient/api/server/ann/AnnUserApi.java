@@ -14,6 +14,7 @@ import io.github.lucklike.httpclient.annotation.HttpClient;
  * @version 1.0.0
  * @date 2024/7/9 01:45
  */
+@SSL(keyStore = "test")
 @HttpClient("${lucky-server}/user")
 public interface AnnUserApi {
 
@@ -21,7 +22,6 @@ public interface AnnUserApi {
     @Post("post")
     User postUser(@JsonBody User user);
 
-    @SSL
     @Get("get")
     Result<User> getUser();
 }
