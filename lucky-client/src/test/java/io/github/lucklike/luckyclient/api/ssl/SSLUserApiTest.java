@@ -1,23 +1,18 @@
-package io.github.lucklike.luckyclient.api.server;
+package io.github.lucklike.luckyclient.api.ssl;
 
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
-import io.github.lucklike.luckyclient.api.server.ann.AnnUserApi;
+import io.github.lucklike.luckyclient.api.ssl.configapi.SSLUserApi;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
-/**
- * @author fukang
- * @version 1.0.0
- * @date 2024/7/9 01:47
- */
 @SpringBootTest
-public class AnnUserApiTest {
+public class SSLUserApiTest {
 
     @Resource
-    private AnnUserApi api;
+    private SSLUserApi api;
 
     @Test
     void postUserTest() {
@@ -35,9 +30,10 @@ public class AnnUserApiTest {
     @Test
     void getUserTest() {
         Result<User> user = api.getUser();
+        user = api.getUser();
         System.out.println(user);
-        User user1 = api.postUser(user.getData());
 
-        System.out.println(user1);
+        User postUser = api.postUser(user.getData());
+        System.out.println(postUser);
     }
 }

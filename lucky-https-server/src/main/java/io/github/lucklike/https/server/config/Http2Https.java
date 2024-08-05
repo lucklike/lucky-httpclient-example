@@ -1,4 +1,4 @@
-package io.github.lucklike.server.config;
+package io.github.lucklike.https.server.config;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;

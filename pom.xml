@@ -12,6 +12,7 @@
         <module>lucky-entity</module>
         <module>lucky-server</module>
         <module>lucky-client</module>
+        <module>lucky-https-server</module>
     </modules>
 
     <properties>

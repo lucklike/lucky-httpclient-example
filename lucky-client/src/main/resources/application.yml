@@ -8,8 +8,7 @@ server:
 
 lucky:
   http-client:
-
-    http-executor: http_client
+    http-executor: jdk
     #日志相关的配置
     logger:
       packages:
@@ -18,19 +17,24 @@ lucky:
     ssl:
       key-stores:
         - id: test
-          protocol: TLSv1.2
           key-store-type: PKCS12
           key-store-password: ClientKeyStore@2024
           cert-password: ClientKeyStore@2024
           key-store-file: classpath:ssl/client.p12
-        - id: test2
+        - id: test1
           key-store-type: PKCS12
           key-store-password: ServerKeyStore@2024
           key-store-file: classpath:ssl/server.p12
+        - id: test2
+          key-store-type: JKS
+          key-store-password: TrustStore@2024
+          key-store-file: classpath:ssl/truststore.jks
 
 
 
-lucky-server: https://localhost
+lucky-server:
+  http: http://localhost:8864
+  https: https://localhost
 
 
 

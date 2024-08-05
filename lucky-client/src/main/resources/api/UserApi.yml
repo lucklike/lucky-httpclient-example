@@ -1,8 +1,5 @@
 io.github.lucklike.luckyclient.api.server.configapi.UserApi:
-  url: ${lucky-server}/user
-  ssl:
-    enable: true
-
+  url: ${lucky-server.http}/user
   resp-convert:
     condition:
       - assertion: "#{$status$ != 200}"

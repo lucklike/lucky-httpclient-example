@@ -8,20 +8,20 @@ import com.luckyframework.httpclient.proxy.annotations.SSL;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 
 /**
  * @author fukang
  * @version 1.0.0
  * @date 2024/7/9 01:45
  */
-@SSL(keyStore = "test")
-@HttpClient("${lucky-server}/user")
-public interface AnnUserApi {
+@HttpClientComponent
+public interface AnnUserApi extends LuckyServerApi {
 
     @RespSelect("#{$body$.data}")
-    @Post("post")
+    @Post("/user/post")
     User postUser(@JsonBody User user);
 
-    @Get("get")
+    @Get("/user/get")
     Result<User> getUser();
 }

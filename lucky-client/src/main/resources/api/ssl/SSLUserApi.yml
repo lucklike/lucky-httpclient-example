@@ -1,0 +1,37 @@
+io.github.lucklike.luckyclient.api.ssl.configapi.SSLUserApi:
+  url: ${lucky-server.https}/user
+  ssl:
+    protocol: TLSv1.2
+    enable: true
+    key-store: test
+    trust-store: test1
+  #    key-store-info:
+  #      key-store-type: PKCS12
+  #      key-store-password: ClientKeyStore@2024
+  #      cert-password: ClientKeyStore@2024
+  #      key-store-file: classpath:ssl/client.p12
+  #    trust-store-info:
+  #      key-store-type: PKCS12
+  #      key-store-password: ServerKeyStore@2024
+  #      key-store-file: classpath:ssl/server.p12
+  resp-convert:
+    condition:
+      - assertion: "#{$status$ != 200}"
+        exception: "API调用失败，状态码：#{$status$}"
+
+  #---------------------------------SSL-提交用户信息--------------------------------------#
+  postUser:
+    url: post
+    method: POST
+    body:
+      json: "#{#json(p0)}"
+    resp-convert:
+      result: "#{$body$.data}"
+      condition:
+        - assertion: "#{$body$.code!= 200}"
+          exception: "API调用失败，code: #{$body$.code}, message: #{$body$.message}"
+
+  #---------------------------------SSL-获取用户信息---------------------------------------#
+  getUser:
+    url: get
+    method: GET

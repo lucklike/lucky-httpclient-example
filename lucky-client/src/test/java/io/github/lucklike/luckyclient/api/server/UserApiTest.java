@@ -1,6 +1,7 @@
 package io.github.lucklike.luckyclient.api.server;
 
 import io.github.lucklike.entity.request.User;
+import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.luckyclient.api.server.configapi.UserApi;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,6 +34,11 @@ public class UserApiTest {
 
     @Test
     void getUserTest() {
-        System.out.println(api.getUser());
+        Result<User> user = api.getUser();
+        user = api.getUser();
+        System.out.println(user);
+
+        User postUser = api.postUser(user.getData());
+        System.out.println(postUser);
     }
 }
