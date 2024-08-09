@@ -3,6 +3,13 @@ io.github.lucklike.luckyclient.api.gitee.GiteeApi:
   method: GET
   query:
     access_token: ${Gitee.access_token}
+  spring-el-import:
+    fun:
+      - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
+  resp-convert:
+    condition:
+      - assertion: "#{$status$ != 200}"
+        exception: "【Gitee】[#{$status$}] API调用失败: #{$body$.message}"
 
   #---------------------------------Gitee-获取关注了某个创库的所有用户信息--------------------------------------#
   stargazers:
