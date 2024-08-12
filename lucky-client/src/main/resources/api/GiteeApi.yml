@@ -3,9 +3,6 @@ io.github.lucklike.luckyclient.api.gitee.GiteeApi:
   method: GET
   query:
     access_token: ${Gitee.access_token}
-  spring-el-import:
-    fun:
-      - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
   resp-convert:
     condition:
       - assertion: "#{$status$ != 200}"

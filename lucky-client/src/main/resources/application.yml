@@ -29,6 +29,9 @@ lucky:
           key-store-type: JKS
           key-store-password: TrustStore@2024
           key-store-file: classpath:ssl/truststore.jks
+    spring-el:
+      function-classes:
+        - clazz: io.github.lucklike.luckyclient.util.SM4Function
 
 
 

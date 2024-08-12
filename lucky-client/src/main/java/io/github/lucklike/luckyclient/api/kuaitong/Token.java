@@ -1,5 +1,6 @@
 package io.github.lucklike.luckyclient.api.kuaitong;
 
+import cn.hutool.core.date.DateUtil;
 import lombok.Data;
 
 import java.util.Date;
@@ -17,6 +18,6 @@ public class Token {
 
 
     public void generateExpiresTime() {
-        this.expires_time = new Date(System.currentTimeMillis() + expires_in * 1000);
+        this.expires_time = DateUtil.offsetSecond(new Date(), expires_in.intValue());
     }
 }

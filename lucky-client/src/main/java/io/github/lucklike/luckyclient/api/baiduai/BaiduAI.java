@@ -1,56 +1,55 @@
-package io.github.lucklike.luckyclient.api.kuaitong;
+package io.github.lucklike.luckyclient.api.baiduai;
 
 import com.luckyframework.common.StringUtils;
-import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
+import io.github.lucklike.httpclient.annotation.HttpClientComponent;
+import io.github.lucklike.luckyclient.api.util.AI;
 import io.github.lucklike.luckyclient.api.util.token.JsonFileTokenManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
+
 /**
- * 快瞳API
+ * 百度千帆大模型平台API
  */
-@LocalConfigHttpClient
-public interface KuaiTongApi {
+@HttpClientComponent
+public interface BaiduAI extends AI {
 
     /**
      * 获取访问Token
      *
      * @return 访问Token
      */
-    Token getAccessToken();
+    Token getToken();
 
     /**
-     * 身份证OCR识别
-     *
-     * @param idCardPath 身份证图片路径
-     * @return 身份证信息
+     * 问答接口
+     * @param content 提问内容
      */
-    IdentityInfo identityCardOcr(String idCardPath);
+    void questionsAndAnswers(String content);
 
 
     /**
-     * 自动添加Token的拦截器，支持过期自动续签
+     * Token管理器
      */
-    @Component("kuaiTongTokenManager")
-    class KuaiTongTokenManager extends JsonFileTokenManager<Token> {
-
+    @Component("baiduAITokenManager")
+    class BaiduAITokenManager extends JsonFileTokenManager<Token> {
 
         @Resource
-        private KuaiTongApi api;
+        private BaiduAI baiduAI;
 
         @Value("${user.dir}")
         private String userDir;
 
         @Override
         protected String getJsonFilePath() {
-            return StringUtils.format("file:{}/kt_token.json", userDir);
+            return StringUtils.format("file:{}/baidu_token.json", userDir);
         }
 
         @Override
         protected Token initToken() {
-            Token token = api.getAccessToken();
+            Token token = baiduAI.getToken();
             token.generateExpiresTime();
             return token;
         }
@@ -65,5 +64,7 @@ public interface KuaiTongApi {
             return Token.class;
         }
     }
-
 }
+
+
+

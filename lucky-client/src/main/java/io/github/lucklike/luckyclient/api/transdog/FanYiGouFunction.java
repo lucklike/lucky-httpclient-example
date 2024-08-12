@@ -38,8 +38,4 @@ public class FanYiGouFunction {
         return DigestUtil.md5Hex(stringA).toUpperCase();
     }
 
-    @FunctionAlias("sm4")
-    public static String sm4(String s) throws Exception {
-        return SM4Util.decryptEcb(s);
-    }
 }

@@ -1,0 +1,38 @@
+io.github.lucklike.luckyclient.api.baiduai.BaiduAI:
+  method: POST
+  spring-el-import:
+    root:
+      api_key: ${baidu.API.APIKey}
+      secret_key: ${baidu.API.SecretKey}
+  header:
+    Content-Type: application/json
+  resp-convert:
+    condition:
+      - assertion: "#{$status$ == 401 and $body$.error != null}"
+        exception: "【百度千帆API】接口调用失败！错误码：['#{$body$.error}'], 错误信息：#{$body$.error_description}"
+      - assertion: "#{$status$ != 200}"
+        exception: "【百度千帆API】接口调用失败！异常的响应码：['#{$status$}'], url: #{$url$}"
+
+  getToken:
+    url: https://aip.baidubce.com/oauth/2.0/token
+    query:
+      grant_type: client_credentials
+      client_id: "#{api_key}"
+      client_secret: "#{secret_key}"
+
+  questionsAndAnswers:
+    sse: https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k
+    query:
+      access_token: "#{@baiduAITokenManager.getToken().access_token}"
+    sse-listener:
+      class-name: io.github.lucklike.luckyclient.api.baiduai.BaiduAIEventListener
+    logger:
+      enable: false
+    body:
+      json: >-
+        {
+          "messages": [
+            {"role":"user", "content": "#{content}"}
+          ],
+          "stream": true
+        }

@@ -18,7 +18,6 @@ io.github.lucklike.luckyclient.api.spark.SparkOpenApi:
         APIKey: ${spark.imageGenerate.APIKey}
         APISecret: ${spark.imageGenerate.APISecret}
     fun:
-      - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
       - io.github.lucklike.luckyclient.api.spark.AuthUtils
   resp-convert:
     condition:

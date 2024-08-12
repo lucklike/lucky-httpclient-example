@@ -13,14 +13,13 @@ import com.luckyframework.httpclient.proxy.annotations.Throws;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import com.luckyframework.httpclient.proxy.sse.Sse;
 import io.github.lucklike.httpclient.annotation.HttpClient;
-import io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction;
 
 import java.util.Map;
 
 @HttpClient
 @SpELImport(
     root = {"appId=${spark.appId}"},
-    fun = {FanYiGouFunction.class, AuthUtils.class},
+    fun = {AuthUtils.class},
     pack = {"java.util"}
 )
 public interface AnnSparkOpenApi {

@@ -9,7 +9,6 @@ io.github.lucklike.luckyclient.api.spark.SpeechApi:
       param:
         create: "#{#read('classpath:param-temp/SpeechCreate.json')}"
     fun:
-      - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
       - io.github.lucklike.luckyclient.api.spark.AuthUtils
 
   logger:

@@ -7,7 +7,6 @@ io.github.lucklike.luckyclient.api.spark.HiDreamApi:
       APISecret: ${spark.HiDream.APISecret}
       APIKey: ${spark.HiDream.APIKey}
     fun:
-      - io.github.lucklike.luckyclient.api.transdog.FanYiGouFunction
       - io.github.lucklike.luckyclient.api.spark.AuthUtils
   method: POST
   resp-convert:

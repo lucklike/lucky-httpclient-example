@@ -3,16 +3,16 @@ package io.github.lucklike.luckyclient.api.spark;
 
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.Console;
+import com.luckyframework.httpclient.core.meta.HeaderMataData;
 import com.luckyframework.httpclient.proxy.sse.Event;
 import com.luckyframework.httpclient.proxy.sse.EventListener;
 import com.luckyframework.httpclient.proxy.sse.Message;
 import com.luckyframework.serializable.SerializationTypeToken;
+import io.github.lucklike.luckyclient.api.util.DelayedOutput;
 
 import java.util.Map;
 
 public class SparkCompletionsEventListener implements EventListener {
-
-    private int outputLength = 0;
 
     @Override
     public void onMessage(Event<Message> event) throws Exception {
@@ -27,26 +27,7 @@ public class SparkCompletionsEventListener implements EventListener {
                 int code = configMap.getInt("code");
                 if (code == 0) {
                     String output = configMap.getString("choices[0].delta.content");
-
-                    int length = output.length();
-                    int rem = outputLength % l;
-                    outputLength += output.length();
-
-                    int j = l - rem;
-                    while (true) {
-                        if (j > length) {
-                            break;
-                        }
-
-                        output = output.substring(0, j) + "\n" + output.substring(j);
-                        length++;
-                        j += l;
-                    }
-
-                    for (char c : output.toCharArray()) {
-                        System.out.print(c);
-                        Thread.sleep(50L);
-                    }
+                    DelayedOutput.output(output);
                 } else if (code == 11200) {
                     Console.printRed("授权错误：该appId没有相关功能的授权 或者 业务量超过限制!");
                 } else if (code == 10007) {
@@ -71,7 +52,7 @@ public class SparkCompletionsEventListener implements EventListener {
 
 
             } else {
-                outputLength = 0;
+                DelayedOutput.clearOutputLength();
                 System.out.println("\n");
             }
         }
