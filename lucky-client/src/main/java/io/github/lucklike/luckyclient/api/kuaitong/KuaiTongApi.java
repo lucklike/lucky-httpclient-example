@@ -1,8 +1,8 @@
 package io.github.lucklike.luckyclient.api.kuaitong;
 
 import com.luckyframework.common.StringUtils;
+import com.luckyframework.httpclient.generalapi.token.LocalJsonFileTokenManager;
 import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
-import io.github.lucklike.luckyclient.api.util.token.JsonFileTokenManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +34,7 @@ public interface KuaiTongApi {
      * 自动添加Token的拦截器，支持过期自动续签
      */
     @Component("kuaiTongTokenManager")
-    class KuaiTongTokenManager extends JsonFileTokenManager<Token> {
+    class KuaiTongTokenManager extends LocalJsonFileTokenManager<Token> {
 
 
         @Resource
@@ -44,12 +44,7 @@ public interface KuaiTongApi {
         private String userDir;
 
         @Override
-        protected String getJsonFilePath() {
-            return StringUtils.format("file:{}/kt_token.json", userDir);
-        }
-
-        @Override
-        protected Token initToken() {
+        protected Token refreshToken(Token oldToken) {
             Token token = api.getAccessToken();
             token.generateExpiresTime();
             return token;
@@ -58,6 +53,11 @@ public interface KuaiTongApi {
         @Override
         protected boolean isExpires(Token token) {
             return token.isExpires();
+        }
+
+        @Override
+        protected String getResourceLocation() {
+            return StringUtils.format("file:{}/kt_token.json", userDir);
         }
 
         @Override

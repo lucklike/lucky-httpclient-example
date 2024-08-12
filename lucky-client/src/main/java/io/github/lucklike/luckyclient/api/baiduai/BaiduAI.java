@@ -1,9 +1,9 @@
 package io.github.lucklike.luckyclient.api.baiduai;
 
 import com.luckyframework.common.StringUtils;
+import com.luckyframework.httpclient.generalapi.token.LocalJsonFileTokenManager;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 import io.github.lucklike.luckyclient.api.util.AI;
-import io.github.lucklike.luckyclient.api.util.token.JsonFileTokenManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +25,7 @@ public interface BaiduAI extends AI {
 
     /**
      * 问答接口
+     *
      * @param content 提问内容
      */
     void questionsAndAnswers(String content);
@@ -34,7 +35,7 @@ public interface BaiduAI extends AI {
      * Token管理器
      */
     @Component("baiduAITokenManager")
-    class BaiduAITokenManager extends JsonFileTokenManager<Token> {
+    class BaiduAITokenManager extends LocalJsonFileTokenManager<Token> {
 
         @Resource
         private BaiduAI baiduAI;
@@ -43,12 +44,7 @@ public interface BaiduAI extends AI {
         private String userDir;
 
         @Override
-        protected String getJsonFilePath() {
-            return StringUtils.format("file:{}/baidu_token.json", userDir);
-        }
-
-        @Override
-        protected Token initToken() {
+        protected Token refreshToken(Token oldToken) {
             Token token = baiduAI.getToken();
             token.generateExpiresTime();
             return token;
@@ -57,6 +53,11 @@ public interface BaiduAI extends AI {
         @Override
         protected boolean isExpires(Token token) {
             return token.isExpires();
+        }
+
+        @Override
+        protected String getResourceLocation() {
+            return StringUtils.format("file:{}/baidu_token.json", userDir);
         }
 
         @Override
