@@ -19,7 +19,8 @@ io.github.lucklike.luckyclient.api.kuaitong.KuaiTongApi:
   #----------------------------------【快瞳】-身份证识别接口---------------------------------#
   identityCardOcr:
     url: /ocr/identityCard
-    multi-data:
-      token: "#{@kuaiTongTokenManager.getToken().access_token}"
-    multi-file:
-      file: "#{idCardPath}"
+    multipart-form-data:
+      txt:
+        token: "#{@kuaiTongTokenManager.getToken().access_token}"
+      file:
+        file: "#{idCardPath}"
