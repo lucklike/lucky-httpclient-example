@@ -20,10 +20,7 @@ public class SparkCompletionsEventListener implements EventListener {
         Message message = event.getMessage();
         if (message.hasData()) {
             if (!" [DONE]".equals(message.getData())) {
-                Map<String, Object> data = message.jsonDataToEntity(new SerializationTypeToken<Map<String, Object>>() {
-                });
-                ConfigurationMap configMap = new ConfigurationMap(data);
-
+                ConfigurationMap configMap = message.jsonDataToMap();
                 int code = configMap.getInt("code");
                 if (code == 0) {
                     String output = configMap.getString("choices[0].delta.content");

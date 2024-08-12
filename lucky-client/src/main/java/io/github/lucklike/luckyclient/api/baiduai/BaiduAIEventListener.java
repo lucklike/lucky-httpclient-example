@@ -19,7 +19,7 @@ public class BaiduAIEventListener implements EventListener {
     @Override
     public void onMessage(Event<Message> event) throws Exception {
         Message message = event.getMessage();
-        ConfigurationMap confMap = message.jsonDataToEntity(ConfigurationMap.class);
+        ConfigurationMap confMap = message.jsonDataToMap();
         if (!confMap.getBoolean("is_end")) {
             String result = confMap.getString("result");
             DelayedOutput.output(result);
