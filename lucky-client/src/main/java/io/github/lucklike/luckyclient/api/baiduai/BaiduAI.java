@@ -43,6 +43,10 @@ public interface BaiduAI extends AI {
         @Value("${user.dir}")
         private String userDir;
 
+        public String getAccessToken() {
+            return getToken().getAccess_token();
+        }
+
         @Override
         protected Token refreshToken(Token oldToken) {
             Token token = baiduAI.getToken();

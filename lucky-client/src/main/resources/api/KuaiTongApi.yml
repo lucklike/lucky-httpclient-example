@@ -21,6 +21,6 @@ io.github.lucklike.luckyclient.api.kuaitong.KuaiTongApi:
     url: /ocr/identityCard
     multipart-form-data:
       txt:
-        token: "#{@kuaiTongTokenManager.getToken().access_token}"
+        token: "#{@kuaiTongTokenManager.getAccessToken()}"
       file:
         file: "#{idCardPath}"

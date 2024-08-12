@@ -23,7 +23,7 @@ io.github.lucklike.luckyclient.api.baiduai.BaiduAI:
   questionsAndAnswers:
     sse: https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k
     query:
-      access_token: "#{@baiduAITokenManager.getToken().access_token}"
+      access_token: "#{@baiduAITokenManager.getAccessToken()}"
     sse-listener:
       class-name: io.github.lucklike.luckyclient.api.baiduai.BaiduAIEventListener
     logger:
