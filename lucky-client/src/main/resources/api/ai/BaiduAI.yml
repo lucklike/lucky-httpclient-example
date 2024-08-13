@@ -32,7 +32,10 @@ io.github.lucklike.luckyclient.api.baiduai.BaiduAI:
       json: >-
         {
           "messages": [
-            {"role":"user", "content": "#{content}"}
+            {
+              "role": "user", 
+              "content": "#{content}"
+            }
           ],
           "stream": true
         }

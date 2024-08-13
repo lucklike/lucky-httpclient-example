@@ -63,11 +63,6 @@ public interface BaiduAI extends AI {
         protected String getResourceLocation() {
             return StringUtils.format("file:{}/baidu_token.json", userDir);
         }
-
-        @Override
-        protected Class<Token> getTokenClass() {
-            return Token.class;
-        }
     }
 }
 

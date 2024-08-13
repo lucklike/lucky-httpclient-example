@@ -64,10 +64,6 @@ public interface KuaiTongApi {
             return StringUtils.format("file:{}/kt_token.json", userDir);
         }
 
-        @Override
-        protected Class<Token> getTokenClass() {
-            return Token.class;
-        }
     }
 
 }
