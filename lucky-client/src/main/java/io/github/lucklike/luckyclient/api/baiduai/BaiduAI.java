@@ -7,7 +7,7 @@ import io.github.lucklike.luckyclient.api.util.AI;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import java.io.File;
 
 
 /**
@@ -37,11 +37,14 @@ public interface BaiduAI extends AI {
     @Component("baiduAITokenManager")
     class BaiduAITokenManager extends LocalJsonFileTokenManager<Token> {
 
-        @Resource
-        private BaiduAI baiduAI;
+        private final BaiduAI baiduAI;
+        private final File jsonFile;
 
-        @Value("${user.dir}")
-        private String userDir;
+
+        public BaiduAITokenManager(BaiduAI baiduAI, @Value("${user.dir}") String userDir) {
+            this.baiduAI = baiduAI;
+            this.jsonFile = new File(userDir + File.separator + "baidu_token.json");
+        }
 
         public String getAccessToken() {
             return getToken().getAccess_token();
@@ -59,9 +62,10 @@ public interface BaiduAI extends AI {
             return token.isExpires();
         }
 
+
         @Override
-        protected String getResourceLocation() {
-            return StringUtils.format("file:{}/baidu_token.json", userDir);
+        protected File getJsonFile() {
+            return jsonFile;
         }
     }
 }

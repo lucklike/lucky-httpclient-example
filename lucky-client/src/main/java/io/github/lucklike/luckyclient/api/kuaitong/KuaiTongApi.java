@@ -6,7 +6,7 @@ import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import java.io.File;
 
 /**
  * 快瞳API
@@ -36,12 +36,13 @@ public interface KuaiTongApi {
     @Component("kuaiTongTokenManager")
     class KuaiTongTokenManager extends LocalJsonFileTokenManager<Token> {
 
+        private final KuaiTongApi api;
+        private final File jsonFile;
 
-        @Resource
-        private KuaiTongApi api;
-
-        @Value("${user.dir}")
-        private String userDir;
+        public KuaiTongTokenManager(KuaiTongApi api, @Value("${user.dir}") String userDir) {
+            this.api = api;
+            this.jsonFile = new File(userDir + File.separator + "kt_token.json");
+        }
 
         public String getAccessToken() {
             return getToken().getAccess_token();
@@ -59,11 +60,11 @@ public interface KuaiTongApi {
             return token.isExpires();
         }
 
-        @Override
-        protected String getResourceLocation() {
-            return StringUtils.format("file:{}/kt_token.json", userDir);
-        }
 
+        @Override
+        protected File getJsonFile() {
+            return jsonFile;
+        }
     }
 
 }
