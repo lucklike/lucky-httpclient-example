@@ -1,7 +1,6 @@
 package io.github.lucklike.luckyclient.api.baiduai;
 
-import com.luckyframework.common.StringUtils;
-import com.luckyframework.httpclient.generalapi.token.LocalJsonFileTokenManager;
+import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 import io.github.lucklike.luckyclient.api.util.AI;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +34,7 @@ public interface BaiduAI extends AI {
      * Token管理器
      */
     @Component("baiduAITokenManager")
-    class BaiduAITokenManager extends LocalJsonFileTokenManager<Token> {
+    class BaiduAITokenManager extends JsonFileTokenManager<Token> {
 
         private final BaiduAI baiduAI;
         private final File jsonFile;

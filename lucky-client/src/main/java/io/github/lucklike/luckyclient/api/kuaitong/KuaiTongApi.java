@@ -1,7 +1,6 @@
 package io.github.lucklike.luckyclient.api.kuaitong;
 
-import com.luckyframework.common.StringUtils;
-import com.luckyframework.httpclient.generalapi.token.LocalJsonFileTokenManager;
+import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
 import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -34,7 +33,7 @@ public interface KuaiTongApi {
      * 自动添加Token的拦截器，支持过期自动续签
      */
     @Component("kuaiTongTokenManager")
-    class KuaiTongTokenManager extends LocalJsonFileTokenManager<Token> {
+    class KuaiTongTokenManager extends JsonFileTokenManager<Token> {
 
         private final KuaiTongApi api;
         private final File jsonFile;
