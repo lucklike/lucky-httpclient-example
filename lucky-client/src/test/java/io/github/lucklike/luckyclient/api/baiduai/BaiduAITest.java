@@ -23,9 +23,9 @@ public class BaiduAITest {
     void questionsAndAnswersTest() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            Console.printlnGreen("ME:");
+            Console.printlnGreen("ME: ");
             String context = scanner.nextLine();
-            System.out.println();
+            Console.printlnMulberry("\nAI:");
             baiduAI.questionsAndAnswers(context);
         }
     }
