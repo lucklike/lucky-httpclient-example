@@ -15,7 +15,7 @@ public interface MockApi {
 
     static MockResponse baiduMock() {
         return MockResponse.create()
-                .status(500)
+                .status(200)
                 .header("Content-Type", "application/json; charset=utf-8")
                 .header("Service", "Nginx-1.3")
                 .body("百度一下，你就知道！");
