@@ -1,22 +1,13 @@
 package io.github.lucklike.luckyclient.api.server.ann;
 
-import com.luckyframework.httpclient.core.meta.DefaultHttpHeaderManager;
-import com.luckyframework.httpclient.core.meta.HttpHeaderManager;
-import com.luckyframework.httpclient.core.meta.Request;
-import com.luckyframework.httpclient.core.meta.Response;
-import com.luckyframework.httpclient.core.meta.ResponseMetaData;
+import com.luckyframework.httpclient.core.meta.ClientCookie;
+import com.luckyframework.httpclient.core.meta.ContentType;
 import com.luckyframework.httpclient.proxy.annotations.Get;
-import com.luckyframework.httpclient.proxy.annotations.ObjectGenerate;
-import com.luckyframework.httpclient.proxy.mock.MockContext;
-import com.luckyframework.httpclient.proxy.mock.MockMeta;
-import com.luckyframework.httpclient.proxy.mock.MockResponseFactory;
+import com.luckyframework.httpclient.proxy.mock.Mock;
+import com.luckyframework.httpclient.proxy.mock.MockResponse;
+import com.luckyframework.io.MultipartFile;
 import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
-import org.springframework.core.io.InputStreamSource;
-
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 /**
  * @author fukang
@@ -27,53 +18,36 @@ import java.io.InputStream;
 public interface HelloWorldApi extends LuckyServerApi {
 
 
-    @MockMeta(mockResp = @ObjectGenerate(MyMock.class))
+    @Mock(
+        status = 404,
+        header = "Content-Type: text/plain",
+        body = "Hello"
+    )
     @Get("/hello")
     String hello();
 
+    @Mock("#{#exceptionMock()}")
     @Get("/exception")
     Result<Object> exception();
 
-    class MyMock implements MockResponseFactory {
+    @Get("http://www.baidu.com")
+    String baidu();
 
-        @Override
-        public Response createMockResponse(Request request, MockContext context) {
-            return new Response() {
-                @Override
-                public Request getRequest() {
-                    return request;
-                }
+    @Mock(body = "#{#resource('classpath:api-info.yml')}")
+    @Get("http://localhost:8080/getFile")
+    MultipartFile getFile();
 
-                @Override
-                public int getStatus() {
-                    return 200;
-                }
-
-                @Override
-                public HttpHeaderManager getHeaderManager() {
-                    return new DefaultHttpHeaderManager();
-                }
-
-                @Override
-                public byte[] getResult() {
-                    return "HELLO WORLD".getBytes();
-                }
-
-                @Override
-                public InputStream getInputStream() {
-                    return new ByteArrayInputStream(getResult());
-                }
-
-                @Override
-                public ResponseMetaData getResponseMetaData() {
-                    return new ResponseMetaData(getRequest(), getStatus(), getHeaderManager(), () -> getInputStream());
-                }
-
-                @Override
-                public void closeResource() {
-
-                }
-            };
-        }
+    static MockResponse exceptionMock() {
+        ClientCookie cookie = new ClientCookie("NAME", "FUKANG");
+        cookie.setComment("username");
+        cookie.setMaxAge(10000);
+        cookie.setHttpOnly(true);
+        return MockResponse.create()
+                .status(500)
+                .cookie("BIDUPSID=DA9ED3306B7BBCF49B26FC7AB2172567; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com")
+                .cookie("BAIDUID=DA9ED3306B7BBCF49B26FC7AB2172567:FG=1; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com")
+                .cookie(cookie)
+                .json(Result.fail(500, "exception"));
     }
+
 }
