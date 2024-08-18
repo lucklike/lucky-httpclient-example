@@ -26,7 +26,7 @@ public interface HelloWorldApi extends LuckyServerApi {
     @Get("/hello")
     String hello();
 
-    @Mock("#{#exceptionMock()}")
+    @Mock
     @Get("/exception")
     Result<Object> exception();
 
