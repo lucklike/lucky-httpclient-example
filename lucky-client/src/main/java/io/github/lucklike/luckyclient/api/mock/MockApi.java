@@ -8,7 +8,7 @@ import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
  * @version 1.0.0
  * @date 2024/8/17 05:25
  */
-@LocalConfigHttpClient("classpath:api/mock/#{$class$.getSimpleName()}.yml")
+@LocalConfigHttpClient("classpath:api/mock/MockApi.yml")
 public interface MockApi {
 
     String baidu();

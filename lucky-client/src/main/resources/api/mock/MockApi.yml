@@ -31,8 +31,8 @@ io.github.lucklike.luckyclient.api.mock.MockApi:
         #自定义配置处理器，
         handle:
           # 模式一： class-name + scope
-          class-name: com.luckyframework.httpclient.proxy.configapi.ResponseConvertHandle
-          scope: SINGLETON/ PROTOTYPE/ METHOD/ CLASS/ METHOD_CONTEXT
+#          class-name: com.luckyframework.httpclient.proxy.configapi.ResponseConvertHandle
+#          scope: SINGLETON/ PROTOTYPE/ METHOD/ CLASS/ METHOD_CONTEXT
 
           #模式二：bean-name
           bean-name: userResponseConvertHandle
