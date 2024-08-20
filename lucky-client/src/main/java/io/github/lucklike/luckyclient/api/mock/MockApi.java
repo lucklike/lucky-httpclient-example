@@ -14,6 +14,7 @@ public interface MockApi {
     String baidu();
 
     static MockResponse baiduMock() {
+        System.out.println("-----------------------Mock--------------------------");
         return MockResponse.create()
                 .status(200)
                 .header("Content-Type", "application/json; charset=utf-8")

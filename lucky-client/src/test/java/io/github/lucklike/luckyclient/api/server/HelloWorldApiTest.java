@@ -36,6 +36,8 @@ class HelloWorldApiTest {
     @Test
     void getFile() {
         MultipartFile file = api.getFile();
+        MultipartFile file2 = api.getFile();
         System.out.println(file);
+        System.out.println(file2);
     }
 }

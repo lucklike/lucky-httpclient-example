@@ -33,7 +33,7 @@ public interface HelloWorldApi extends LuckyServerApi {
     @Get("http://www.baidu.com")
     String baidu();
 
-    @Mock(body = "#{#resource('classpath:api-info.yml')}")
+    @Mock(body = "#{#resource('file:${user.dir}/kt_token.json')}")
     @Get("http://localhost:8080/getFile")
     MultipartFile getFile();
 

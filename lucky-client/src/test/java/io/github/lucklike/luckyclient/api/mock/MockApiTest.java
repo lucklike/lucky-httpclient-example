@@ -21,5 +21,6 @@ class MockApiTest {
     @Test
     void baidu() {
         System.out.println(mockApi.baidu());
+        System.out.println(mockApi.baidu());
     }
 }
