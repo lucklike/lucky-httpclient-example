@@ -13,11 +13,6 @@ io.github.lucklike.luckyclient.api.mock.MockApi:
     #请求扩展处理器
     request-extension:
       - handle:
-          # 模式一： class-name + scope
-#          class-name: io.github.lucklike.luckyclient.api.mock.UserRequestExtendHandle
-#          scope: SINGLETON/ PROTOTYPE/ METHOD/ CLASS/ METHOD_CONTEXT
-
-          #模式二：bean-name
           bean-name: userRequestExtendHandle
         config:
           id: 123
@@ -26,19 +21,12 @@ io.github.lucklike.luckyclient.api.mock.MockApi:
 
     # 响应转换器
     resp-convert:
-      # 自定义转换器
       convert:
-        #自定义配置处理器，
         handle:
-          # 模式一： class-name + scope
-#          class-name: com.luckyframework.httpclient.proxy.configapi.ResponseConvertHandle
-#          scope: SINGLETON/ PROTOTYPE/ METHOD/ CLASS/ METHOD_CONTEXT
-
-          #模式二：bean-name
           bean-name: userResponseConvertHandle
-
-        #自定义配置
         config:
-          id: 1234
+          ID: 1234
           name: JackKang
           email: jackKang@qq.com
+          phone: 17363312985
+          user-address: ["北京", "上海", "南京"]

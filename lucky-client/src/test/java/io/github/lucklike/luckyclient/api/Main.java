@@ -25,9 +25,7 @@ public class Main {
         Map map = Resources.fromYamlReader(reader, Map.class);
         Map<String, Object> abc = (Map<String, Object>) map.get("abc");
         System.out.println(abc);
-        LooseBind looseBind = new LooseBind();
-        A a = new A();
-        looseBind.binding(a, abc);
+        A a = ConversionUtils.looseBind(A.class, abc);
         System.out.println(a);
     }
 
