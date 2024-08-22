@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @HttpClient
 @RespConvert(
-    branch = {
+    conditions = {
             @Branch(assertion = "#{$status$ != 200}", exception = "【ROLL】油价查询接口调用异常，响应码：'#{$status$}'"),
             @Branch(assertion = "#{$body$.code != 1}", exception = "【ROLL】油价查询接口调用异常，状态码：'#{$body$.code}', 错误信息：#{$body$.msg}")
     })

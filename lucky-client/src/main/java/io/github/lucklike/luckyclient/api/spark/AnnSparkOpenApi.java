@@ -63,7 +63,7 @@ public interface AnnSparkOpenApi {
     })
     @RespConvert(
         result = "#{$body$.data}",
-        branch = {
+        conditions = {
             @Branch(assertion = "#{$status$ != 200}", exception = "讯飞火星API调用失败，异常的HTTP状态码[#{$status$}]: #{$body$.header.message}"),
             @Branch(assertion = "#{$body$.code != '0'}", exception = "【身份证识别】讯飞火星API调用失败，异常的CODE状态码：[#{$body$.code}]: #{$body$.error_msg}")
         }
@@ -93,7 +93,7 @@ public interface AnnSparkOpenApi {
     })
     @RespConvert(
         result = "#{$body$.payload.choices.text[0].content}",
-        branch = {
+        conditions = {
             @Branch(assertion = "#{$status$ != 200}", exception = "讯飞火星API调用失败，异常的HTTP状态码[#{$status$}]: #{$body$.header.message}"),
             @Branch(assertion = "#{$body$.header.code != 0}", exception = "【图片生成】讯飞火星API调用失败，异常的CODE状态码：[#{$body$.header.code}]: #{$body$.header.message}")
         }
