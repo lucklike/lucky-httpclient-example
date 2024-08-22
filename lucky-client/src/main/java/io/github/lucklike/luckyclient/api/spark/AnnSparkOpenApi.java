@@ -29,18 +29,15 @@ public interface AnnSparkOpenApi {
      * @param content 提问内容
      */
     @PropertiesJsonObject({
-        "model=generalv3",
+        "model=general",
         "stream=#{true}",
         "messages[0].role=user",
         "messages[0].content=#{content}"
     })
     @StaticHeader({"Authorization: Bearer ${spark.completions.APIKey}:${spark.completions.APISecret}"})
     @Sse(listener = @ObjectGenerate(SparkCompletionsEventListener.class))
-    @RespConvert(
-        branch = @Branch(assertion = "#{$status$ != 200}", exception = "讯飞火星API调用失败，异常的HTTP状态码[#{$status$}]: #{$body$.header.message}")
-    )
     @Post("https://spark-api-open.xf-yun.com/v1/chat/completions")
-    @PrintLogProhibition
+//    @PrintLogProhibition
     void completions(String content);
 
     /**
