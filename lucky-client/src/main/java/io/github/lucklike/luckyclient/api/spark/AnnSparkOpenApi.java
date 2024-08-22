@@ -36,7 +36,7 @@ public interface AnnSparkOpenApi {
     })
     @StaticHeader({"Authorization: Bearer ${spark.completions.APIKey}:${spark.completions.APISecret}"})
     @Sse(listener = @ObjectGenerate(SparkCompletionsEventListener.class))
-    @Post("https://spark-api-open.xf-yun.com/v1/chat/completions2")
+    @Post("https://spark-api-open.xf-yun.com/v1/chat/completions")
     @PrintLogProhibition
     void completions(String content);
 

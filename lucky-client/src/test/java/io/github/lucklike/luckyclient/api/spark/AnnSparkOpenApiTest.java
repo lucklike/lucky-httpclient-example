@@ -30,7 +30,7 @@ public class AnnSparkOpenApiTest {
         while (true) {
             Console.printlnGreen("ME:");
             String input = src.nextLine();
-            System.out.println("\nAI:");
+            Console.printlnMulberry("\nAI:");
             annSparkOpenApi.completions(input);
         }
     }

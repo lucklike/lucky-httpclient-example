@@ -27,7 +27,6 @@ public class SparkCompletionsEventListener implements EventListener {
 
     @Override
     public void onMessage(Event<Message> event) throws Exception {
-        int l = 70;
         Message message = event.getMessage();
         if (message.hasData()) {
             if (!" [DONE]".equals(message.getData())) {
