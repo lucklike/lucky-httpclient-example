@@ -40,7 +40,8 @@ public interface HelloWorldApi extends LuckyServerApi {
     static MockResponse exceptionMock() {
         ClientCookie cookie = new ClientCookie("NAME", "FUKANG");
         cookie.setComment("username");
-        cookie.setMaxAge(10000);
+        cookie.setMaxAge(2147483647);
+        cookie.setDomain(".baidu.com");
         cookie.setHttpOnly(true);
         return MockResponse.create()
                 .status(500)

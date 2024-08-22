@@ -15,18 +15,24 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Resource resource = ConversionUtils.conversion("classpath:test.yml", Resource.class);
-        Reader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
-        Map map = Resources.fromYamlReader(reader, Map.class);
-        Map<String, Object> abc = (Map<String, Object>) map.get("abc");
-        System.out.println(abc);
-        A a = ConversionUtils.looseBind(A.class, abc);
+        ConfigurationMap configMap = Resources.resourceAsConfigMap("classpath:test.yml");
+        A a = configMap.looseBindTo(A.class);
         System.out.println(a);
+
+        B b = configMap.looseBind("b-map.b2", B.class);
+        System.out.println(b);
+
+        C c = configMap.looseBind("b-map.b2.map-map-list.key1.k1-1[0]", C.class);
+        System.out.println(c);
+
+        C[][] cc = configMap.looseBind("b-map.b2.c-list", C[][].class);
+        System.out.println(Arrays.deepToString(cc));
     }
 
     @Data

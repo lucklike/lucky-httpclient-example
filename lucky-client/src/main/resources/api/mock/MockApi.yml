@@ -7,7 +7,7 @@ io.github.lucklike.luckyclient.api.mock.MockApi:
 
     # Mock功能相关配置
     mock:
-      enable: true
+      enable: false
 
     #请求扩展处理器
     request-extension:

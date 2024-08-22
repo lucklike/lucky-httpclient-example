@@ -1,39 +1,38 @@
-abc:
-  id: A-ID
-  name: A-Name
-  b-map:
-    b1:
-      b-id: b1ID
-      b_name: b1NAME
-    b2:
-      bId: b2ID
-      B_NAME: b2NAME
-      c-list:
-        -
-          - cid: cid1
-            cName: cname1
-          - cid: cid@
-            c-Name: cname@
-        -
-          - cid: cid3
-            cName: cname13
-          - cid: cid4
-            c-Name: cname4
-      map-map-list:
-        key1:
-          k1-1:
-            - c-id: cid5
-              c-name: cname5
-            - c_id: cid6
-              c_name: cname6
-          k1-2:
-            - cId: cid7
-              cName: cname7
-            - C_ID: cid8
-              C_NAME: cname8
-        key2:
-          k2-1:
-            - c-id: cid9
-              c-name: cname9
-            - c_id: cid10
-              c_name: cname10
+id: A-ID
+name: A-Name
+b-map:
+  b1:
+    b-id: b1ID
+    b_name: b1NAME
+  b2:
+    bId: b2ID
+    B_NAME: b2NAME
+    c-list:
+      -
+        - cid: cid1
+          cName: cname1
+        - cid: cid@
+          c-Name: cname@
+      -
+        - cid: cid3
+          cName: cname13
+        - cid: cid4
+          c-Name: cname4
+    map-map-list:
+      key1:
+        k1-1:
+          - c-id: cid5
+            c-name: cname5
+          - c_id: cid6
+            c_name: cname6
+        k1-2:
+          - cId: cid7
+            cName: cname7
+          - C_ID: cid8
+            C_NAME: cname8
+      key2:
+        k2-1:
+          - c-id: cid9
+            c-name: cname9
+          - c_id: cid10
+            c_name: cname10

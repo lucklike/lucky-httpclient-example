@@ -26,6 +26,7 @@ class HelloWorldApiTest {
     @Test
     void exception() {
         System.out.println(api.exception());
+        System.out.println(api.exception());
     }
 
     @Test
