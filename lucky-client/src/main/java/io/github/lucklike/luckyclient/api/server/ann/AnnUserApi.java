@@ -3,11 +3,9 @@ package io.github.lucklike.luckyclient.api.server.ann;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import com.luckyframework.httpclient.proxy.annotations.RespSelect;
-import com.luckyframework.httpclient.proxy.annotations.SSL;
+import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
-import io.github.lucklike.httpclient.annotation.HttpClient;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 
 /**
@@ -18,7 +16,7 @@ import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 @HttpClientComponent
 public interface AnnUserApi extends LuckyServerApi {
 
-    @RespSelect("#{$body$.data}")
+    @RespConvert("#{$body$.data}")
     @Post("/user/post")
     User postUser(@JsonBody User user);
 
