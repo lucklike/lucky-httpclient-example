@@ -3,7 +3,9 @@ package io.github.lucklike.luckyclient.api.spark;
 
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.Console;
+import com.luckyframework.exception.LuckyRuntimeException;
 import com.luckyframework.httpclient.core.meta.HeaderMataData;
+import com.luckyframework.httpclient.core.meta.Response;
 import com.luckyframework.httpclient.proxy.sse.Event;
 import com.luckyframework.httpclient.proxy.sse.EventListener;
 import com.luckyframework.httpclient.proxy.sse.Message;
@@ -13,6 +15,15 @@ import io.github.lucklike.luckyclient.api.util.DelayedOutput;
 import java.util.Map;
 
 public class SparkCompletionsEventListener implements EventListener {
+
+    @Override
+    public void onOpen(Event<Response> event) throws Exception {
+        Response response = event.getMessage();
+        int status = response.getStatus();
+        if (status != 200) {
+            throw new LuckyRuntimeException("讯飞火星API调用失败，异常的HTTP状态码[{}]: {}", status, response.getStringResult());
+        }
+    }
 
     @Override
     public void onMessage(Event<Message> event) throws Exception {
