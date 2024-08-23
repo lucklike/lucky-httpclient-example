@@ -1,0 +1,10 @@
+io.github.lucklike.luckyclient.api.loosebind.DefaultParamBindApi:
+  url: http://127.0.0.1/bind
+  request-extension:
+    - handle:
+        beanName: defaultParamBindHandle
+      config:
+        operator_no: 2464
+        op_password: 111111
+        op_station: CRH:IFS:OpStation
+        op_branch_no: 100

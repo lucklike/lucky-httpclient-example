@@ -14,12 +14,13 @@ import java.util.List;
 import static com.luckyframework.httpclient.proxy.CommonFunctions.read;
 import static com.luckyframework.httpclient.proxy.CommonFunctions.resource;
 
-@HttpClient
+
+@HttpClient("http://127.0.0.1:8080")
 public interface LooseBindApi {
 
     @Mock
     @RespConvert("``#{#lbe('$body$.data')}``")
-    @Get("http://127.0.0.1:8080/book")
+    @Get("/book")
     List<Book> book();
 
     static Response bookMock() throws IOException {
