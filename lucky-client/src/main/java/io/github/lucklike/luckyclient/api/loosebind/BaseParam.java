@@ -6,6 +6,11 @@ import lombok.Data;
 public class BaseParam {
 
     /**
+     * URL
+     */
+    private String url;
+
+    /**
      * 菜单ID
      */
     private String menu_id;

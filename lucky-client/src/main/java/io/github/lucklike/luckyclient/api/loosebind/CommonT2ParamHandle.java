@@ -7,7 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DefaultParamBindHandle implements RequestExtendHandle<BaseParam> {
+public class CommonT2ParamHandle implements RequestExtendHandle<BaseParam> {
 
     @Override
     public void handle(MethodContext context, Request request, BaseParam config) {

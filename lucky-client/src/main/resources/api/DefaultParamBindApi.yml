@@ -1,4 +1,4 @@
-io.github.lucklike.luckyclient.api.loosebind.DefaultParamBindApi:
+CommonT2:
   url: http://127.0.0.1/bind
   request-extension:
     - handle:
