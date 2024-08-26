@@ -4,12 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Main {
+public class ServerMain {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         int port = 8887; // 843 flash policy port
 
-        MySocketServer s = new MySocketServer(port);
+        MyWebSocketServer s = new MyWebSocketServer(port);
         s.start();
         System.out.println("ChatServer started on port: " + s.getPort());
 

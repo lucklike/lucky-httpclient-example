@@ -10,13 +10,13 @@ import java.net.UnknownHostException;
 /**
  * WebSocket工具： http://coolaf.com/tool/chattest
  */
-public class MySocketServer extends WebSocketServer {
+public class MyWebSocketServer extends WebSocketServer {
 
-    public MySocketServer(int port) throws UnknownHostException {
+    public MyWebSocketServer(int port) throws UnknownHostException {
         super(new InetSocketAddress(port));
     }
 
-    public MySocketServer(InetSocketAddress address) {
+    public MyWebSocketServer(InetSocketAddress address) {
         super(address);
     }
 
