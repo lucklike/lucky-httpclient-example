@@ -37,6 +37,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!--WebSocket-->
+        <dependency>
+            <groupId>org.java-websocket</groupId>
+            <artifactId>Java-WebSocket</artifactId>
+            <version>1.5.7</version>
+        </dependency>
+
         <dependency>
             <groupId>io.github.lucklike</groupId>
             <artifactId>lucky-httpclient-spring-boot-starter</artifactId>

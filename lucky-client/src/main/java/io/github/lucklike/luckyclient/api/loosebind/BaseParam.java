@@ -1,8 +1,12 @@
 package io.github.lucklike.luckyclient.api.loosebind;
 
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component
+@ConfigurationProperties(prefix = "cpe.service.common-t3")
 public class BaseParam {
 
     /**
