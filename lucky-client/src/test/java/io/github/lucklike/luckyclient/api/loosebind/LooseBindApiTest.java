@@ -1,5 +1,7 @@
 package io.github.lucklike.luckyclient.api.loosebind;
 
+import com.luckyframework.httpclient.core.meta.DefaultRequest;
+import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.proxy.annotations.BodyParam;
 import com.luckyframework.httpclient.proxy.annotations.DynamicParam;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
@@ -13,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @SpringBootTest(classes = LuckyClientApplication.class)
 class LooseBindApiTest {
@@ -46,9 +50,9 @@ class LooseBindApiTest {
         System.out.println(commonT3ServiceApi.test());
     }
 
-    public static void main(String[] args) {
-        LocalConfigHttpClient annotation = AnnotationUtils.getCombinationAnnotation(AI.class, LocalConfigHttpClient.class);
-        System.out.println(annotation);
+    public static void main(String[] args) throws URISyntaxException {
+        DefaultRequest request = Request.get("ws://localhost:88080/lucky");
+        System.out.println(new URI(request.getUrl()));
 
     }
 }

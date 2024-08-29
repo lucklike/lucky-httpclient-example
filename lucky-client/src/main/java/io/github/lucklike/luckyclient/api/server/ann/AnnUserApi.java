@@ -16,7 +16,6 @@ import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 @HttpClientComponent
 public interface AnnUserApi extends LuckyServerApi {
 
-    @RespConvert("#{$body$.data}")
     @Post("/user/post")
     User postUser(@JsonBody User user);
 

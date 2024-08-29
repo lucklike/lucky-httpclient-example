@@ -3,6 +3,7 @@ package io.github.lucklike.luckyclient.api.server.ann;
 import com.luckyframework.httpclient.core.meta.ClientCookie;
 import com.luckyframework.httpclient.core.meta.ContentType;
 import com.luckyframework.httpclient.proxy.annotations.Get;
+import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
 import com.luckyframework.io.MultipartFile;
