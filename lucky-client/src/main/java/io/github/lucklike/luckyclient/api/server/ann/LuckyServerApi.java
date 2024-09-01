@@ -39,7 +39,7 @@ public interface LuckyServerApi {
 
         // 是LuckyAPI
         if (url.startsWith(luckyServer)) {
-            if (Result.class.isAssignableFrom(type.getRawClass())) {
+            if (Result.class.isAssignableFrom(type.resolve())) {
                 return returnM;
             }
             return returnD;
