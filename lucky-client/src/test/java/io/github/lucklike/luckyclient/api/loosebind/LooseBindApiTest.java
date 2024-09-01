@@ -5,6 +5,7 @@ import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.proxy.annotations.BodyParam;
 import com.luckyframework.httpclient.proxy.annotations.DynamicParam;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
+import com.luckyframework.httpclient.proxy.configapi.ConfigApi;
 import com.luckyframework.reflect.AnnotationUtils;
 import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
 import io.github.lucklike.luckyclient.LuckyClientApplication;
@@ -12,7 +13,12 @@ import io.github.lucklike.luckyclient.api.baiduai.BaiduAI;
 import io.github.lucklike.luckyclient.api.util.AI;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.BindResult;
+import org.springframework.boot.context.properties.bind.Bindable;
+import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.ResolvableType;
+import org.springframework.core.env.Environment;
 
 import javax.annotation.Resource;
 import java.net.URI;
@@ -30,6 +36,9 @@ class LooseBindApiTest {
     @Resource
     private CommonT3ServiceApi commonT3ServiceApi;
 
+    @Resource
+    private Environment environment;
+
     @Test
     void book() {
         System.out.println(looseBindApi.book());
@@ -43,6 +52,15 @@ class LooseBindApiTest {
     @Test
     void queryTest() {
         System.out.println(commonT2ServiceApi.queryTest(new BaseParam(), new BaseParam()));
+    }
+
+    @Test
+    void springBinderTest() {
+        Binder binder = Binder.get(environment);
+        Bindable<ConfigApi> objectBindable = Bindable.of(ResolvableType.forType(ConfigApi.class));
+        BindResult<ConfigApi> bound = binder.bind("cpe.service.common-t2", objectBindable);
+        ConfigApi configApi = bound.get();
+        System.out.println(configApi);
     }
 
     @Test

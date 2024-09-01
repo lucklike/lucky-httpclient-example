@@ -11,14 +11,16 @@ import org.springframework.core.ResolvableType;
 
 import java.lang.reflect.Type;
 
+import static io.github.lucklike.luckyclient.api.server.ann.LuckyServerApi.DOMAIN_NAME_KEY;
+
 /**
  * @author fukang
  * @version 1.0.0
  * @date 2024/7/7 03:34
  */
-@DomainName("${lucky-server.http}")
+@DomainName(DOMAIN_NAME_KEY)
 @RespConvert(
-        result = "``#{$this$._result_($mc$, $url$)}``",
+        result = "``#{#_result_($mc$, $url$)}``",
         conditions = {
                 @Branch(assertion = "#{$status$ != 200}", exception = "【Lucky-Server-Api】接口调用异常，响应码: #{$status$}, URL: #{$url$}"),
                 @Branch(assertion = "#{$body$.code != 200}", exception = "【Lucky-Server-Api】接口调用异常，code: #{$body$.code}, message: #{$body$.message}, URL: #{$url$}")
@@ -26,8 +28,10 @@ import java.lang.reflect.Type;
 )
 public interface LuckyServerApi {
 
-    default String _result_(MethodContext context, String url) {
-        String luckyServer = context.parseExpression("${lucky-server.http}",String.class);
+    String DOMAIN_NAME_KEY = "${lucky-server.http}";
+
+    static String _result_(MethodContext context, String url) {
+        String luckyServer = context.parseExpression(DOMAIN_NAME_KEY, String.class);
         ResolvableType type = context.getReturnResolvableType();
 
         String returnM = "#{$resp$.getEntity($mc$.getRealMethodReturnType())}";
