@@ -4,9 +4,8 @@ import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.core.meta.Response;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
-import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
-import com.luckyframework.httpclient.proxy.mock.SseData;
+import com.luckyframework.httpclient.proxy.mock.SseMock;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 import io.github.lucklike.luckyclient.api.util.AI;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,28 +33,7 @@ public interface BaiduAI extends AI {
      *
      * @param content 提问内容
      */
-    @Mock(mockResp = "#{#questionsAndAnswersMock($mc$, $req$)}", cache = false)
     void questionsAndAnswers(String content);
-
-    static Response questionsAndAnswersMock(MethodContext context, Request request) throws IOException {
-        return MockResponse
-                .create()
-                .header("Content-Type", "text/event-stream; charset=utf-8")
-                .sse(SseData.create()
-                        .addSection(SseData.section()
-                                .comment("测试数据")
-                                .id("questionsAndAnswers")
-                                .event("SSE")
-                                .retry("5000")
-                                .data("{\"is_end\": false, \"result\": \"\"}"))
-                        .addData("{\"is_end\": false, \"result\": \"ARGS: " + context.getArguments()[0] + "\\n\"}")
-                        .addData("{\"is_end\": false, \"result\": \"URL: [" + request.getRequestMethod() + "] " + request.getUrl() + "\\n\"}")
-                        .addData("{\"is_end\": false, \"result\": \"你好呀\"}")
-                        .addData("{\"is_end\": false, \"result\": \",我是Mock出来的数据\"}")
-                        .addData("{\"is_end\": false, \"result\": \"。我用于为方法questionsAndAnswers提供测试数据!\"}")
-                        .addData("{\"is_end\": true, \"result\": \"! \"}")
-                );
-    }
 
     /**
      * Token管理器
@@ -94,6 +72,42 @@ public interface BaiduAI extends AI {
             return jsonFile;
         }
     }
+
+
+    //------------------------------------------------------------------------------------------------------------------
+    //                                              Mock-Methods
+    //------------------------------------------------------------------------------------------------------------------
+
+
+    /**
+     * {@link #questionsAndAnswers(String) questionsAndAnswers}响应结果的模拟方法
+     *
+     * @param context 方法上下文
+     * @param request 当前请求对象
+     * @return 模拟出来的响应
+     * @throws IOException 可能出现的异常
+     */
+    static Response questionsAndAnswersMock(MethodContext context, Request request) throws IOException {
+        return MockResponse
+                .create()
+                .header("Content-Type", "text/event-stream; charset=utf-8")
+                .sse(SseMock.create()
+                        .addSection(SseMock.section()
+                                .comment("测试数据")
+                                .id("questionsAndAnswers")
+                                .event("SSE")
+                                .retry("5000")
+                                .data("{\"is_end\": false, \"result\": \"\"}"))
+                        .addData("{\"is_end\": false, \"result\": \"ARGS: " + context.getArguments()[0] + "\\n\"}")
+                        .addData("{\"is_end\": false, \"result\": \"URL: [" + request.getRequestMethod() + "] " + request.getUrl() + "\\n\"}")
+                        .addData("{\"is_end\": false, \"result\": \"你好呀\"}")
+                        .addData("{\"is_end\": false, \"result\": \",我是Mock出来的数据\"}")
+                        .addData("{\"is_end\": false, \"result\": \"。我用于为方法questionsAndAnswers提供测试数据!\"}")
+                        .addData("{\"is_end\": true, \"result\": \"! \"}")
+                );
+    }
+
+
 }
 
 

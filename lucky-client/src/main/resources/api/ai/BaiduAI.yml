@@ -28,6 +28,10 @@ io.github.lucklike.luckyclient.api.baiduai.BaiduAI:
   #----------------------------------【百度智能云】-智能问答接口-------------------------------------------------------#
   questionsAndAnswers:
     sse: /rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k
+    mock:
+      enable: true
+      cache: false
+      response: "#{#questionsAndAnswersMock($mc$, $req$)}"
     query:
       access_token: "#{@baiduAITokenManager.getAccessToken()}"
     sse-listener:

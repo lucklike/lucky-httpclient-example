@@ -8,6 +8,10 @@ io.github.lucklike.luckyclient.api.server.configapi.UserApi:
   postUser:
     url: post
     method: POST
+    header:
+      H1: [1234, 5678]
+      H2: 1dwewfw
+      "[SET]H1": 4534
     body:
       json: "#{#json(p0)}"
     resp-convert:

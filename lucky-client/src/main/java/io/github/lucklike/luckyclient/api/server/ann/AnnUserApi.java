@@ -4,6 +4,7 @@ import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
+import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
@@ -16,6 +17,7 @@ import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 @HttpClientComponent
 public interface AnnUserApi extends LuckyServerApi {
 
+    @StaticHeader({"H1: 123", "H1: 345"})
     @Post("/user/post")
     User postUser(@JsonBody User user);
 
