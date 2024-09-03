@@ -1,8 +1,8 @@
 package io.github.lucklike.luckyclient.api.simple;
 
-import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
+import io.github.lucklike.httpclient.configapi.ResourceHttpClient;
 
-@LocalConfigHttpClient
+@ResourceHttpClient
 public interface BilibiliApi {
 
     String index(String test);

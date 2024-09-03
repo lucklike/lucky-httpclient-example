@@ -3,6 +3,7 @@ package io.github.lucklike.luckyclient.api.server;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.luckyclient.api.server.configapi.UserApi;
+import io.github.lucklike.luckyclient.api.server.configapi.net.NetUserApi;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -40,5 +41,21 @@ public class UserApiTest {
 
         User postUser = api.postUser(user.getData());
         System.out.println(postUser);
+    }
+
+    @Resource
+    private NetUserApi netUserApi;
+
+    @Test
+    void netPostUserTest() {
+        User user = new User();
+        user.setId(1);
+        user.setName("Lucky的猫");
+        user.setPassword("P-A-$-$-W-0-R-D");
+        user.setPhone("13456789925");
+        user.setEmail("13456789925@qq.com");
+        User userResult = netUserApi.postUser(user);
+
+        System.out.println(userResult);
     }
 }

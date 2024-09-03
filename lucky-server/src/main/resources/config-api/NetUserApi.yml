@@ -1,0 +1,25 @@
+NetUserApi:
+  url: ${lucky-server.http}/user
+  resp-convert:
+    condition:
+      - assertion: "#{$status$ != 200}"
+        exception: "API调用失败，状态码：#{$status$}"
+
+  postUser:
+    url: post
+    method: POST
+    header:
+      H1: [1234, 5678]
+      H2: 1dwewfw
+      "[SET]H1": 4534
+    body:
+      json: "#{#json(p0)}"
+    resp-convert:
+      result: "#{$body$.data}"
+      condition:
+        - assertion: "#{$body$.code!= 200}"
+          exception: "API调用失败，code: #{$body$.code}, message: #{$body$.message}"
+
+  getUser:
+    url: get
+    method: GET

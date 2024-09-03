@@ -1,7 +1,7 @@
 package io.github.lucklike.luckyclient.api.kuaitong;
 
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
-import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
+import io.github.lucklike.httpclient.configapi.ResourceHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ import java.io.File;
 /**
  * 快瞳API
  */
-@LocalConfigHttpClient
+@ResourceHttpClient
 public interface KuaiTongApi {
 
     /**

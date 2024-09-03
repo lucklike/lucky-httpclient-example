@@ -1,10 +1,10 @@
 package io.github.lucklike.luckyclient.api.spark;
 
-import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
+import io.github.lucklike.httpclient.configapi.ResourceHttpClient;
 
 import java.util.Map;
 
-@LocalConfigHttpClient
+@ResourceHttpClient
 public interface SparkOpenApi {
 
     /**

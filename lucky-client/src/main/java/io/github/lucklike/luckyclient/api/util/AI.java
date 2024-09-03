@@ -1,7 +1,7 @@
 package io.github.lucklike.luckyclient.api.util;
 
-import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
+import io.github.lucklike.httpclient.configapi.ResourceHttpClient;
 
-@LocalConfigHttpClient("classpath:api/ai/#{$class$.getSimpleName()}.yml")
+@ResourceHttpClient("classpath:api/ai/#{$class$.getSimpleName()}.yml")
 public interface AI {
 }

@@ -2,17 +2,9 @@ package io.github.lucklike.luckyclient.api.loosebind;
 
 import com.luckyframework.httpclient.core.meta.DefaultRequest;
 import com.luckyframework.httpclient.core.meta.Request;
-import com.luckyframework.httpclient.proxy.annotations.BodyParam;
-import com.luckyframework.httpclient.proxy.annotations.DynamicParam;
-import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.configapi.ConfigApi;
-import com.luckyframework.reflect.AnnotationUtils;
-import io.github.lucklike.httpclient.configapi.LocalConfigHttpClient;
 import io.github.lucklike.luckyclient.LuckyClientApplication;
-import io.github.lucklike.luckyclient.api.baiduai.BaiduAI;
-import io.github.lucklike.luckyclient.api.util.AI;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;

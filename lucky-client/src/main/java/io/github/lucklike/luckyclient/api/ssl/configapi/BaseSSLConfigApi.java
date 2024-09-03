@@ -1,7 +1,7 @@
 package io.github.lucklike.luckyclient.api.ssl.configapi;
 
-import com.luckyframework.httpclient.proxy.configapi.EnableLocalConfigParser;
+import io.github.lucklike.httpclient.configapi.ResourceHttpClient;
 
-@EnableLocalConfigParser(source = "classpath:/api/ssl/#{$class$.getSimpleName()}.yml")
+@ResourceHttpClient("classpath:/api/ssl/#{$class$.getSimpleName()}.yml")
 public interface BaseSSLConfigApi {
 }
