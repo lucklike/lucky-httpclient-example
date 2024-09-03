@@ -1,9 +1,7 @@
 package io.github.lucklike.luckyclient.api.mock;
 
 import com.luckyframework.httpclient.proxy.annotations.Get;
-import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
-import io.github.lucklike.httpclient.annotation.HttpClient;
 import io.github.lucklike.httpclient.configapi.ResourceHttpClient;
 
 /**
@@ -11,10 +9,9 @@ import io.github.lucklike.httpclient.configapi.ResourceHttpClient;
  * @version 1.0.0
  * @date 2024/8/17 05:25
  */
-@HttpClient
+@ResourceHttpClient
 public interface MockApi {
 
-    @Mock("#{#baiduMock()}")
     @Get("http://www.baidu.com")
     String baidu();
 
