@@ -5,9 +5,11 @@ io.github.lucklike.luckyclient.api.baiduai.BaiduAI:
       api_key: ${baidu.API.APIKey}
       secret_key: ${baidu.API.SecretKey}
   logger:
-    enable: false
+    enable: true
   url: https://aip.baidubce.com
   method: POST
+  query:
+    access_token: "@if(#{$method$.getName() != 'getToken'}): #{@baiduAITokenManager.getAccessToken()}"
   header:
     Content-Type: application/json
   resp-convert:
@@ -32,8 +34,6 @@ io.github.lucklike.luckyclient.api.baiduai.BaiduAI:
       enable: true
       cache: false
       response: "#{#questionsAndAnswersMock($mc$, $req$)}"
-    query:
-      access_token: "#{@baiduAITokenManager.getAccessToken()}"
     sse-listener:
       class-name: io.github.lucklike.luckyclient.api.baiduai.BaiduAIEventListener
     body:

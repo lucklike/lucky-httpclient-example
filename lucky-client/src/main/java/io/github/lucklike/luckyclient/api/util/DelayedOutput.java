@@ -19,25 +19,27 @@ public class DelayedOutput {
         outputLength.remove();
     }
 
-    public static void output(String output)  {
-        int l = 70;
-        int sleep = 20;
+    public static void output(String output) {
+        output(output, 70, 20);
+    }
+
+    public static void output(String output, int maxLength, int delayTime)  {
         int length = output.length();
         int outputLength = getOutputLength();
-        int rem = outputLength % l;
+        int rem = outputLength % maxLength;
         setOutputLength(outputLength + output.length());
 
-        int j = l - rem;
+        int j = maxLength - rem;
         while (j <= length) {
             output = output.substring(0, j) + "\n" + output.substring(j);
             length++;
-            j += l;
+            j += maxLength;
         }
 
         for (char c : output.toCharArray()) {
             Console.printMulberry(c);
             try {
-                Thread.sleep(sleep);
+                Thread.sleep(delayTime);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
