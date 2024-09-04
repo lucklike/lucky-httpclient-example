@@ -19,7 +19,7 @@ public abstract class AbstractClassApi {
     private String luckyServerUrl;
 
     @Get("http://www.baidu.com")
-    public abstract String baidu();
+    abstract String baidu();
 
     public Map<String, Object> meagerResult() {
         Map<String, Object> result = new HashMap<>();
