@@ -1,5 +1,6 @@
 package io.github.lucklike.entity.request;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  * @date 2024/7/9 01:39
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
 
     private Integer id;

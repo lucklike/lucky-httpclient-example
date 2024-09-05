@@ -1,11 +1,8 @@
 # 百度智能云API
 io.github.lucklike.luckyclient.api.baiduai.BaiduAI:
-  spring-el-import:
-    root:
-      api_key: ${baidu.API.APIKey}
-      secret_key: ${baidu.API.SecretKey}
   logger:
-    enable: true
+    enable: false
+    enable-req-log: false
   url: https://aip.baidubce.com
   method: POST
   query:
@@ -24,14 +21,14 @@ io.github.lucklike.luckyclient.api.baiduai.BaiduAI:
     url: /oauth/2.0/token
     query:
       grant_type: client_credentials
-      client_id: "#{api_key}"
-      client_secret: "#{secret_key}"
+      client_id: ${baidu.API.APIKey}
+      client_secret: ${baidu.API.SecretKey}
 
   #----------------------------------【百度智能云】-智能问答接口-------------------------------------------------------#
   questionsAndAnswers:
     sse: /rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k
     mock:
-      enable: true
+      enable: false
       cache: false
       response: "#{#questionsAndAnswersMock($mc$, $req$)}"
     sse-listener:

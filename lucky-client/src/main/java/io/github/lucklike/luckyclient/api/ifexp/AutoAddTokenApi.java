@@ -3,7 +3,6 @@ package io.github.lucklike.luckyclient.api.ifexp;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import com.luckyframework.httpclient.proxy.annotations.PrintRequestLog;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.mock.Mock;
 import io.github.lucklike.entity.request.User;

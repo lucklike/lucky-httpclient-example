@@ -14,7 +14,7 @@ lucky:
       packages:
         - io.github.lucklike.luckyclient.api
       body-max-length: 1024
-      enable-resp-log: false
+
     cookie-manage:
       enable: true
 
