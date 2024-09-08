@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.roll;
 
-import com.luckyframework.httpclient.proxy.annotations.Branch;
+import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
@@ -13,11 +13,8 @@ import java.util.Map;
  * 油价查询API
  */
 @HttpClient
-@RespConvert(
-    conditions = {
-            @Branch(assertion = "#{$status$ != 200}", exception = "【ROLL】油价查询接口调用异常，响应码：'#{$status$}'"),
-            @Branch(assertion = "#{$body$.code != 1}", exception = "【ROLL】油价查询接口调用异常，状态码：'#{$body$.code}', 错误信息：#{$body$.msg}")
-    })
+@Condition(assertion = "#{$status$ != 200}", exception = "【ROLL】油价查询接口调用异常，响应码：'#{$status$}'")
+@Condition(assertion = "#{$body$.code != 1}", exception = "【ROLL】油价查询接口调用异常，状态码：'#{$body$.code}', 错误信息：#{$body$.msg}")
 @StaticQuery({"app_id=${ROLL.AppID}", "app_secret=${ROLL.AppSecret}"})
 public interface OilPriceApi {
 

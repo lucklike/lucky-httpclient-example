@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.spark;
 
-import com.luckyframework.httpclient.proxy.annotations.Branch;
+import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.ObjectGenerate;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
@@ -11,7 +11,6 @@ import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import com.luckyframework.httpclient.proxy.sse.Sse;
 import io.github.lucklike.httpclient.annotation.HttpClient;
-import kotlin.jvm.Throws;
 
 import java.util.Map;
 
@@ -58,16 +57,10 @@ public interface AnnSparkOpenApi {
         "X-Param: #{base64Param}",
         "X-CheckSum: #{#md5(APIKey + currTime + base64Param)}"
     })
-    @StaticForm({
-            "image=#{#base64(#resource(path))}"
-    })
-    @RespConvert(
-        result = "#{$body$.data}",
-        conditions = {
-            @Branch(assertion = "#{$status$ != 200}", exception = "讯飞火星API调用失败，异常的HTTP状态码[#{$status$}]: #{$body$.header.message}"),
-            @Branch(assertion = "#{$body$.code != '0'}", exception = "【身份证识别】讯飞火星API调用失败，异常的CODE状态码：[#{$body$.code}]: #{$body$.error_msg}")
-        }
-    )
+    @StaticForm({ "image=#{#base64(#resource(path))}"})
+    @Condition(assertion = "#{$status$ != 200}", exception = "讯飞火星API调用失败，异常的HTTP状态码[#{$status$}]: #{$body$.header.message}")
+    @Condition(assertion = "#{$body$.code != '0'}", exception = "【身份证识别】讯飞火星API调用失败，异常的CODE状态码：[#{$body$.code}]: #{$body$.error_msg}")
+    @RespConvert( "#{$body$.data}")
     @Post("https://webapi.xfyun.cn/v1/service/v1/ocr/idcard")
     Map<String, Object> idCardOcr(String path);
 
@@ -91,13 +84,9 @@ public interface AnnSparkOpenApi {
         "payload.message.text[0].role=user",
         "payload.message.text[0].content=#{content}"
     })
-    @RespConvert(
-        result = "#{$body$.payload.choices.text[0].content}",
-        conditions = {
-            @Branch(assertion = "#{$status$ != 200}", exception = "讯飞火星API调用失败，异常的HTTP状态码[#{$status$}]: #{$body$.header.message}"),
-            @Branch(assertion = "#{$body$.header.code != 0}", exception = "【图片生成】讯飞火星API调用失败，异常的CODE状态码：[#{$body$.header.code}]: #{$body$.header.message}")
-        }
-    )
+    @Condition(assertion = "#{$status$ != 200}", exception = "讯飞火星API调用失败，异常的HTTP状态码[#{$status$}]: #{$body$.header.message}")
+    @Condition(assertion = "#{$body$.header.code != 0}", exception = "【图片生成】讯飞火星API调用失败，异常的CODE状态码：[#{$body$.header.code}]: #{$body$.header.message}")
+    @RespConvert( "#{$body$.payload.choices.text[0].content}")
     @Post("#{#getAuthUrl(url, APIKey, APISecret)}")
     String imageGenerate(String content);
 
