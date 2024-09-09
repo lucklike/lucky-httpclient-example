@@ -1,7 +1,6 @@
 package io.github.lucklike.luckyclient.api.abstractapi;
 
 import com.luckyframework.httpclient.proxy.annotations.Get;
-import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 import io.github.lucklike.luckyclient.api.roll.OilPriceApi;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,8 +19,6 @@ public abstract class AbstractClassApi {
     @Value("${lucky-server.http}")
     private String luckyServerUrl;
 
-    @StaticHeader(condition = "1==2", value = {"X-H1: h1", "X-H3: h3"})
-    @StaticHeader({"X-H2: h2", "@if(1==1): X-H4: h4"})
     @Get("http://www.baidu.com")
     abstract String baidu();
 

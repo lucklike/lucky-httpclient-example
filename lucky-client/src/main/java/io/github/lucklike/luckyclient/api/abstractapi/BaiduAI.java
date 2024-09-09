@@ -3,8 +3,10 @@ package io.github.lucklike.luckyclient.api.abstractapi;
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.Console;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
+import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
+import com.luckyframework.httpclient.proxy.annotations.PrintResponseLog;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.StaticQuery;
@@ -26,6 +28,9 @@ import java.util.Scanner;
  */
 @PrintLogProhibition
 @HttpClient(name = "BAI-DU-AI", value = "https://aip.baidubce.com")
+@Condition(assertion = "#{!($body$ instanceof T(String))}", exception = "【百度千帆API】接口调用失败！错误码：['#{$body$.error_code}'], 错误信息：#{$body$.error_msg}")
+@Condition(assertion = "#{$status$ == 401 and $body$.error != null}", exception = "【百度千帆API】接口调用失败！错误码：['#{$body$.error}'], 错误信息：#{$body$.error_description}")
+@Condition(assertion = "#{$status$ != 200}", exception = "【百度千帆API】接口调用失败！异常的响应码：['#{$status$}'], url: #{$url$}")
 @StaticHeader("Content-Type: application/json")
 @StaticQuery("@if(#{$method$.getName() != 'token'}): access_token=#{$this$.getAccessToken()}")
 public abstract class BaiduAI extends JsonFileTokenManager<Token> implements EventListener {

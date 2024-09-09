@@ -1,6 +1,8 @@
 package io.github.lucklike.luckyclient.api.abstractapi;
 
 import com.luckyframework.reflect.AnnotationUtils;
+import com.luckyframework.reflect.ClassUtils;
+import com.luckyframework.reflect.MethodUtils;
 import io.github.lucklike.luckyclient.api.baiduai.BaiduAI;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.Resource;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,9 +29,10 @@ class AbstractClassApiTest {
     }
 
     public static void main(String[] args) {
-        for (Annotation annotation : AbstractClassApi.class.getAnnotations()) {
-            boolean repeatableAnnotation = AnnotationUtils.isRepeatableAnnotation(annotation);
-            System.out.println(repeatableAnnotation);
+        Method method = MethodUtils.getDeclaredMethod(AbstractClassApi.class, "baidu");
+        List<Annotation> combinationAnnotations = AnnotationUtils.getCombinationAnnotations(method);
+        for (Annotation combinationAnnotation : combinationAnnotations) {
+            System.out.println(combinationAnnotation);
         }
     }
 }
