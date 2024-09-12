@@ -4,6 +4,7 @@ import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
+import com.luckyframework.httpclient.proxy.annotations.Retryable;
 import com.luckyframework.httpclient.proxy.annotations.StaticQuery;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 
@@ -19,6 +20,7 @@ import java.util.Map;
 public interface OilPriceApi {
 
 
+    @Retryable(retryCount = 10, waitMillis = 2000L)
     @RespConvert("#{$body$.data}")
     @Get("https://www.mxnzp.com/api/oil/search")
     Map<String, Object> query(@QueryParam String province);

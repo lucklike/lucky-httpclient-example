@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
-import io.github.lucklike.httpclient.annotation.HttpClientComponent;
+import io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi;
 import io.github.lucklike.luckyclient.api.cairh.annotations.NonToken;
 import lombok.Data;
 
@@ -12,10 +12,10 @@ import java.io.File;
 import java.util.Date;
 
 
-@HttpClientComponent
-public abstract class TokenApi extends JsonFileTokenManager<Token> implements BaseApi {
+@CRHApi
+@NonToken
+public abstract class TokenApi extends JsonFileTokenManager<Token> {
 
-    @NonToken
     @PropertiesJsonObject({
             "secret_key=${cairh.openapi.secretKey}",
             "app_id=${cairh.openapi.appId}"
