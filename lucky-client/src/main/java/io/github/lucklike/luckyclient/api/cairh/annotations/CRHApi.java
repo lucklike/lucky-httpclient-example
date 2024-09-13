@@ -16,6 +16,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static io.github.lucklike.luckyclient.api.cairh.annotations.BaseApi.URL_CONFIG;
+
 /**
  * 注解集成方式
  */
@@ -29,11 +31,8 @@ import java.lang.annotation.Target;
 @Condition(assertion = "#{$body$.error.error_no != '0'}", exception = "【财人汇】开放接口访问失败！接口响应码：#{$body$.error.error_no}, 错误信息：#{$body$.error.error_info}，接口地址： #{$url$}")
 @StaticHeader("@if(#{#token($mc$)}): Authorization: #{@tokenApi.getAccessToken()}")
 @SpELImport(fun = CairhCommonFunction.class)
-@HttpClient
+@HttpClient(URL_CONFIG)
 public @interface CRHApi {
-
-    @AliasFor(annotation = HttpClient.class, attribute = "value")
-    String value() default "${cairh.openapi.url}";
 
     @AliasFor(annotation = HttpClient.class, attribute = "name")
     String name() default "";

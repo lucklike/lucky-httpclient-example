@@ -1,13 +1,19 @@
 package io.github.lucklike.luckyclient.api.cairh;
 
 import com.luckyframework.common.StopWatch;
+import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
+import com.luckyframework.httpclient.proxy.annotations.StaticParam;
+import com.luckyframework.reflect.AnnotationUtils;
 import io.github.lucklike.luckyclient.api.cairh.request.JournalRequest;
 import io.github.lucklike.luckyclient.api.cairh.response.QueryOperatorInfoResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.annotation.MergedAnnotation;
+import org.springframework.core.annotation.MergedAnnotations;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 @SpringBootTest
@@ -61,5 +67,13 @@ class CairhApiTest {
         System.out.println(queryExamDetail);
         sw.stopWatch();
         System.out.println(sw.prettyPrintFormat());
+    }
+
+    public static void main(String[] args) {
+        List<StaticParam> list1 = AnnotationUtils.getNestCombinationAnnotations(CairhApi.class, StaticParam.class, false);
+        List<StaticParam> list2 = AnnotationUtils.getNestCombinationAnnotations(CairhApi.class, StaticParam.class, true);
+
+        System.out.println(list1);
+        System.out.println(list2);
     }
 }

@@ -80,7 +80,7 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
         ConfigurationMap confMap = message.jsonDataToMap();
         if (!confMap.getBoolean("is_end")) {
             String result = confMap.getString("result");
-            DelayedOutput.output(result);
+            DelayedOutput.output(result, 80, 50);
         } else {
             Console.printlnMulberry("\n");
             DelayedOutput.clearOutputLength();
