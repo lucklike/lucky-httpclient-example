@@ -2,6 +2,8 @@ package io.github.lucklike.luckyclient.api.cairh.annotations;
 
 import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.DomainName;
+import com.luckyframework.httpclient.proxy.annotations.InterceptorRegister;
+import com.luckyframework.httpclient.proxy.annotations.ObjectGenerate;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.SSL;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
@@ -18,6 +20,7 @@ import io.github.lucklike.luckyclient.api.cairh.function.CairhCommonFunction;
 @StaticHeader("@if(#{#token($mc$)}): Authorization: #{@tokenApi.getAccessToken()}")
 @DomainName(BaseApi.URL_CONFIG)
 @SpELImport(fun = CairhCommonFunction.class)
+@InterceptorRegister(intercept = @ObjectGenerate(CairhInterceptor.class), priority = Integer.MIN_VALUE)
 public interface BaseApi {
 
 
