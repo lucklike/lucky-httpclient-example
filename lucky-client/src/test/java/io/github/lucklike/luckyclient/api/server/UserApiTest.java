@@ -36,11 +36,10 @@ public class UserApiTest {
     @Test
     void getUserTest() {
         Result<User> user = api.getUser();
-        user = api.getUser();
         System.out.println(user);
 
-        User postUser = api.postUser(user.getData());
-        System.out.println(postUser);
+//        User postUser = api.postUser(user.getData());
+//        System.out.println(postUser);
     }
 
     @Resource

@@ -23,3 +23,11 @@ io.github.lucklike.luckyclient.api.server.configapi.UserApi:
   getUser:
     url: get
     method: GET
+    mock:
+      enable: true
+    condition-query:
+      condition: 1==1
+      data:
+        q1: qq_11
+        q2: "@if(1==2): qqq_22"
+
