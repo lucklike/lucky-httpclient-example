@@ -41,10 +41,10 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
     private int outputDelayTime = 50;
 
     {
-        tokenFile = CONFIG_MAP.getEntry("BAIDU.API.TOKEN-FILE", File.class);
+        tokenFile = CONFIG_MAP.getEntry("BAIDU.API.TOKEN_FILE", File.class);
 
-        String maxLength = CONFIG_MAP.getStringOrDefault("BAIDU.OUT-PUT.MAX-LENGTH", "");
-        String delayTime = CONFIG_MAP.getStringOrDefault("BAIDU.OUT-PUT.DELAY-TIME", "");
+        String maxLength = CONFIG_MAP.getStringOrDefault("BAIDU.OUT_PUT.MAX_LENGTH", "");
+        String delayTime = CONFIG_MAP.getStringOrDefault("BAIDU.OUT_PUT.DELAY_TIME", "");
 
         if (StringUtils.hasText(maxLength)) {
             outputMaxLength = Integer.parseInt(maxLength);
@@ -89,8 +89,8 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
 
     @StaticQuery({
             "grant_type=client_credentials",
-            "client_id=``#{BAIDU.API.API-KEY}``",
-            "client_secret=``#{BAIDU.API.SECRET-KEY}``"
+            "client_id=``#{BAIDU.API.API_KEY}``",
+            "client_secret=``#{BAIDU.API.SECRET_KEY}``"
     })
     @Post("/oauth/2.0/token")
     abstract Token token();
