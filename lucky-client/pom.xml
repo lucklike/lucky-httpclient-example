@@ -97,8 +97,8 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>io.github.lucklike.luckyclient.LuckyClientApplication</mainClass>
-                    <skip>true</skip>
+                    <mainClass>io.github.lucklike.luckyclient.api.mainfun.BaiduAIMain</mainClass>
+<!--                    <skip>true</skip>-->
                 </configuration>
                 <executions>
                     <execution>
