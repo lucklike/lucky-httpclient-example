@@ -59,8 +59,8 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
         Table table = new Table();
         table.styleSeven();
         table.addHeader("CONF-KEY", "CONF-VALUE");
-        table.addDataRow("Config File", System.getProperty("baidu.ai.config.file"));
-        table.addDataRow("Token File", tokenFile.getAbsolutePath());
+        table.addDataRow("Config File", CONFIG_MAP.getString("BAIDU.API.CONFIG.FILE"));
+        table.addDataRow("Token File", CONFIG_MAP.getString("BAIDU.API.TOKEN-FILE"));
         table.addDataRow("Output Max Length", outputMaxLength);
         table.addDataRow("Output Delay Time", outputDelayTime);
         Console.printlnGreen(table.format());

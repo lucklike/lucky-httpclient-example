@@ -9,10 +9,11 @@ public class BaiduAIMain {
 
    public static final ConfigurationMap CONFIG_MAP;
 
-    static {
-        CONFIG_MAP = Resources.yamlResourceAsConfigMap(System.getProperty("baidu.ai.config.file"));
-    }
-
+   static {
+       String configFilePath = System.getProperty("baidu.ai.config.file");
+       CONFIG_MAP = Resources.yamlResourceAsConfigMap(configFilePath);
+       CONFIG_MAP.addProperty("BAIDU.API.CONFIG.FILE", configFilePath);
+   }
 
     public static void main(String[] args) {
         getAI().questionsAndAnswersTest();
