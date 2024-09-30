@@ -2,8 +2,10 @@ package io.github.lucklike.luckyclient.api;
 
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.Resources;
+import com.luckyframework.httpclient.proxy.CommonFunctions;
 import lombok.Data;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,8 @@ public class Main {
 
         C[][] cc = configMap.looseBind("b-map.b2.c-list", C[][].class);
         System.out.println(Arrays.deepToString(cc));
+
+        System.out.println(CommonFunctions.base64(new File("D:\\test.pdf")));
     }
 
     @Data

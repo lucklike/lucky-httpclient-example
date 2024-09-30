@@ -41,10 +41,8 @@ class CairhApiTest {
         sw.start("queryJournal");
         JournalRequest req = new JournalRequest();
         req.setCurrent(1);
-        req.setSize(600);
-        req.setTable_name("syspropertyconfigjour");
-        req.setStart_time("2024-06-13 00:00:00");
-        req.setEnd_time("2024-09-12 23:59:59");
+        req.setSize(10);
+        req.setTable_name("allbranchjour");
         Map<String, Object> diffMap = cairhApi.queryJournal(req);
         System.out.println(diffMap);
         sw.stopWatch();

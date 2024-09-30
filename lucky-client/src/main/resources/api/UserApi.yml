@@ -26,6 +26,10 @@ io.github.lucklike.luckyclient.api.server.configapi.UserApi:
     mock:
       enable: true
 
+    request-extension:
+      handle:
+        bean-name: myUserRequestExtendHandle
+
     # 条件请求头
     condition-header:
         # 条件表达式

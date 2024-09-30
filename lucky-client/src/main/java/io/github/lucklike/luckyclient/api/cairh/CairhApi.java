@@ -6,6 +6,7 @@ import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
+import com.luckyframework.httpclient.proxy.annotations.Timeout;
 import io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi;
 import io.github.lucklike.luckyclient.api.cairh.annotations.LooseBind;
 import io.github.lucklike.luckyclient.api.cairh.request.JournalRequest;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.util.Map;
 
 @CRHApi
+@Timeout(readTimeout = 60000)
 public interface CairhApi {
 
     @LooseBind
@@ -26,7 +28,7 @@ public interface CairhApi {
     @Post("/openapi/common/queryProduct")
     Map<String, Object> queryProduct(String productNo);
 
-    @Post("/basedata/common-base/journal/queryByPage")
+    @Post("/basedata/journal/queryByPage")
     Map<String, Object> queryJournal(@JsonBody JournalRequest request);
 
     @DownloadToLocal(saveDir = "D:/test/", filename = "黑名单")

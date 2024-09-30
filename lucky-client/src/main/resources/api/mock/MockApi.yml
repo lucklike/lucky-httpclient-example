@@ -4,10 +4,23 @@ io.github.lucklike.luckyclient.api.mock.MockApi:
   baidu:
     url: http://www.baidu.com
     method: GET
+    query:
+      keyword: "#{keyWord}"
 
     # Mock功能相关配置
     mock:
       enable: true
+      status: 200
+      header:
+        Server: BWS/1.1
+        X-Xss-Protection: 1;mode=block
+        Content-Type: text/html; charset=utf-8
+        X-USER-LIST:
+            - USER-JACK
+            - USER-TOM
+            - USER-KARL
+        X-API: "#{$method$.toString()}"
+      body: "百度一下，你就知道！#{$mc$.getSignature()}"
 
     #请求扩展处理器
     request-extension:

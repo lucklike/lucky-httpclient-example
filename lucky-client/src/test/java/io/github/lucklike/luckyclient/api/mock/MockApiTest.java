@@ -20,7 +20,7 @@ class MockApiTest {
 
     @Test
     void baidu() {
-        mockApi.baidu();
+        mockApi.baidu("Can You Feel My World");
         mockApi.getBaidu();
         System.out.println(mockApi.getApiKey());
 //        System.out.println();

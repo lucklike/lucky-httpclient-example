@@ -12,8 +12,8 @@ import java.io.File;
 import java.util.Date;
 
 
-@CRHApi
 @NonToken
+@CRHApi(name = "tokenApi")
 public abstract class TokenApi extends JsonFileTokenManager<Token> {
 
     @PropertiesJsonObject({
