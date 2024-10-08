@@ -3,10 +3,8 @@ package io.github.lucklike.luckyclient.api.abstractapi;
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.Console;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
-import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
-import com.luckyframework.httpclient.proxy.annotations.PrintResponseLog;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.StaticQuery;
@@ -97,7 +95,7 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
 
     @Override
     protected File getJsonFile() {
-        return new File(System.getProperty("user.dir") + File.separator + "baidu_token.json");
+        return new File(System.getProperty("user.dir"),"baidu_token.json");
     }
 
     @Override
