@@ -1,5 +1,7 @@
 package io.github.lucklike.luckyclient.api.inject;
 
+import com.luckyframework.httpclient.generalapi.RangeDownloadApi;
+import io.github.lucklike.httpclient.annotation.HttpReference;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,8 +15,16 @@ class FileServiceTest {
     @Resource
     private FileService fileService;
 
+    @HttpReference
+    private RangeDownloadApi rangeDownloadApi;
+
     @Test
     void downloadFile() {
-        fileService.downloadFile("http://www.baidu.com", "D:/test");
+        fileService.downloadFile("https://www.bilibili.com", "D:/test");
+    }
+
+    @Test
+    void rangeDownloadApiTest() {
+        rangeDownloadApi.download("http://www.baidu.com", "D:/test", "baidu.htm");
     }
 }

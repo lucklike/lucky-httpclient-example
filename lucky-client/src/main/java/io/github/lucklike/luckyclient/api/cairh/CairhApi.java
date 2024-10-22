@@ -4,15 +4,20 @@ import com.luckyframework.httpclient.proxy.annotations.DownloadToLocal;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
+import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
 import com.luckyframework.httpclient.proxy.annotations.Timeout;
 import io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi;
 import io.github.lucklike.luckyclient.api.cairh.annotations.LooseBind;
 import io.github.lucklike.luckyclient.api.cairh.request.JournalRequest;
+import io.github.lucklike.luckyclient.api.cairh.request.RareWordRequest;
+import io.github.lucklike.luckyclient.api.cairh.response.PageResponse;
 import io.github.lucklike.luckyclient.api.cairh.response.QueryOperatorInfoResponse;
+import io.github.lucklike.luckyclient.api.cairh.response.RareWordResponse;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 @CRHApi
@@ -37,5 +42,12 @@ public interface CairhApi {
 
     @Get("/comp/exampaper/queryExamDetail")
     Map<String, Object> queryExamDetail(@QueryParam("exampaper_id") String id);
+
+    @PrintLogProhibition
+    @Post("http://127.0.0.1:30030/basedata/rareword/queryByPage")
+    PageResponse<RareWordResponse> rareWordQuery(@JsonBody RareWordRequest request);
+
+    @Post("/basedata/rareword/queryAll")
+    List<RareWordResponse> queryAllRareWord();
 
 }

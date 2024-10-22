@@ -43,7 +43,7 @@ public class SparkOpenApiTest {
 
     @Test
     void imageGenerateTest() throws IOException {
-        String content = "黑洞，一个宇宙中最大的天体，吞噬着周围的物质";
+        String content = "天空大海和她";
         String imageBase64 = sparkOpenApi.imageGenerate(content);
         String fileName = content + "_" +NanoIdUtils.randomNanoId(3) + ".jpg";
         File file = new File("D:/test/" + fileName);
