@@ -1,6 +1,7 @@
 package io.github.lucklike.luckyclient.api.cairh;
 
 import com.luckyframework.httpclient.proxy.annotations.DownloadToLocal;
+import com.luckyframework.httpclient.proxy.annotations.ExceptionReturn;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
@@ -44,7 +45,7 @@ public interface CairhApi {
     Map<String, Object> queryExamDetail(@QueryParam("exampaper_id") String id);
 
     @PrintLogProhibition
-    @Post("http://127.0.0.1:30030/basedata/rareword/queryByPage")
+    @Post("basedata/rareword/queryByPage")
     PageResponse<RareWordResponse> rareWordQuery(@JsonBody RareWordRequest request);
 
     @Post("/basedata/rareword/queryAll")

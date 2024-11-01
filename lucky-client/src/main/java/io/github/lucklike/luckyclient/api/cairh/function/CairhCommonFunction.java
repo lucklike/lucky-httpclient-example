@@ -17,7 +17,7 @@ public class CairhCommonFunction {
      * @param mc 当前方法上下文
      * @return 方法是否需要携带Token信息
      */
-    public static boolean token(MethodContext mc) {
+    public static boolean needToken(MethodContext mc) {
         NonToken nonTokenAnn = mc.getSameAnnotationCombined(NonToken.class);
         return nonTokenAnn == null || !nonTokenAnn.value();
     }

@@ -4,6 +4,7 @@ import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.MutableMap;
 import com.luckyframework.common.StopWatch;
 import com.luckyframework.common.StringUtils;
+import io.github.lucklike.luckyclient.api.cairh.mall.MallApi;
 import io.github.lucklike.luckyclient.api.cairh.request.JournalRequest;
 import io.github.lucklike.luckyclient.api.cairh.request.RareWordRequest;
 import io.github.lucklike.luckyclient.api.cairh.response.PageResponse;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -72,6 +74,7 @@ class CairhApiTest {
         StopWatch sw = new StopWatch();
         sw.start("queryExamDetail");
         Map<String, Object> queryExamDetail = cairhApi.queryExamDetail("202407081649230130135");
+        Map<String, Object> queryExamDetail2 = cairhApi.queryExamDetail("202407081649230130135");
         System.out.println(queryExamDetail);
         sw.stopWatch();
         System.out.println(sw.prettyPrintFormat());
@@ -80,7 +83,7 @@ class CairhApiTest {
     @Test
     void rareWordQueryTest() {
         RareWordRequest request = new RareWordRequest();
-        PageResponse<RareWordResponse> response = cairhApi. rareWordQuery(request);
+        PageResponse<RareWordResponse> response = cairhApi.rareWordQuery(request);
 
         Set<String> idSet = new HashSet<>();
         for (int i = 0; i < response.getPages(); i++) {
@@ -157,4 +160,28 @@ class CairhApiTest {
     void test() {
         System.out.println(StringUtils.toFullWidth("g"));
     }
+
+
+    @Resource
+    private MallApi mallApi;
+
+    @Test
+    void mallApiTest() {
+        List<ConfigurationMap> allSeries = mallApi.getAllSeries(69);
+        for (ConfigurationMap seriesMap : allSeries) {
+            String serialNo = seriesMap.getString("serial_no");
+            List<ConfigurationMap> prodList = mallApi.getProdList(serialNo);
+            if (prodList.size() > 1) {
+                System.out.println(serialNo);
+            }
+        }
+    }
+
+    @Test
+    void seriesIdGetTest() {
+        Set<String> allSeriesId = mallApi.getAllSeriesId();
+        allSeriesId.forEach(System.out::println);
+        System.out.println(allSeriesId.size());
+    }
+
 }
