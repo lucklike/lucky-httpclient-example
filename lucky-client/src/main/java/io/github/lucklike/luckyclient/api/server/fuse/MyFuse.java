@@ -29,13 +29,19 @@ public class MyFuse implements FuseProtector {
     }
 
     @Override
-    public void record(MethodContext methodContext, Request request, Throwable throwable) {
+    public void recordFailure(MethodContext methodContext, Request request, Throwable throwable) {
         Throwable causeThrowable = ExceptionUtils.getCauseThrowable(throwable);
         if (causeThrowable instanceof ConnectException) {
             Date date = DateUtil.offsetSecond(new Date(), 20);
             fuseConfigMap.put(getKey(request), date);
         }
     }
+
+    @Override
+    public void recordSuccess(MethodContext methodContext, Request request, long timeConsuming) {
+        System.out.println(timeConsuming);
+    }
+
 
     private String getKey(Request request) {
         return String.format("%s:%s", request.getURL().getHost(), request.getURL().getPort());

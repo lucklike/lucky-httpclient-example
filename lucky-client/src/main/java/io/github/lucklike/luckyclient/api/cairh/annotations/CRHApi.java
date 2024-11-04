@@ -29,11 +29,11 @@ import static io.github.lucklike.luckyclient.api.cairh.annotations.BaseApi.URL_C
 @Inherited
 @SSL
 @HttpClient(URL_CONFIG)
-@RespConvert("``#{#convert($mc$)}``")
+@RespConvert("``#{#crh_convert($mc$)}``")
 @SpELImport(fun = CairhCommonFunction.class)
 @Condition(assertion = "#{$status$ != 200}", exception = "【财人汇】开放接口访问失败！HTTP状态码：#{$status$}， 接口地址： #{$url$}")
 @Condition(assertion = "#{$body$.error.error_no != '0'}", exception = "【财人汇】开放接口访问失败！接口响应码：#{$body$.error.error_no}, 错误信息：#{$body$.error.error_info}，接口地址： #{$url$}")
-@StaticHeader("@if(#{#needToken($mc$)}): Authorization: #{@tokenApi.getAccessToken()}")
+@StaticHeader("@if(#{#crh_needToken($mc$)}): Authorization: #{@tokenApi.getAccessToken()}")
 //@InterceptorRegister(intercept = @ObjectGenerate(CairhInterceptor.class), priority = Integer.MIN_VALUE)
 public @interface CRHApi {
 

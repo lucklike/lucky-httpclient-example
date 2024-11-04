@@ -1,6 +1,7 @@
 package io.github.lucklike.server.controller;
 
 import cn.hutool.core.lang.id.NanoId;
+import cn.hutool.core.util.RandomUtil;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,10 @@ public class UserController {
     }
 
     @GetMapping("get")
-    public Result<User> getUser(){
+    public Result<User> getUser() throws InterruptedException {
+        int s = RandomUtil.randomInt(1000, 3000);
+        System.out.println(s);
+        Thread.sleep(s);
         User user = new User();
         user.setId((int)(10000 * Math.random()));
         user.setName(NanoId.randomNanoId());

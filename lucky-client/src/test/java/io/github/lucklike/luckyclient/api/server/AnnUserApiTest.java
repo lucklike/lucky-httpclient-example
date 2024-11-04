@@ -3,6 +3,7 @@ package io.github.lucklike.luckyclient.api.server;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.luckyclient.api.server.ann.AnnUserApi;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,6 +14,7 @@ import javax.annotation.Resource;
  * @version 1.0.0
  * @date 2024/7/9 01:47
  */
+@Slf4j
 @SpringBootTest
 public class AnnUserApiTest {
 
@@ -39,5 +41,12 @@ public class AnnUserApiTest {
         User user1 = api.postUser(user.getData());
 
         System.out.println(user1);
+    }
+
+    @Test
+    void fuseTest() throws InterruptedException {
+        while (true) {
+            api.getUser();
+        }
     }
 }
