@@ -1,5 +1,10 @@
 package io.github.lucklike.luckyclient.api.server;
 
+import com.luckyframework.async.EnhanceFuture;
+import com.luckyframework.async.EnhanceFutureFactory;
+import com.luckyframework.common.DateUtils;
+import com.luckyframework.threadpool.ThreadPoolFactory;
+import com.luckyframework.threadpool.ThreadPoolParam;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.luckyclient.api.server.ann.AnnUserApi;
@@ -8,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author fukang
@@ -45,8 +51,29 @@ public class AnnUserApiTest {
 
     @Test
     void fuseTest() throws InterruptedException {
+        System.out.println(DateUtils.time());
         while (true) {
             api.getUser();
+        }
+    }
+
+    @Test
+    void fuseTest2() {
+        ThreadPoolParam param = new ThreadPoolParam();
+        ThreadPoolExecutor threadPool = ThreadPoolFactory.createThreadPool(param);
+        EnhanceFutureFactory futureFactory = new EnhanceFutureFactory(threadPool);
+        EnhanceFuture<Result<User>> getUserFuture = futureFactory.create();
+        EnhanceFuture<User> objectEnhanceFuture = futureFactory.create();
+        Result<User> user = api.getUser();
+        for (int i = 0; i < 10000; i++) {
+            getUserFuture.addAsyncTask(() -> api.getUser());
+            objectEnhanceFuture.addAsyncTask(() -> api.postUser(user.getData()));
+        }
+        for (Result<User> result : getUserFuture.getResults()) {
+            System.out.println(result);
+        }
+        for (User result : objectEnhanceFuture.getResults()) {
+            System.out.println(result);
         }
     }
 }

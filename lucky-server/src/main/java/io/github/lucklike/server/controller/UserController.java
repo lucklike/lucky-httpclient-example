@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 /**
  * @author fukang
  * @version 1.0.0
@@ -19,16 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("user")
 public class UserController {
 
+    private AtomicLong postCount = new AtomicLong(0);
+    private AtomicLong getCount = new AtomicLong(0);
+
     @PostMapping("post")
     public Result<User> postUser(@RequestBody User user){
-        System.out.println(user);
+        System.out.println(postCount.getAndAdd(1) + "[POST]==>" +user);
         return Result.success(user);
     }
 
     @GetMapping("get")
     public Result<User> getUser() throws InterruptedException {
         int s = RandomUtil.randomInt(1000, 3000);
-        System.out.println(s);
+        System.out.println(getCount.getAndAdd(1) + "[GET]==>" + s);
         Thread.sleep(s);
         User user = new User();
         user.setId((int)(10000 * Math.random()));

@@ -5,7 +5,9 @@ import com.luckyframework.httpclient.proxy.annotations.ExceptionHandle;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import com.luckyframework.httpclient.proxy.fuse.FixedQuantityFuseStrategy;
+import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
+import com.luckyframework.httpclient.proxy.fuse.LengthWindowFuseStrategy;
+import com.luckyframework.httpclient.proxy.fuse.TimeWindowFuseStrategy;
 import com.luckyframework.httpclient.proxy.handle.ExceptionFallback;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
@@ -18,8 +20,9 @@ import io.github.lucklike.luckyclient.api.server.fallbak.MyIdGenerator;
  * @version 1.0.0
  * @date 2024/7/9 01:45
  */
-
-@FixedQuantityFuseStrategy(maxReqSize = 10, maxRespTime = 1500L, maxFailRatio = 0.8, fuseTime = 8, idGenerator = MyIdGenerator.class)
+@PrintLogProhibition
+//@TimeWindowFuseStrategy(timeInterval = 10,  maxFailCount = 3, maxTimeoutRatio = 0.6, slideUnit = 2, idGenerator = MyIdGenerator.class)
+@LengthWindowFuseStrategy(maxReqSize = 300,  maxFailRatio = 0.5, maxTimeoutRatio = 0.6, idGenerator = MyIdGenerator.class)
 @ExceptionFallback(AnnUserApiFallBack.class)
 @HttpClientComponent
 public interface AnnUserApi extends LuckyServerApi {

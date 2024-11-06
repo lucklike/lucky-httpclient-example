@@ -12,7 +12,11 @@ public class AnnUserApiFallBack implements AnnUserApi {
 
     @Override
     public User postUser(User user) {
-        return user;
+        User user1 = new User();
+        user1.setId(3333);
+        user1.setEmail("FallBack@example.com");
+        user1.setPhone("123544454");
+        return user1;
     }
 
     @Override

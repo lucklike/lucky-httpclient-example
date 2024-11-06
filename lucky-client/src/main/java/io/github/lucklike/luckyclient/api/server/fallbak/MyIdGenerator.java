@@ -10,6 +10,6 @@ public class MyIdGenerator implements IdGenerator {
     @Override
     public Object generateId(MethodContext context, Request request) {
         URL url = request.getURL();
-        return String.format("%s:%s%s", url.getHost(), url.getPort(), url.getPath());
+        return String.format("%s:%s", url.getHost(), url.getPort());
     }
 }
