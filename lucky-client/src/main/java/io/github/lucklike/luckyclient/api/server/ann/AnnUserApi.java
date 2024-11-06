@@ -5,7 +5,6 @@ import com.luckyframework.httpclient.proxy.annotations.ExceptionHandle;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.fuse.FixedQuantityFuseStrategy;
 import com.luckyframework.httpclient.proxy.handle.ExceptionFallback;
 import io.github.lucklike.entity.request.User;
@@ -20,7 +19,7 @@ import io.github.lucklike.luckyclient.api.server.fallbak.MyIdGenerator;
  * @date 2024/7/9 01:45
  */
 
-@FixedQuantityFuseStrategy(maxReqSize = 10, maxRespTime = 1500L, maxFailRatio = 0.8, fuseTimeSeconds = 8, idGenerator = MyIdGenerator.class)
+@FixedQuantityFuseStrategy(maxReqSize = 10, maxRespTime = 1500L, maxFailRatio = 0.8, fuseTime = 8, idGenerator = MyIdGenerator.class)
 @ExceptionFallback(AnnUserApiFallBack.class)
 @HttpClientComponent
 public interface AnnUserApi extends LuckyServerApi {
