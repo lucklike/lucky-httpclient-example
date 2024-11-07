@@ -9,6 +9,7 @@ import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.fuse.LengthWindowFuseStrategy;
 import com.luckyframework.httpclient.proxy.fuse.TimeWindowFuseStrategy;
 import com.luckyframework.httpclient.proxy.handle.ExceptionFallback;
+import com.luckyframework.reflect.Param;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
@@ -22,7 +23,7 @@ import io.github.lucklike.luckyclient.api.server.fallbak.MyIdGenerator;
  */
 @PrintLogProhibition
 //@TimeWindowFuseStrategy(timeInterval = 10,  maxFailCount = 3, maxTimeoutRatio = 0.6, slideUnit = 2, idGenerator = MyIdGenerator.class)
-@LengthWindowFuseStrategy(maxReqSize = 300,  maxFailRatio = 0.5, maxTimeoutRatio = 0.6, idGenerator = MyIdGenerator.class)
+//@LengthWindowFuseStrategy(maxReqSize = 300,  maxFailRatio = 0.5, maxTimeoutRatio = 0.6, idGenerator = MyIdGenerator.class)
 @ExceptionFallback(AnnUserApiFallBack.class)
 @HttpClientComponent
 public interface AnnUserApi extends LuckyServerApi {
@@ -41,7 +42,7 @@ public interface AnnUserApi extends LuckyServerApi {
      *
      * @param e 异常实例
      */
-    static void getUserExceptionHandle(Exception e) throws InterruptedException {
+    static void getUserExceptionHandle(@Param("systemProperties['java.home']")String userDir, Exception e) throws InterruptedException {
         Thread.sleep(200L);
         System.out.println(DateUtils.time() + " -> " +e);
     }
