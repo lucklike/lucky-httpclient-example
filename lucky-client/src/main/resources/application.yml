@@ -9,7 +9,7 @@ server:
 lucky:
   http-client:
     #使用JDK执行器
-    http-executor: jdk
+    http-executor: http_client
     #日志相关的配置
     logger:
       packages:
