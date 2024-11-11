@@ -1,5 +1,7 @@
 package io.github.lucklike.luckyclient.api.inject;
 
+import com.luckyframework.common.FileUnitUtils;
+import com.luckyframework.common.UnitUtils;
 import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.generalapi.Range;
 import com.luckyframework.httpclient.generalapi.RangeDownloadApi2;
@@ -37,14 +39,32 @@ public class DownloadTes {
                 .setConnectTimeout(120000)
                 .setWriterTimeout(60000)
                 .setReadTimeout(60000);
-        Range rangeInfo = downloadApi2.rangeInfo(request);
+        boolean rangeInfo = downloadApi2.isSupport(request);
         System.out.println(rangeInfo);
     }
 
     @Test
     void rangeDownloadTest() {
         Request request = Request.get("https://mirrors.aliyun.com/centos/8/isos/x86_64/CentOS-8.5.2111-x86_64-boot.iso");
-        File file = downloadApi2.rangeFileDownload(request, "D:/test/iso/", null, RangeDownloadApi2.DEFAULT_RANGE_SIZE);
+        File file = downloadApi2.rangeFileDownload(request, "/Users/fukang/Desktop/test/", "CentOS-1", RangeDownloadApi2.DEFAULT_RANGE_SIZE);
+//        File file = new File("/Users/fukang/Desktop/test/CentOS-8.5.2111-x86_64-boot.iso");
+        int r = 0;
+        while (downloadApi2.hasFail(file)) {
+            System.out.println("开始第" + (++r) + "次重试......");
+            downloadApi2.rangeFileDownloadByFailFile(request, file);
+        }
         System.out.println(file);
+    }
+
+    public static void main(String[] args) {
+        File file = new File("/Users/fukang/Desktop/test/CentOS.iso");
+        long length = file.length();
+        System.out.println(length);
+        System.out.println(UnitUtils.byteTo(length));
+
+        File file1 = new File("/Users/fukang/Desktop/test/CentOS-1.iso");
+        long length1 = file1.length();
+        System.out.println(length1);
+        System.out.println(UnitUtils.byteTo(length1));
     }
 }
