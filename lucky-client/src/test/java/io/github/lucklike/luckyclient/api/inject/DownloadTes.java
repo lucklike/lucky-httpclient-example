@@ -25,7 +25,8 @@ public class DownloadTes {
     @Test
     void download() throws Exception {
         String url = "https://github.com/docmirror/dev-sidecar/releases/download/v1.8.9/DevSidecar-1.8.9-node16.exe";
-        File file = downloadApi.rangeFileDownload(url, "D:/test/dev-sidecar", 2 * 1024 * 1024);
+        Request request = Request.get(url);
+        File file = downloadApi2.rangeFileDownload(request, "/Users/fukang/Desktop/test/dev-sidecar", null,5 * 1024 * 1024);
         System.out.println(file.getAbsolutePath());
     }
 
