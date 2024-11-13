@@ -17,7 +17,7 @@ import java.util.Map;
 @HttpClient
 @SpELImport(
     root = {"appId=${spark.appId}"},
-    fun = {AuthUtils.class},
+    classes = {AuthUtils.class},
     pack = {"java.util"}
 )
 public interface AnnSparkOpenApi {

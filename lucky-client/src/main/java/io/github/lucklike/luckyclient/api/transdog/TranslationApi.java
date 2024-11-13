@@ -6,7 +6,7 @@ import io.github.lucklike.httpclient.configapi.ResourceHttpClient;
 /**
  * 翻译狗API
  */
-@SpELImport(fun = FanYiGouFunction.class)
+@SpELImport(FanYiGouFunction.class)
 @ResourceHttpClient
 public interface TranslationApi {
 
