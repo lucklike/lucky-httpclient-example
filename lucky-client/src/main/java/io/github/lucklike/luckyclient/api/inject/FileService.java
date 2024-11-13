@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.inject;
 
-import com.luckyframework.httpclient.generalapi.RangeDownloadApi;
+import com.luckyframework.httpclient.generalapi.file.RangeDownloadApi;
 import io.github.lucklike.httpclient.annotation.HttpReference;
 import org.springframework.stereotype.Service;
 

@@ -42,7 +42,7 @@ public interface AnnUserApi extends LuckyServerApi {
      *
      * @param e 异常实例
      */
-    static void getUserExceptionHandle(@Param("systemProperties['java.home']")String userDir, Exception e) throws InterruptedException {
+    static void getUserExceptionHandle(@Param("#{user}")String userDir, Exception e) throws InterruptedException {
         Thread.sleep(200L);
         System.out.println(DateUtils.time() + " -> " +e);
     }

@@ -2,8 +2,11 @@ package io.github.lucklike.luckyclient.api.mock;
 
 import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
+import com.luckyframework.reflect.Param;
 import io.github.lucklike.httpclient.configapi.ResourceHttpClient;
 import org.springframework.beans.factory.annotation.Value;
+
+import java.io.File;
 
 /**
  * @author fukang
@@ -28,12 +31,12 @@ public abstract class MockApi {
         return apiKey;
     }
 
-//    public static MockResponse baiduMock(MethodContext context) {
-//        System.out.println("-----------------------Mock--------------------------");
-//        return MockResponse.create()
-//                .status(200)
-//                .header("Content-Type", "application/json; charset=utf-8")
-//                .header("Service", "Nginx-1.3")
-//                .body("百度一下，你就知道！" + context.getSignature());
-//    }
+    public static MockResponse baiduMock(@Param("#{a}") String javaVersion, MethodContext context) {
+        System.out.println("-----------------------Mock--------------------------");
+        return MockResponse.create()
+                .status(200)
+                .header("Content-Type", "application/json; charset=utf-8")
+                .header("Service", "Nginx-1.3")
+                .body("百度一下，你就知道！" + context.getSignature());
+    }
 }

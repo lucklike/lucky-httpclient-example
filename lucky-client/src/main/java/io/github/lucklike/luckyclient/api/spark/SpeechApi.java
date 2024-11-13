@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.spark;
 
-import com.luckyframework.httpclient.generalapi.RangeDownloadApi;
+import com.luckyframework.httpclient.generalapi.file.FileApi;
 import io.github.lucklike.httpclient.configapi.ResourceHttpClient;
 
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.Map;
  * @date 2024/7/27 02:13
  */
 @ResourceHttpClient
-public interface SpeechApi extends RangeDownloadApi {
+public interface SpeechApi extends FileApi {
 
     /**
      * 创建回调方式任务

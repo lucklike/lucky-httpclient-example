@@ -8,13 +8,17 @@ server:
 
 lucky:
   http-client:
+    async-thread-pool:
+      core-pool-size: 10
+      blocking-queue-size: 100
+      maximum-pool-size: 20
     #使用JDK执行器
     http-executor: jdk
     #日志相关的配置
     logger:
       packages:
         - io.github.lucklike.luckyclient.api
-#        - com.luckyframework.httpclient.generalapi
+        - com.luckyframework.httpclient.generalapi
       body-max-length: 1024
       force-print-body: true
 
