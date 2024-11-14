@@ -71,7 +71,10 @@ cpe:
       op_password: 111111
       op_station: CRH:IFS:OpStation
       op_branch_no: 100
-
+    HeheHttp:
+      url: https://testsjkh.nesc.cn
+      appId: system
+      appSecret: 12345
 
 
 
