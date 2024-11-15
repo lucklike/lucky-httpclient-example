@@ -54,8 +54,8 @@ public class DownloadTest {
 
     @Test
     void rangeDownloadTest() {
-        Request request = Request.get("https://mirrors.aliyun.com/centos-stream/10-stream/BaseOS/x86_64/iso/CentOS-Stream-10-20241112.0-x86_64-boot.iso");
-        File file1 = downloadApi.downloadRetryIfFail(request, "/Users/fukang/Desktop/test");
+        Request request = Request.get("https://download.jetbrains.com/idea/ideaIU-2024.3.dmg");
+        File file1 = downloadApi.downloadRetryIfFail(request, "/Users/fukang/Downloads/EdgeDownload/");
         System.out.println(file1.getAbsolutePath());
     }
 

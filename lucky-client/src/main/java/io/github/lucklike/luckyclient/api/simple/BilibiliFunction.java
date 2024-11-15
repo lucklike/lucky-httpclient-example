@@ -1,15 +1,15 @@
 package io.github.lucklike.luckyclient.api.simple;
 
-import com.luckyframework.httpclient.proxy.spel.FunctionNamespace;
-import com.luckyframework.httpclient.proxy.spel.RootVar;
-import com.luckyframework.httpclient.proxy.spel.Var;
+import com.luckyframework.httpclient.proxy.spel.Namespace;
+import com.luckyframework.httpclient.proxy.spel.var.RootVar;
+import com.luckyframework.httpclient.proxy.spel.var.Var;
 
 /**
  * @author fukang
  * @version 1.0.0
  * @date 2024/11/14 02:26
  */
-@FunctionNamespace("bili")
+@Namespace("bili")
 public class BilibiliFunction {
 
     @RootVar

@@ -1,13 +1,13 @@
 package io.github.lucklike.luckyclient.api.cairh.function;
 
 import com.luckyframework.httpclient.proxy.context.MethodContext;
-import com.luckyframework.httpclient.proxy.spel.FunctionNamespace;
+import com.luckyframework.httpclient.proxy.spel.Namespace;
 import io.github.lucklike.luckyclient.api.cairh.annotations.LooseBind;
 
 /**
  * CRH-OPENAPI公共方法
  */
-@FunctionNamespace("crh")
+@Namespace("crh")
 public class CairhCommonFunction {
 
     /**
