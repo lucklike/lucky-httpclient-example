@@ -4,7 +4,6 @@ import com.luckyframework.httpclient.proxy.annotations.AutoRedirect;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.StaticQuery;
 import com.luckyframework.httpclient.proxy.spel.RootVar;
-import com.luckyframework.httpclient.proxy.spel.RootVarLit;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 
 import java.util.HashMap;

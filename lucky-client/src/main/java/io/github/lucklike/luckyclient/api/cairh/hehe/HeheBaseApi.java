@@ -6,12 +6,11 @@ import com.luckyframework.httpclient.proxy.annotations.DomainName;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.StaticForm;
 import com.luckyframework.httpclient.proxy.spel.RootVar;
-import com.luckyframework.httpclient.proxy.spel.RootVarLit;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
-import io.github.lucklike.luckyclient.api.cairh.ApiNameUtils;
+import com.luckyframework.httpclient.proxy.spel.VarScope;
 
 
-@Condition(assertion = "#{$status$ != 200}", exception = "``#{$api.error.statusErr}``")
+@Condition(assertion = "#{$status$ != 200}", exception = "``#{$err.statusErr}``")
 @Condition(
         assertion = "#{{40001, 40002, 40003, 40004, 40005, 40006, 40007, 40008, 40009, 40010, 50001, 50004, 90099}.contains($body$.error_code)}",
         exception = "``合合接口【#{$api.name}】响应码异常：【#{$body$.error_code}：#{$body$.error_code}】[#{$reqMethod$}] #{$url$}``"
@@ -35,9 +34,9 @@ public interface HeheBaseApi {
     @RootVar
     String appSecret = "${cpe.service.HeheHttp.appSecret}";
 
-    @RootVarLit
+    @RootVar(literal = true)
     String apiName = "#{#apiName($mc$)}";
 
-    @RootVarLit
-    String $statusErrMsg = "#{$respHeader$['Date']}";
+    @RootVar(scope = VarScope.RESPONSE)
+    String $statusErrMsg = "#{$stringBody$}";
 }

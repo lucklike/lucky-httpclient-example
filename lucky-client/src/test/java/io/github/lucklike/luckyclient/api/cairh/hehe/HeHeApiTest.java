@@ -1,7 +1,9 @@
 package io.github.lucklike.luckyclient.api.cairh.hehe;
 
 import com.luckyframework.common.ConfigurationMap;
+import com.luckyframework.common.ContainerUtils;
 import com.luckyframework.httpclient.proxy.CommonFunctions;
+import com.luckyframework.httpclient.proxy.spel.VarScope;
 import io.github.lucklike.luckyclient.api.cairh.hehe.req.FaceCompareReq;
 import io.github.lucklike.luckyclient.api.cairh.hehe.resp.HeheIdCardResponse;
 import org.junit.jupiter.api.Test;
@@ -23,7 +25,7 @@ class HeHeApiTest {
 
     @Test
     void ocrIdCard() {
-        HeheIdCardResponse response = heHeApi.ocrIdCard("file:/Users/fukang/Pictures/avatar.jpg");
+        HeheIdCardResponse response = heHeApi.ocrIdCard("file:D:/id/card/wbq-1.jpg");
         System.out.println(response);
     }
 
@@ -39,5 +41,10 @@ class HeHeApiTest {
 
     private String _res64(String path) throws IOException {
         return base64(resource(path));
+    }
+
+    public static void main(String[] args) {
+        VarScope[] scopes = new VarScope[]{VarScope.DEFAULT, VarScope.CLASS};
+        System.out.println(ContainerUtils.notInArrays(scopes, VarScope.DEFAULT));
     }
 }
