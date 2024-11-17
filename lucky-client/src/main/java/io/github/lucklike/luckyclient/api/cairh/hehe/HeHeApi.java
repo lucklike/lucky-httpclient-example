@@ -15,12 +15,12 @@ import io.github.lucklike.luckyclient.api.cairh.hehe.resp.HeheIdCardResponse;
 public interface HeHeApi extends HeheBaseApi {
 
 
-    @Describe("合合ocr身份证识别")
+    @Describe("合合OCR身份证识别")
     @Post("/icr/recognize_id_card1")
     HeheIdCardResponse ocrIdCard(@BinaryBody String sfzPath);
 
-    @Describe(id = "ycv1", name = "ocr人像对比")
-    @Post("/face/similarity/image")
+    @Describe(id = "ycv1", name = "OCR人像对比")
+    @Post("/face/similarity/image1")
     ConfigurationMap ocrFaceCompare(@FormParam FaceCompareReq req);
 
 }

@@ -43,4 +43,9 @@ public class UserController {
         user.setPassword("**********");
         return Result.success(user);
     }
+
+    @GetMapping("error")
+    public Result exceptionTest() {
+       return Result.fail(4001, "error test");
+    }
 }

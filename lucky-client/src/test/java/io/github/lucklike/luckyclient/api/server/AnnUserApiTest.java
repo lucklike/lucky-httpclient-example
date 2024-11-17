@@ -44,9 +44,9 @@ public class AnnUserApiTest {
     void getUserTest() {
         Result<User> user = api.getUser();
         System.out.println(user);
-        User user1 = api.postUser(user.getData());
-
-        System.out.println(user1);
+//        User user1 = api.postUser(user.getData());
+//
+//        System.out.println(user1);
     }
 
     @Test
@@ -55,6 +55,11 @@ public class AnnUserApiTest {
         while (true) {
             api.getUser();
         }
+    }
+
+    @Test
+    void errorTest() {
+        api.error();
     }
 
     @Test

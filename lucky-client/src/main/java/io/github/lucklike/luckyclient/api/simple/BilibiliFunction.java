@@ -10,13 +10,16 @@ import com.luckyframework.httpclient.proxy.spel.var.Var;
  * @date 2024/11/14 02:26
  */
 @Namespace("bili")
-public class BilibiliFunction {
+public class BilibiliFunction extends A {
 
     @RootVar
     private static final String name = "Bilibili-Name";
 
     @RootVar
     private static final String userDir = "${user.dir}";
+
+    @RootVar
+    private static final String n_v = "#{#_$(1==2, #str('{}==={}', bili.name, bili.userDir), '')}";
 
     @Var("version")
     private static final String javaVersion = "${java.version}";

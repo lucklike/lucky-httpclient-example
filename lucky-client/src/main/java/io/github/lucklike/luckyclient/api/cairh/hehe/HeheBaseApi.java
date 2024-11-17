@@ -1,5 +1,6 @@
 package io.github.lucklike.luckyclient.api.cairh.hehe;
 
+import com.luckyframework.httpclient.generalapi.describe.CommonErrorMsgVars;
 import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
 import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.DomainName;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@Condition(assertion = "#{$status$ != 200}", exception = "``#{$err.statusErr}``")
+@Condition(assertion = "``#{$assert.status}``", exception = "``#{$err.status}``")
 @Condition(
         assertion = "#{#in(errHttpCodes, $body$.error_code)}",
         exception = "``合合接口【#{$api.name}】响应码异常：【#{$body$.error_code}：#{$body$.error_code}】[#{$reqMethod$}] #{$url$}``"
@@ -25,8 +26,7 @@ import java.util.Map;
 )
 
 @RespConvert("#{$body$}")
-@SpELImport(DescribeFunction.class)
-@SpELImport(DescribeFunction.class)
+@SpELImport({DescribeFunction.class, CommonErrorMsgVars.class})
 @DomainName("${cpe.service.HeheHttp.url}")
 @StaticForm(condition = "#{#matchId($mc$, 'ycv1')}", value = {"app_id=#{appId}", "app_secret=#{appSecret}"})
 public interface HeheBaseApi {
@@ -40,5 +40,8 @@ public interface HeheBaseApi {
 
 
     @ResponseRootVar
-    String $statusErrMsg = "#{$stringBody$}";
+    String _statusErrMsg_ = "#{$stringBody$}";
+
+    @RootVar
+    int[] _normalStatus_ = {200, 201, 206};
 }
