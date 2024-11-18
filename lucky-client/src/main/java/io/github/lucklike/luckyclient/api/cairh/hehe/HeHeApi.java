@@ -16,11 +16,11 @@ public interface HeHeApi extends HeheBaseApi {
 
 
     @Describe("合合OCR身份证识别")
-    @Post("/icr/recognize_id_card1")
+    @Post("/icr/recognize_id_card")
     HeheIdCardResponse ocrIdCard(@BinaryBody String sfzPath);
 
     @Describe(id = "ycv1", name = "OCR人像对比")
-    @Post("/face/similarity/image1")
+    @Post("/face/similarity/image")
     ConfigurationMap ocrFaceCompare(@FormParam FaceCompareReq req);
 
 }

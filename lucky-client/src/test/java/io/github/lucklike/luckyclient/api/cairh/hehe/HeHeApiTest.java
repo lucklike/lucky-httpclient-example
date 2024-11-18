@@ -23,15 +23,15 @@ class HeHeApiTest {
 
     @Test
     void ocrIdCard() {
-        HeheIdCardResponse response = heHeApi.ocrIdCard("file:/Users/fukang/Pictures/1234.jpg");
+        HeheIdCardResponse response = heHeApi.ocrIdCard("file:D:/id/card/20240716100959.jpg");
         System.out.println(response);
     }
 
     @Test
     void ocrFaceCompare() throws IOException {
         FaceCompareReq req = new FaceCompareReq();
-        req.setImgA(_res64("file:/Users/fukang/Pictures/1234.jpg"));
-        req.setImgB(_res64("file:/Users/fukang/Pictures/1234.jpg"));
+        req.setImgA(_res64("file:D:/id/20240913_165323.mp4"));
+        req.setImgB(_res64("file:D:/id/20240913_165323.mp4"));
         ConfigurationMap response = heHeApi.ocrFaceCompare(req);
         System.out.println(response);
     }
