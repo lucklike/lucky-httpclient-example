@@ -23,7 +23,7 @@ class HeHeApiTest {
 
     @Test
     void ocrIdCard() {
-        HeheIdCardResponse response = heHeApi.ocrIdCard("file:D:/id/card/20240716100959.jpg");
+        HeheIdCardResponse response = heHeApi.ocrIdCard("file:/Users/fukang/Pictures/1234.jpg");
         System.out.println(response);
     }
 

@@ -1,16 +1,11 @@
 package io.github.lucklike.luckyclient.api.server.ann;
 
-import com.luckyframework.httpclient.generalapi.describe.ErrorStatusFilter;
-import com.luckyframework.httpclient.proxy.annotations.Condition;
+import com.luckyframework.httpclient.generalapi.describe.ErrorStatusThrowException;
 import com.luckyframework.httpclient.proxy.annotations.DomainName;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
-import com.luckyframework.httpclient.proxy.spel.var.RootLiteral;
 import io.github.lucklike.entity.response.Result;
 import org.springframework.core.ResolvableType;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static io.github.lucklike.luckyclient.api.server.ann.LuckyServerApi.DOMAIN_NAME_KEY;
 
@@ -21,11 +16,11 @@ import static io.github.lucklike.luckyclient.api.server.ann.LuckyServerApi.DOMAI
  */
 @DomainName(DOMAIN_NAME_KEY)
 @RespConvert( "``#{#_result_($mc$, $url$)}``")
-@ErrorStatusFilter(
-        respCodeExp = "#{$body$.code}",
-        respCodeAssertExp = "#{$body$.code != 200}",
-        statusErrMsgExp = "#{$body$.error}",
-        respCodeErrMsgExp = "#{$body$.message}"
+@ErrorStatusThrowException(
+        code = "#{$body$.code}",
+        errCodeAssert = "#{$body$.code != 200}",
+        errStatusAssert = "#{$body$.error}",
+        errStatusMsg = "#{$body$.message}"
 )
 public interface LuckyServerApi {
 
