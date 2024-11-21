@@ -3,6 +3,7 @@ package io.github.lucklike.luckyclient.api.abstractapi;
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.Console;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
+import com.luckyframework.httpclient.generalapi.token.TokenApi;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
@@ -27,7 +28,7 @@ import java.util.Scanner;
 @PrintLogProhibition
 @HttpClient(name = "BAI-DU-AI", value = "https://aip.baidubce.com")
 @StaticHeader("Content-Type: application/json")
-@StaticQuery("@if(#{$method$.getName() != 'token'}): access_token=#{$this$.getAccessToken()}")
+@StaticQuery("@if(#{#nonTokenApi($mc$)}): access_token=#{$this$.getAccessToken()}")
 public abstract class BaiduAI extends JsonFileTokenManager<Token> implements EventListener {
 
     //---------------------------------------------------------------------
@@ -55,6 +56,7 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
         "client_id=${baidu.API.APIKey}",
         "client_secret=${baidu.API.SecretKey}"
     })
+    @TokenApi
     @Post("/oauth/2.0/token")
     abstract Token token();
 
