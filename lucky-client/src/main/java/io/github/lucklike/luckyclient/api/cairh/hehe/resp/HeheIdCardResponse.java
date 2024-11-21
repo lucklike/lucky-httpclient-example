@@ -1,13 +1,14 @@
 package io.github.lucklike.luckyclient.api.cairh.hehe.resp;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+
 @Data
-@Accessors(chain = true)
-public class HeheIdCardResponse {
-    private Integer error_code;
-    private String error_msg;
+@EqualsAndHashCode(callSuper = true)
+public class HeheIdCardResponse extends HeheBaseResp {
+
     private String type;
     private String name;
     private String sex;
@@ -22,10 +23,4 @@ public class HeheIdCardResponse {
     private Boolean complete;
     private Boolean border_covered;
     private Boolean gray_image;
-    private Time_cost time_cost;
-}
-@Data
-class Time_cost{
-    Integer preprocess;
-    Integer recognize;
 }

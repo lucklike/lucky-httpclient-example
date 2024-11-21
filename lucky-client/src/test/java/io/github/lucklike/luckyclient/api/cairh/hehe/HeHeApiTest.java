@@ -3,6 +3,8 @@ package io.github.lucklike.luckyclient.api.cairh.hehe;
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.reflect.AnnotationUtils;
 import io.github.lucklike.luckyclient.api.cairh.hehe.req.FaceCompareReq;
+import io.github.lucklike.luckyclient.api.cairh.hehe.resp.BusinessLicenseResponse;
+import io.github.lucklike.luckyclient.api.cairh.hehe.resp.GATResidenceResponse;
 import io.github.lucklike.luckyclient.api.cairh.hehe.resp.HeheIdCardResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +13,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.Map;
 
 import static com.luckyframework.httpclient.proxy.CommonFunctions.base64;
 import static com.luckyframework.httpclient.proxy.CommonFunctions.resource;
@@ -23,7 +26,25 @@ class HeHeApiTest {
 
     @Test
     void ocrIdCard() {
-        HeheIdCardResponse response = heHeApi.ocrIdCard("file:/Users/fukang/Pictures/1234.jpg");
+        HeheIdCardResponse response = heHeApi.ocrIdCard("file:D:/id/card/20240712093345.jpg");
+        System.out.println(response);
+    }
+
+    @Test
+    void testOcrBusinessLicense() {
+        BusinessLicenseResponse response = heHeApi.ocrBusinessLicense("file:D:/id/card/R-C.jpg");
+        System.out.println(response);
+    }
+
+    @Test
+    void testOcrGATResidence() {
+        GATResidenceResponse response = heHeApi.ocrGATResidence("file:D:/id/card/GAT-1.jpg");
+        System.out.println(response);
+    }
+
+    @Test
+    void testOcrPermanentResident() {
+        ConfigurationMap response = heHeApi.ocrPermanentResident("file:D:/id/card/WGR-YJZ-1.png");
         System.out.println(response);
     }
 

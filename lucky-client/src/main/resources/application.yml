@@ -13,7 +13,7 @@ lucky:
       blocking-queue-size: 100
       maximum-pool-size: 20
     #使用JDK执行器
-    http-executor: http_client
+    http-executor: okhttp3
     #日志相关的配置
     logger:
       packages:

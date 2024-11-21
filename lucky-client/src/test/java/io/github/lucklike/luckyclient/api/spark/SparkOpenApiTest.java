@@ -43,7 +43,7 @@ public class SparkOpenApiTest {
 
     @Test
     void imageGenerateTest() throws IOException {
-        String content = "天空大海和她";
+        String content = "Lucky";
         String imageBase64 = sparkOpenApi.imageGenerate(content);
         String fileName = content + "_" +NanoIdUtils.randomNanoId(3) + ".jpg";
         File file = new File("D:/test/" + fileName);

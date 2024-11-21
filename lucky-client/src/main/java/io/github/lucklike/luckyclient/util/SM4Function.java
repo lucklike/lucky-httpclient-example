@@ -10,4 +10,9 @@ public class SM4Function {
         return SM4Util.decryptEcb(s);
     }
 
+    @Function("_sm4_")
+    public static String _sm4_(String s) throws Exception {
+        return SM4Util.encryptEcb(s);
+    }
+
 }
