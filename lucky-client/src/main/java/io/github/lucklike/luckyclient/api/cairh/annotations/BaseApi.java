@@ -17,7 +17,7 @@ import io.github.lucklike.luckyclient.api.cairh.function.CairhCommonFunction;
 @RespConvert("``#{#crh_convert($mc$)}``")
 @Condition(assertion = "#{$status$ != 200}", exception = "【财人汇】开放接口访问失败！HTTP状态码：#{$status$}， 接口地址： #{$url$}")
 @Condition(assertion = "#{$body$.error.error_no != '0'}", exception = "【财人汇】开放接口访问失败！接口响应码：#{$body$.error.error_no}, 错误信息：#{$body$.error.error_info}，接口地址： #{$url$}")
-@StaticHeader("@if(#{!#matchId($mc$, 'CRH_TOKEN_API')}): Authorization: #{@tokenApi.getAccessToken()}")
+@StaticHeader("@if(#{#nonTokenApi($mc$)}}): Authorization: #{@tokenApi.getAccessToken()}")
 @DomainName(BaseApi.URL_CONFIG)
 @SpELImport(CairhCommonFunction.class)
 @InterceptorRegister(intercept = @ObjectGenerate(CairhInterceptor.class), priority = Integer.MIN_VALUE)
