@@ -5,6 +5,7 @@ import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.proxy.annotations.BinaryBody;
 import com.luckyframework.httpclient.proxy.annotations.FormParam;
 import com.luckyframework.httpclient.proxy.annotations.Post;
+import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 import io.github.lucklike.luckyclient.api.cairh.hehe.req.FaceCompareReq;
 import io.github.lucklike.luckyclient.api.cairh.hehe.resp.BankCardResponse;

@@ -1,8 +1,8 @@
 package io.github.lucklike.luckyclient.api.cairh;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.generalapi.token.MemoryTokenManager;
-import com.luckyframework.httpclient.generalapi.token.TokenApi;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
 import io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi;
@@ -14,7 +14,7 @@ import java.util.Date;
 @CRHApi(name = "tokenApi")
 public abstract class CrhTokenApi extends MemoryTokenManager<Token> {
 
-    @TokenApi
+    @Describe(isTokenApi = true)
     @PropertiesJsonObject({
             "secret_key=${cairh.openapi.secretKey}",
             "app_id=${cairh.openapi.appId}"

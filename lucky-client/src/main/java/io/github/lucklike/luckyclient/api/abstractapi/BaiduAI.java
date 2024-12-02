@@ -2,13 +2,19 @@ package io.github.lucklike.luckyclient.api.abstractapi;
 
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.Console;
+import com.luckyframework.httpclient.core.meta.Request;
+import com.luckyframework.httpclient.generalapi.describe.Describe;
+import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
-import com.luckyframework.httpclient.generalapi.token.TokenApi;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.StaticQuery;
+import com.luckyframework.httpclient.proxy.context.MethodContext;
+import com.luckyframework.httpclient.proxy.context.MethodMetaContext;
+import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
+import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
 import com.luckyframework.httpclient.proxy.sse.Event;
 import com.luckyframework.httpclient.proxy.sse.EventListener;
 import com.luckyframework.httpclient.proxy.sse.Message;
@@ -27,8 +33,6 @@ import java.util.Scanner;
  */
 @PrintLogProhibition
 @HttpClient(name = "BAI-DU-AI", value = "https://aip.baidubce.com")
-@StaticHeader("Content-Type: application/json")
-@StaticQuery("@if(#{#nonTokenApi($mc$)}): access_token=#{$this$.getAccessToken()}")
 public abstract class BaiduAI extends JsonFileTokenManager<Token> implements EventListener {
 
     //---------------------------------------------------------------------
@@ -45,6 +49,33 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
         }
     }
 
+    //---------------------------------------------------------------------
+    //                         Callback Method
+    //---------------------------------------------------------------------
+
+    @Callback(lifecycle = Lifecycle.METHOD_META)
+    static void paramAddCallback1(MethodMetaContext context) {
+        System.out.println("METHOD_META---》" + context.getCurrentAnnotatedElement());
+    }
+
+    @Callback(lifecycle = Lifecycle.REQUEST)
+    static void paramAddCallback2(MethodContext context) {
+        System.out.println("paramAddCallback2---》" + context.getCurrentAnnotatedElement());
+    }
+
+    @Callback(lifecycle = Lifecycle.REQUEST)
+    static void paramAddCallback(MethodContext context, Request request, BaiduAI baiduAI) {
+        request.addHeader("Content-Type", "application/json");
+        if (DescribeFunction.nonTokenApi(context)) {
+            request.addQueryParameter("access_token", baiduAI.getAccessToken());
+        }
+    }
+
+    @Callback(lifecycle = Lifecycle.REQUEST)
+    static void paramAddCallback3(MethodContext context) {
+        System.out.println("paramAddCallback3---》" + context.getCurrentAnnotatedElement());
+    }
+
 
     //---------------------------------------------------------------------
     //                          Api Method
@@ -56,7 +87,7 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
         "client_id=${baidu.API.APIKey}",
         "client_secret=${baidu.API.SecretKey}"
     })
-    @TokenApi
+    @Describe(isTokenApi = true)
     @Post("/oauth/2.0/token")
     abstract Token token();
 
@@ -111,4 +142,5 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
     protected boolean isExpires(Token token) {
         return token.isExpires();
     }
+
 }

@@ -1,6 +1,5 @@
 package io.github.lucklike.luckyclient.api.server.ann;
 
-import com.luckyframework.httpclient.generalapi.describe.ErrorStatusThrowException;
 import com.luckyframework.httpclient.proxy.annotations.DomainName;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
@@ -16,12 +15,6 @@ import static io.github.lucklike.luckyclient.api.server.ann.LuckyServerApi.DOMAI
  */
 @DomainName(DOMAIN_NAME_KEY)
 @RespConvert( "``#{#_result_($mc$, $url$)}``")
-@ErrorStatusThrowException(
-        code = "#{$body$.code}",
-        errCodeAssert = "#{$body$.code != 200}",
-        errStatusAssert = "#{$body$.error}",
-        errStatusMsg = "#{$body$.message}"
-)
 public interface LuckyServerApi {
 
     String DOMAIN_NAME_KEY = "${lucky-server.http}";

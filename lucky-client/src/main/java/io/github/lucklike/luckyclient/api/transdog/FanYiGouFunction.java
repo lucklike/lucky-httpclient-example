@@ -2,9 +2,8 @@ package io.github.lucklike.luckyclient.api.transdog;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import com.luckyframework.common.StringUtils;
-import com.luckyframework.httpclient.proxy.spel.function.Function;
+import com.luckyframework.httpclient.proxy.spel.FunctionAlias;
 import io.github.lucklike.httpclient.annotation.SpELFunction;
-import io.github.lucklike.luckyclient.util.SM4Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +20,7 @@ public class FanYiGouFunction {
      * @param queryMap 参与token加密的参数Map
      * @return token
      */
-    @Function("token")
+    @FunctionAlias("token")
     public static String getToken(Map<String, Object> queryMap, String privateKey) {
         Map<String, Object> paramMap = new HashMap<>(queryMap);
         paramMap.put("privatekey", privateKey);

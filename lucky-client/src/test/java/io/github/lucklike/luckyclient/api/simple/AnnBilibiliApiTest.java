@@ -17,12 +17,4 @@ public class AnnBilibiliApiTest {
     void indexTest() {
         System.out.println(annBilibiliApi.index());
     }
-
-    public static void main(String[] args) {
-        Field[] allFields = ClassUtils.getAllFields(BilibiliFunction.class);
-        for (int i = 0; i < allFields.length; i++) {
-            System.out.println(allFields[i]);
-        }
-    }
-
 }
