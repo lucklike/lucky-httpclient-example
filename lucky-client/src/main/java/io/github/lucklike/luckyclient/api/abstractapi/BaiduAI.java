@@ -9,6 +9,7 @@ import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
+import com.luckyframework.httpclient.proxy.annotations.Retryable;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.StaticQuery;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
@@ -31,6 +32,7 @@ import java.util.Scanner;
  * @version 1.0.0
  * @date 2024/9/4 20:48
  */
+@Retryable
 @PrintLogProhibition
 @HttpClient(name = "BAI-DU-AI", value = "https://aip.baidubce.com")
 public abstract class BaiduAI extends JsonFileTokenManager<Token> implements EventListener {

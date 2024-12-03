@@ -1,14 +1,13 @@
 package io.github.lucklike.luckyclient.api.cairh;
 
+import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.proxy.annotations.DownloadToLocal;
-import com.luckyframework.httpclient.proxy.annotations.ExceptionReturn;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
-import com.luckyframework.httpclient.proxy.annotations.Timeout;
 import io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi;
 import io.github.lucklike.luckyclient.api.cairh.annotations.LooseBind;
 import io.github.lucklike.luckyclient.api.cairh.request.JournalRequest;
@@ -22,32 +21,37 @@ import java.util.List;
 import java.util.Map;
 
 @CRHApi
-@Timeout(readTimeout = 60000)
 public interface CairhApi {
 
     @LooseBind
     @PropertiesJsonObject("operator_no=#{operatorNo}")
+    @Describe("操作员查询")
     @Post("/compfront/video/queryOperatorInfo")
     QueryOperatorInfoResponse queryOperatorInfo(String operatorNo);
 
     @PropertiesJsonObject({"productNo=#{productNo}"})
+    @Describe("产品查询")
     @Post("/openapi/common/queryProduct")
     Map<String, Object> queryProduct(String productNo);
 
+    @Describe("系统操作流水查询")
     @Post("/basedata/journal/queryByPage")
     Map<String, Object> queryJournal(@JsonBody JournalRequest request);
 
     @DownloadToLocal(saveDir = "D:/test/", filename = "黑名单")
+    @Describe("黑名单模版导出")
     @Post("/basedata/blacklist/exportTemplate")
     File blackListTemplateDownload();
 
+    @Describe("问卷查询")
     @Get("/comp/exampaper/queryExamDetail")
     Map<String, Object> queryExamDetail(@QueryParam("exampaper_id") String id);
 
-    @PrintLogProhibition
+    @Describe("生僻字查询")
     @Post("basedata/rareword/queryByPage")
     PageResponse<RareWordResponse> rareWordQuery(@JsonBody RareWordRequest request);
 
+    @Describe("查询所有生僻字")
     @Post("/basedata/rareword/queryAll")
     List<RareWordResponse> queryAllRareWord();
 

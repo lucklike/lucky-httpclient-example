@@ -19,7 +19,7 @@ import java.util.Map;
 public interface HeHeApi extends HeheBaseApi {
 
     @Describe("合合OCR身份证识别")
-    @Post("/icr/recognize_id_card")
+    @Post("/icr/recognize_id_card1")
     HeheIdCardResponse ocrIdCard(@BinaryBody String sfzPath);
 
     @Describe("合合OCR银行卡识别")

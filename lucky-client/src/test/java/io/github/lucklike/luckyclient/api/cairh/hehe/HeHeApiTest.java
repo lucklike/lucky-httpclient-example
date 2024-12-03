@@ -48,14 +48,14 @@ class HeHeApiTest {
         System.out.println(response);
     }
 
-    @Test
-    void ocrFaceCompare() throws IOException {
-        FaceCompareReq req = new FaceCompareReq();
-        req.setImgA(_res64("file:D:/id/20240913_165323.mp4"));
-        req.setImgB(_res64("file:D:/id/20240913_165323.mp4"));
-        ConfigurationMap response = heHeApi.ocrFaceCompare(req);
-        System.out.println(response);
-    }
+//    @Test
+//    void ocrFaceCompare() throws IOException {
+//        FaceCompareReq req = new FaceCompareReq();
+//        req.setImgA(_res64("file:D:/id/20240913_165323.mp4"));
+//        req.setImgB(_res64("file:D:/id/20240913_165323.mp4"));
+//        ConfigurationMap response = heHeApi.ocrFaceCompare(req);
+//        System.out.println(response);
+//    }
 
 
     private String _res64(String path) throws IOException {

@@ -41,11 +41,8 @@ lucky:
           key-store-password: TrustStore@2024
           key-store-file: classpath:ssl/truststore.jks
     spring-el:
-      function-classes:
+      classes:
         - clazz: io.github.lucklike.luckyclient.util.SM4Function
-      root-variables:
-        a: A1
-        b: B1
 
 
 

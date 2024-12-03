@@ -44,6 +44,7 @@ class CairhApiTest {
         StopWatch sw = new StopWatch();
         sw.start("queryJournal");
         QueryOperatorInfoResponse response = cairhApi.queryOperatorInfo("41801");
+        QueryOperatorInfoResponse response1 = cairhApi.queryOperatorInfo("1163");
         System.out.println(response);
         sw.stopWatch();
         System.out.println(sw.prettyPrintFormat());
@@ -72,8 +73,10 @@ class CairhApiTest {
     @Test
     void queryExamDetail() {
         StopWatch sw = new StopWatch();
-        sw.start("queryExamDetail");
+        sw.start("queryExamDetail-1");
         Map<String, Object> queryExamDetail = cairhApi.queryExamDetail("202407081649230130135");
+        sw.stopLast();
+        sw.start("queryExamDetail-2");
         Map<String, Object> queryExamDetail2 = cairhApi.queryExamDetail("202407081649230130135");
         System.out.println(queryExamDetail);
         sw.stopWatch();
