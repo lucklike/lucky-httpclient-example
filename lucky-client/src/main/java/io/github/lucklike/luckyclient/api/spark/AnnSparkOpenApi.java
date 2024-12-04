@@ -4,7 +4,7 @@ import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.ObjectGenerate;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
-import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
+import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.StaticForm;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
@@ -27,7 +27,7 @@ public interface AnnSparkOpenApi {
      *
      * @param content 提问内容
      */
-    @PropertiesJsonObject({
+    @PropertiesJson({
         "model=general",
         "stream=#{true}",
         "messages[0].role=user",
@@ -76,7 +76,7 @@ public interface AnnSparkOpenApi {
         "APIKey=${spark.imageGenerate.APIKey}",
         "APISecret=${spark.imageGenerate.APISecret}"
     })
-    @PropertiesJsonObject({
+    @PropertiesJson({
         "header.app_id=#{appId}",
         "parameter.chat.domain=general",
         "parameter.chat.width=#{512}",

@@ -63,6 +63,11 @@ public class AnnUserApiTest {
     }
 
     @Test
+    void postTest() {
+        api.postTest("Jack", 12);
+    }
+
+    @Test
     void fuseTest2() {
         ThreadPoolParam param = new ThreadPoolParam();
         ThreadPoolExecutor threadPool = ThreadPoolFactory.createThreadPool(param);

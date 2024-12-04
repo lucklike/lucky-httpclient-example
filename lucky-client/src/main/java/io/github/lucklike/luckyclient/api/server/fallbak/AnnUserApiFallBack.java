@@ -33,6 +33,11 @@ public class AnnUserApiFallBack implements AnnUserApi {
 
     }
 
+    @Override
+    public void postTest(String name, Integer age) {
+
+    }
+
     //【#{#hasText($api.name) ? $api.name : ''}】#{#nonText($api.id) ? '' : '(' + (#hasText($api.version) ? #str('{}/{}', $api.id, $api.version) : $api.id) + ')'} 接口响应码异常：'#{#hasText(_codeName_) ? _codeName_ + ' = ' : ''}#{__code__}' #{#hasText(_codeErrMsgName_) ? _codeErrMsgName_ + ' = ' : ''}#{#hasText(_msg_} ? _msg_ + ',' : ''#{#nonText($api.author) ? '' : '请联系接口维护人员：' + (#hasText($api.contactWay) ? #str('{}/{}', $api.author, $api.contactWay) : $api.author) + ', '}接口地址：[#{$reqMethod$}]#{$url$}
 
 }

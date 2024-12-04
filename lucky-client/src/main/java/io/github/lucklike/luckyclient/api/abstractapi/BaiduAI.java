@@ -8,9 +8,8 @@ import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
-import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
+import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.Retryable;
-import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.StaticQuery;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.context.MethodMetaContext;
@@ -93,7 +92,7 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
     @Post("/oauth/2.0/token")
     abstract Token token();
 
-    @PropertiesJsonObject({
+    @PropertiesJson({
         "messages[0].role=user",
         "messages[0].content=#{content}",
         "stream=#{true}"

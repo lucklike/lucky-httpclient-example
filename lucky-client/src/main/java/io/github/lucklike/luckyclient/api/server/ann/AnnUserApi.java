@@ -4,6 +4,9 @@ import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
+import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
+import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonArray;
+import com.luckyframework.reflect.Param;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
@@ -29,5 +32,9 @@ public interface AnnUserApi extends LuckyServerApi {
     @Describe("异常测试")
     @Get("/user/error?d=123")
     void error();
+
+    @Post("/user/post")
+    @PropertiesJsonArray
+    void postTest(@Param("$[0].name") String name, @Param("$[0].age") Integer age);
 
 }

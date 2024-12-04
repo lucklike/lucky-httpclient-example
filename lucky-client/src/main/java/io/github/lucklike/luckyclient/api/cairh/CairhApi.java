@@ -5,8 +5,7 @@ import com.luckyframework.httpclient.proxy.annotations.DownloadToLocal;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
-import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonObject;
+import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
 import io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi;
 import io.github.lucklike.luckyclient.api.cairh.annotations.LooseBind;
@@ -24,13 +23,13 @@ import java.util.Map;
 public interface CairhApi {
 
     @LooseBind
-    @PropertiesJsonObject("operator_no=#{operatorNo}")
     @Describe("操作员查询")
+    @PropertiesJson
     @Post("/compfront/video/queryOperatorInfo")
-    QueryOperatorInfoResponse queryOperatorInfo(String operatorNo);
+    QueryOperatorInfoResponse queryOperatorInfo(String operator_no);
 
-    @PropertiesJsonObject({"productNo=#{productNo}"})
     @Describe("产品查询")
+    @PropertiesJson
     @Post("/openapi/common/queryProduct")
     Map<String, Object> queryProduct(String productNo);
 
