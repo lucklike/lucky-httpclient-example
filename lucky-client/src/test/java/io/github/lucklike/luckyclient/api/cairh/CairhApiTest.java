@@ -112,6 +112,13 @@ class CairhApiTest {
         System.out.println(path);
     }
 
+    @Test
+    void testBaseDictionary() {
+        List<Integer> subCodes = cairhApi.baseDictionary();
+        subCodes.sort(Integer::compareTo);
+        subCodes.forEach(System.out::println);
+    }
+
     private Map<String, Object> toScriptMap(RareWordResponse response) {
         Map<String, Object> scritpMap = new LinkedHashMap<>();
         scritpMap.put("schema", "CRH_USER");

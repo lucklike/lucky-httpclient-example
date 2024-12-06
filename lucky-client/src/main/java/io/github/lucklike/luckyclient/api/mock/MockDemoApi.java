@@ -15,7 +15,7 @@ import io.github.lucklike.httpclient.annotation.HttpClient;
 @SpELImport(TraceFunction.class)
 public interface MockDemoApi {
 
-    @Mock(condition = "${baidu.mock.enable: false}", cache = false)
+    @Mock(condition = "${baidu.mock.enable: false}")
     @Get("http://www.baidu.com?keyword=#{keyword}")
     String baidu(String keyword);
 

@@ -37,19 +37,20 @@ public class CairhCommonFunction {
         return "#{#lb($mc$, $body$.data)}";
     }
 
-    /**
-     * CRH开放API检验的回调函数，运行非CRH API时会抛异常
-     *
-     * @param mc      方法上下文
-     * @param request 请求对象
-     */
-    @Callback(lifecycle = Lifecycle.REQUEST)
-    public static void crhApiCheck(MethodContext mc, Request request) {
-        String cairhOpenApi = mc.parseExpression(URL_CONFIG, String.class);
-        if (!request.getUrl().startsWith(cairhOpenApi)) {
-            throw new IllegalArgumentException("Not CRH Open Platform API: " + request.getUrl());
-        }
-    }
+//    /**
+//     * CRH开放API检验的回调函数，运行非CRH API时会抛异常
+//     *
+//     * @param mc      方法上下文
+//     * @param request 请求对象
+//     */
+//    @Callback(lifecycle = Lifecycle.REQUEST)
+//    public static Object crhApiCheck(MethodContext mc, Request request) {
+//        String cairhOpenApi = mc.parseExpression(URL_CONFIG, String.class);
+//        if (!request.getUrl().startsWith(cairhOpenApi)) {
+//            return new IllegalArgumentException("Not CRH Open Platform API: " + request.getUrl());
+//        }
+//        return null;
+//    }
 
     /**
      * 设置默认参数的回调函数
@@ -62,9 +63,9 @@ public class CairhCommonFunction {
     public static void addDefParamCallback(
             MethodContext mc,
             Request request,
-            @Param("#{@tokenApi}") CrhTokenApi tokenApi
+            CrhTokenApi tokenApi
     ) {
-        if (DescribeFunction.nonTokenApi(mc)) {
+        if (DescribeFunction.needToken(mc)) {
             request.addHeader("Authorization", tokenApi.getAccessToken());
         }
     }

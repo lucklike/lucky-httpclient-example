@@ -4,17 +4,13 @@ import com.luckyframework.cache.Cache;
 import com.luckyframework.cache.impl.LRUCache;
 import com.luckyframework.common.Console;
 import com.luckyframework.common.StringUtils;
-import com.luckyframework.httpclient.generalapi.describe.ApiDescribe;
 import com.luckyframework.httpclient.generalapi.describe.Describe;
-import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
 import com.luckyframework.httpclient.proxy.CommonFunctions;
 import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.Get;
-import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
-import com.luckyframework.httpclient.proxy.context.MethodMetaContext;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
-import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
+import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
 import com.luckyframework.io.FileUtils;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 import org.springframework.util.FileCopyUtils;
@@ -22,16 +18,19 @@ import org.springframework.util.FileCopyUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Scanner;
 
 /**
  * Timeless 歌词查询API
  */
-@PrintLogProhibition
 @Condition(assertion = "#{$status$ != 200}", exception = "[Timeless Api]<{}>接口调用异常，错误的状态码：'#{$status$}' 接口地址：[#{$reqMethod$}] #{$url$}")
-@Condition(assertion = "#{$body$.errno != 0}", exception = "[Timeless Api]<#{#apiName}>接口调用异常，错误的响应码：'#{$body$.errno}' : #{$body$.errmsg} 接口地址：[#{$reqMethod$}] #{$url$}")
+@Condition(assertion = "#{$body$.errno != 0}", exception = "[Timeless Api]<#{$api.name}>接口调用异常，错误的响应码：'#{$body$.errno}' : #{$body$.errmsg} 接口地址：[#{$reqMethod$}] #{$url$}")
 @HttpClient("https://api.timelessq.com")
 public interface TimelessApi {
+
+    @Var(lifecycle = Lifecycle.METHOD_META)
+    String $api = "#{#describe($mec$)}";
 
     // 歌词文件保存路径
     File SAVE_DIR = new File(System.getProperty("user.dir"), "lyrics");
@@ -97,11 +96,9 @@ public interface TimelessApi {
     @Get("/music/tencent/search?keyword=#{song}")
     String querySongId(String song);
 
+    @RespConvert("#{$body$.data}")
+    @Describe("省市区街道列表查询")
+    @Get("/district?level=4")
+    List<District> district();
 
-    @Callback(lifecycle = Lifecycle.METHOD_META, store = true, storeName = "apiName")
-    static String apiName(MethodMetaContext metaContext) {
-        ApiDescribe describe = DescribeFunction.describe(metaContext);
-        String name = describe.getName();
-        return StringUtils.hasText(name) ? name : metaContext.getCurrentAnnotatedElement().getName();
-    }
 }

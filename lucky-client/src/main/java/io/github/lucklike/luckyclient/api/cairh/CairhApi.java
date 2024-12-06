@@ -7,6 +7,8 @@ import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
+import com.luckyframework.httpclient.proxy.annotations.RespConvert;
+import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
 import io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi;
 import io.github.lucklike.luckyclient.api.cairh.annotations.LooseBind;
 import io.github.lucklike.luckyclient.api.cairh.request.JournalRequest;
@@ -53,5 +55,11 @@ public interface CairhApi {
     @Describe("查询所有生僻字")
     @Post("/basedata/rareword/queryAll")
     List<RareWordResponse> queryAllRareWord();
+
+    @Describe(needToken = false)
+    @RespConvert("#{$body$.data.content.?[dict_code eq 'agreement_type'].![order_no]}")
+    @StaticJsonBody("{\"group\":\"10user\",\"leaf\":\"basedictionary\"}")
+    @Post("http://stool.cairenhui.com/resource/cdata/query")
+    List<Integer> baseDictionary();
 
 }

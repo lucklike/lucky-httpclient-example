@@ -5,6 +5,7 @@ import com.luckyframework.common.Console;
 import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
+import com.luckyframework.httpclient.generalapi.describe.TokenApi;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
@@ -67,7 +68,7 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
     @Callback(lifecycle = Lifecycle.REQUEST)
     static void paramAddCallback(MethodContext context, Request request, BaiduAI baiduAI) {
         request.addHeader("Content-Type", "application/json");
-        if (DescribeFunction.nonTokenApi(context)) {
+        if (DescribeFunction.needToken(context)) {
             request.addQueryParameter("access_token", baiduAI.getAccessToken());
         }
     }
@@ -84,18 +85,18 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
 
 
     @StaticQuery({
-        "grant_type=client_credentials",
-        "client_id=${baidu.API.APIKey}",
-        "client_secret=${baidu.API.SecretKey}"
+            "grant_type=client_credentials",
+            "client_id=${baidu.API.APIKey}",
+            "client_secret=${baidu.API.SecretKey}"
     })
-    @Describe(isTokenApi = true)
+    @TokenApi
     @Post("/oauth/2.0/token")
     abstract Token token();
 
     @PropertiesJson({
-        "messages[0].role=user",
-        "messages[0].content=#{content}",
-        "stream=#{true}"
+            "messages[0].role=user",
+            "messages[0].content=#{content}",
+            "stream=#{true}"
     })
     @Sse(expression = "#{$this$}")
     @Post("/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k")
@@ -129,7 +130,7 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
 
     @Override
     protected File getJsonFile() {
-        return new File(System.getProperty("user.dir"),"baidu_token.json");
+        return new File(System.getProperty("user.dir"), "baidu_token.json");
     }
 
     @Override

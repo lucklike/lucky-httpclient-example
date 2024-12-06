@@ -5,6 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.List;
 
 @SpringBootTest
 class TimelessApiTest {
@@ -19,9 +20,9 @@ class TimelessApiTest {
     }
 
     @Test
-    void testqQuerySongId() {
-        String s = timelessApi.querySongId("");
-        System.out.println(s);
+    void testDistrict() {
+        List<District> districtList = timelessApi.district();
+        System.out.println(districtList);
     }
 
 }

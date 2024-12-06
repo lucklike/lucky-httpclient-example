@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: lucky_client
   config:
     import:
       - optional:classpath:api-info.yml
