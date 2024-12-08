@@ -1,5 +1,6 @@
 package io.github.lucklike.luckyclient.api.timeless;
 
+import com.luckyframework.common.StopWatch;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,7 +22,11 @@ class TimelessApiTest {
 
     @Test
     void testDistrict() {
+        StopWatch sw = new StopWatch();
+        sw.start("query");
         List<District> districtList = timelessApi.district();
+        sw.stopWatch();
+        System.out.println(sw.prettyPrintMillis());
         System.out.println(districtList);
     }
 

@@ -3,7 +3,6 @@ package io.github.lucklike.luckyclient.api.abstractapi;
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.Console;
 import com.luckyframework.httpclient.core.meta.Request;
-import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
 import com.luckyframework.httpclient.generalapi.describe.TokenApi;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
