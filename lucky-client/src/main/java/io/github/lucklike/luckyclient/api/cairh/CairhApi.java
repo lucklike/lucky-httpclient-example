@@ -9,6 +9,7 @@ import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
+import com.luckyframework.httpclient.proxy.annotations.Wrapper;
 import io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi;
 import io.github.lucklike.luckyclient.api.cairh.annotations.LooseBind;
 import io.github.lucklike.luckyclient.api.cairh.request.JournalRequest;
@@ -20,9 +21,13 @@ import io.github.lucklike.luckyclient.api.cairh.response.RareWordResponse;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 @CRHApi
 public interface CairhApi {
+
+    @Wrapper("#{$this$.queryOperatorInfo(operator_no).userName}")
+    Future<String> getOperatorName(String operator_no);
 
     @LooseBind
     @Describe("操作员查询")
@@ -61,5 +66,9 @@ public interface CairhApi {
     @StaticJsonBody("{\"group\":\"10user\",\"leaf\":\"basedictionary\"}")
     @Post("http://stool.cairenhui.com/resource/cdata/query")
     List<Integer> baseDictionary();
+
+
+
+
 
 }

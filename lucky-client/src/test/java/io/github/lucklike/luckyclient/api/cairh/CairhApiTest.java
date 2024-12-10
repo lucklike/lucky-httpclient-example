@@ -1,5 +1,7 @@
 package io.github.lucklike.luckyclient.api.cairh;
 
+import com.luckyframework.async.EnhanceFuture;
+import com.luckyframework.async.EnhanceFutureFactory;
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.MutableMap;
 import com.luckyframework.common.StopWatch;
@@ -23,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @SpringBootTest
@@ -37,6 +40,15 @@ class CairhApiTest {
     @Test
     void queryProduct() {
         System.out.println(cairhApi.queryProduct("000086"));
+    }
+
+    @Test
+    void testGetOperatorName() {
+        EnhanceFutureFactory futureFactory = new EnhanceFutureFactory();
+        EnhanceFuture<String> enhanceFuture = futureFactory.create();
+        enhanceFuture.addFuture(cairhApi.getOperatorName("1163"));
+        enhanceFuture.addFuture(cairhApi.getOperatorName("999"));
+        System.out.println(enhanceFuture.getResultMap());
     }
 
     @Test
