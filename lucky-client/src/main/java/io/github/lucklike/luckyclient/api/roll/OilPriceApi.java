@@ -6,6 +6,7 @@ import com.luckyframework.httpclient.proxy.annotations.QueryParam;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.Retryable;
 import com.luckyframework.httpclient.proxy.annotations.StaticQuery;
+import com.luckyframework.httpclient.proxy.annotations.Wrapper;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 
 import java.util.Map;
@@ -19,9 +20,14 @@ import java.util.Map;
 @StaticQuery({"app_id=${ROLL.AppID}", "app_secret=${ROLL.AppSecret}"})
 public interface OilPriceApi {
 
+    @Wrapper("#{$this$.query(p).t92}")
+    String query92(String p);
+
+    @Wrapper("#{$this$.query0(province).data}")
+    Map<String, Object> query(String province);
 
     @Retryable(retryCount = 10, waitMillis = 2000L)
-    @RespConvert("#{$body$.data}")
     @Get("https://www.mxnzp.com/api/oil/search")
-    Map<String, Object> query(@QueryParam String province);
+    Map<String, Object> query0(@QueryParam String province);
+
 }

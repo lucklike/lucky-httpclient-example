@@ -24,6 +24,15 @@ public class OilPriceApiTest {
         System.out.println(t.format());
     }
 
+    @Test
+    void testQuery() {
+//        Map<String, Object> map = api.query("湖北");
+//        System.out.println(map);
+
+        System.out.println(api.query92("广东"));
+
+    }
+
     private void sleep() throws InterruptedException {
         Thread.sleep(2000L);
     }
