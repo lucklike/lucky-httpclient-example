@@ -21,7 +21,7 @@ lucky:
       packages:
         - io.github.lucklike.luckyclient.api
         - com.luckyframework.httpclient.generalapi
-      body-max-length: 1024
+      body-max-length: -1
       force-print-body: true
 
     cookie-manage:

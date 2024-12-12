@@ -1,4 +1,4 @@
-package io.github.lucklike.luckyclient.api.cairh.response;
+package io.github.lucklike.luckyclient.api.cairh.basedata.resp;
 
 
 import lombok.Data;

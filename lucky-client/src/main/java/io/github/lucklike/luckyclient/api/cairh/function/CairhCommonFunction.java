@@ -8,20 +8,24 @@ import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.spel.Namespace;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
-import com.luckyframework.reflect.Param;
+import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
 import io.github.lucklike.luckyclient.api.cairh.BizException;
-import io.github.lucklike.luckyclient.api.cairh.CrhTokenApi;
 import io.github.lucklike.luckyclient.api.cairh.annotations.LooseBind;
+import io.github.lucklike.luckyclient.api.cairh.openapi.CrhOpenApi;
 
 import java.util.Objects;
-
-import static io.github.lucklike.luckyclient.api.cairh.annotations.BaseApi.URL_CONFIG;
 
 /**
  * CRH-OPENAPI公共方法
  */
 @Namespace("crh")
 public class CairhCommonFunction {
+
+    /**
+     * 构建代理对象时生成URL
+     */
+    @Var(lifecycle = Lifecycle.CLASS)
+    public static final String $crh_base_url = "${cairh.openapi.url}/#{#ann($cc$, 'io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi').project}";
 
     /**
      * 确定转换表达式，当方法被{@link LooseBind @LooseBind}标注时使用松散绑定
@@ -57,16 +61,16 @@ public class CairhCommonFunction {
      *
      * @param mc       方法上下文
      * @param request  请求对象
-     * @param tokenApi 获取Token的类对象
+     * @param openApi 获取Token的类对象
      */
     @Callback(lifecycle = Lifecycle.REQUEST)
     public static void addDefParamCallback(
             MethodContext mc,
             Request request,
-            CrhTokenApi tokenApi
+            CrhOpenApi openApi
     ) {
         if (DescribeFunction.needToken(mc)) {
-            request.addHeader("Authorization", tokenApi.getAccessToken());
+            request.addHeader("Authorization", openApi.getAccessToken());
         }
     }
 

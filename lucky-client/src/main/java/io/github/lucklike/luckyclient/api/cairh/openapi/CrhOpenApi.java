@@ -1,26 +1,33 @@
-package io.github.lucklike.luckyclient.api.cairh;
+package io.github.lucklike.luckyclient.api.cairh.openapi;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.generalapi.describe.TokenApi;
+import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
 import com.luckyframework.httpclient.generalapi.token.MemoryTokenManager;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi;
-import lombok.Data;
 
+import java.io.File;
 import java.util.Date;
+import java.util.Map;
 
+@CRHApi(project = "openapi")
+public abstract class CrhOpenApi extends JsonFileTokenManager<Token> {
 
-@CRHApi(name = "tokenApi")
-public abstract class CrhTokenApi extends MemoryTokenManager<Token> {
+    @Describe("产品查询")
+    @PropertiesJson
+    @Post("/common/queryProduct")
+    public abstract Map<String, Object> queryProduct(String productNo);
 
+    @Describe("获取访问Token")
     @PropertiesJson({
-            "secret_key=${cairh.openapi.secretKey}",
-            "app_id=${cairh.openapi.appId}"
+        "secret_key=${cairh.openapi.secretKey}",
+        "app_id=${cairh.openapi.appId}"
     })
     @TokenApi
-    @Post("/openapi/authless/token")
-    abstract Token token();
+    @Post("/authless/token")
+    public abstract Token token();
 
 
     //---------------------------------------------------------------------------
@@ -41,13 +48,10 @@ public abstract class CrhTokenApi extends MemoryTokenManager<Token> {
         return token.getExpiresAt().before(new Date());
     }
 
+    @Override
+    protected File getJsonFile() {
+        return new File(System.getProperty("user.dir"), "cairh_token.json");
+    }
 
 }
 
-@Data
-class Token {
-    private String accessToken;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date expiresAt;
-}

@@ -1,6 +1,6 @@
-package io.github.lucklike.luckyclient.api.cairh.request;
+package io.github.lucklike.luckyclient.api.cairh.basedata.req;
 
-import io.github.lucklike.luckyclient.api.cairh.response.RareWordResponse;
+import io.github.lucklike.luckyclient.api.cairh.basedata.resp.RareWordResponse;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

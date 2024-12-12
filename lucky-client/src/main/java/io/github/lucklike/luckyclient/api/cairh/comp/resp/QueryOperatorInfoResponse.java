@@ -1,7 +1,6 @@
-package io.github.lucklike.luckyclient.api.cairh.response;
+package io.github.lucklike.luckyclient.api.cairh.comp.resp;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 /**
  * 查询操作员响应

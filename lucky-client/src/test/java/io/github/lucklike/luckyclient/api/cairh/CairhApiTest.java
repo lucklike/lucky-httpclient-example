@@ -6,12 +6,16 @@ import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.MutableMap;
 import com.luckyframework.common.StopWatch;
 import com.luckyframework.common.StringUtils;
+import io.github.lucklike.luckyclient.api.cairh.basedata.BaseDataApi;
+import io.github.lucklike.luckyclient.api.cairh.comp.CompApi;
+import io.github.lucklike.luckyclient.api.cairh.comp.CompFrontApi;
 import io.github.lucklike.luckyclient.api.cairh.mall.MallApi;
-import io.github.lucklike.luckyclient.api.cairh.request.JournalRequest;
-import io.github.lucklike.luckyclient.api.cairh.request.RareWordRequest;
-import io.github.lucklike.luckyclient.api.cairh.response.PageResponse;
-import io.github.lucklike.luckyclient.api.cairh.response.QueryOperatorInfoResponse;
-import io.github.lucklike.luckyclient.api.cairh.response.RareWordResponse;
+import io.github.lucklike.luckyclient.api.cairh.openapi.CrhOpenApi;
+import io.github.lucklike.luckyclient.api.cairh.basedata.req.JournalRequest;
+import io.github.lucklike.luckyclient.api.cairh.basedata.req.RareWordRequest;
+import io.github.lucklike.luckyclient.api.cairh.basedata.resp.PageResponse;
+import io.github.lucklike.luckyclient.api.cairh.comp.resp.QueryOperatorInfoResponse;
+import io.github.lucklike.luckyclient.api.cairh.basedata.resp.RareWordResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,29 +29,37 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @SpringBootTest
 class CairhApiTest {
 
-    @Autowired
-    private CairhApi cairhApi;
+    @Resource
+    private BaseDataApi baseDataApi;
+
+    @Resource
+    private CompApi compApi;
+
+    @Resource
+    private CompFrontApi compFrontApi;
+
+    @Resource
+    private CrhOpenApi crhOpenApi;
 
     @Autowired
     private ScriptGenerateApi scriptGenerateApi;
 
     @Test
     void queryProduct() {
-        System.out.println(cairhApi.queryProduct("000086"));
+        System.out.println(crhOpenApi.queryProduct("000086"));
     }
 
     @Test
     void testGetOperatorName() {
         EnhanceFutureFactory futureFactory = new EnhanceFutureFactory();
         EnhanceFuture<String> enhanceFuture = futureFactory.create();
-        enhanceFuture.addFuture(cairhApi.getOperatorName("1163"));
-        enhanceFuture.addFuture(cairhApi.getOperatorName("999"));
+        enhanceFuture.addAsyncTask(() -> compFrontApi.getOperatorName("1163"));
+        enhanceFuture.addAsyncTask(() -> compFrontApi.getOperatorName("999"));
         System.out.println(enhanceFuture.getResultMap());
     }
 
@@ -55,8 +67,8 @@ class CairhApiTest {
     void queryOperatorInfo() {
         StopWatch sw = new StopWatch();
         sw.start("queryJournal");
-        QueryOperatorInfoResponse response = cairhApi.queryOperatorInfo("41801");
-        QueryOperatorInfoResponse response1 = cairhApi.queryOperatorInfo("1163");
+        QueryOperatorInfoResponse response = compFrontApi.queryOperatorInfo("41801");
+        QueryOperatorInfoResponse response1 = compFrontApi.queryOperatorInfo("1163");
         System.out.println(response);
         sw.stopWatch();
         System.out.println(sw.prettyPrintFormat());
@@ -70,7 +82,7 @@ class CairhApiTest {
         req.setCurrent(1);
         req.setSize(10);
         req.setTable_name("allbranchjour");
-        Map<String, Object> diffMap = cairhApi.queryJournal(req);
+        Map<String, Object> diffMap = baseDataApi.queryJournal(req);
         System.out.println(diffMap);
         sw.stopWatch();
         System.out.println(sw.prettyPrintFormat());
@@ -78,7 +90,7 @@ class CairhApiTest {
 
     @Test
     void blackListTemplateDownload() {
-        File file = cairhApi.blackListTemplateDownload();
+        File file = baseDataApi.blackListTemplateDownload();
         System.out.println(file);
     }
 
@@ -86,10 +98,10 @@ class CairhApiTest {
     void queryExamDetail() {
         StopWatch sw = new StopWatch();
         sw.start("queryExamDetail-1");
-        Map<String, Object> queryExamDetail = cairhApi.queryExamDetail("202407081649230130135");
+        Map<String, Object> queryExamDetail = compApi.queryExamDetail("202407081649230130135");
         sw.stopLast();
         sw.start("queryExamDetail-2");
-        Map<String, Object> queryExamDetail2 = cairhApi.queryExamDetail("202407081649230130135");
+        Map<String, Object> queryExamDetail2 = compApi.queryExamDetail("202407081649230130135");
         System.out.println(queryExamDetail);
         sw.stopWatch();
         System.out.println(sw.prettyPrintFormat());
@@ -98,13 +110,13 @@ class CairhApiTest {
     @Test
     void rareWordQueryTest() {
         RareWordRequest request = new RareWordRequest();
-        PageResponse<RareWordResponse> response = cairhApi.rareWordQuery(request);
+        PageResponse<RareWordResponse> response = baseDataApi.rareWordQuery(request);
 
         Set<String> idSet = new HashSet<>();
         for (int i = 0; i < response.getPages(); i++) {
             RareWordRequest r = new RareWordRequest();
             r.setCurrent(i);
-            Set<String> ids = cairhApi.rareWordQuery(r).getRecords().stream().map(RareWordResponse::getSerial_id).collect(Collectors.toSet());
+            Set<String> ids = baseDataApi.rareWordQuery(r).getRecords().stream().map(RareWordResponse::getSerial_id).collect(Collectors.toSet());
             idSet.addAll(ids);
             System.out.println("当前页：" + i + ", 累计记录的ID数：" + idSet.size());
         }
@@ -113,7 +125,7 @@ class CairhApiTest {
 
     @Test
     void queryAllRareWordTest() {
-        List<RareWordResponse> allRareWordList = cairhApi.queryAllRareWord();
+        List<RareWordResponse> allRareWordList = baseDataApi.queryAllRareWord();
 
         ConfigurationMap configMap = new ConfigurationMap();
         configMap.addProperty("name", "数据插入");
@@ -122,13 +134,6 @@ class CairhApiTest {
         configMap.addProperty("data", allRareWordList.stream().map(this::toScriptMap).collect(Collectors.toList()));
         String path = scriptGenerateApi.getSqlScript(configMap);
         System.out.println(path);
-    }
-
-    @Test
-    void testBaseDictionary() {
-        List<Integer> subCodes = cairhApi.baseDictionary();
-        subCodes.sort(Integer::compareTo);
-        subCodes.forEach(System.out::println);
     }
 
     private Map<String, Object> toScriptMap(RareWordResponse response) {

@@ -1,9 +1,6 @@
-package io.github.lucklike.luckyclient.api.cairh.request;
+package io.github.lucklike.luckyclient.api.cairh.basedata.req;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-
-import java.util.Date;
 
 
 @Data

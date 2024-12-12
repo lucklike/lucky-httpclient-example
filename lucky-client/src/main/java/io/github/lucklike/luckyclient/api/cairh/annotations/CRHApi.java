@@ -14,8 +14,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static io.github.lucklike.luckyclient.api.cairh.annotations.BaseApi.URL_CONFIG;
-
 /**
  * 注解集成方式
  */
@@ -24,11 +22,13 @@ import static io.github.lucklike.luckyclient.api.cairh.annotations.BaseApi.URL_C
 @Documented
 @Inherited
 @SSL
-@HttpClient(URL_CONFIG)
+@HttpClient("#{crh.$crh_base_url}")
 @RespConvert("``#{#crh_convert($mc$)}``")
 @SpELImport({CairhCommonFunction.class})
 public @interface CRHApi {
 
     @AliasFor(annotation = HttpClient.class, attribute = "name")
     String name() default "";
+
+    String project() default "";
 }
