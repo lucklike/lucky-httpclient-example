@@ -58,8 +58,9 @@ class CairhApiTest {
     void testGetOperatorName() {
         EnhanceFutureFactory futureFactory = new EnhanceFutureFactory();
         EnhanceFuture<String> enhanceFuture = futureFactory.create();
-        enhanceFuture.addAsyncTask(() -> compFrontApi.getOperatorName("1163"));
-        enhanceFuture.addAsyncTask(() -> compFrontApi.getOperatorName("999"));
+        enhanceFuture.addFuture(compFrontApi.getOperatorName("1163"));
+        enhanceFuture.addFuture(compFrontApi.getOperatorName("001157"));
+        enhanceFuture.addFuture(compFrontApi.getOperatorName("000000"));
         System.out.println(enhanceFuture.getResultMap());
     }
 
@@ -67,8 +68,7 @@ class CairhApiTest {
     void queryOperatorInfo() {
         StopWatch sw = new StopWatch();
         sw.start("queryJournal");
-        QueryOperatorInfoResponse response = compFrontApi.queryOperatorInfo("41801");
-        QueryOperatorInfoResponse response1 = compFrontApi.queryOperatorInfo("1163");
+        QueryOperatorInfoResponse response = compFrontApi.queryOperatorInfo0("41801");
         System.out.println(response);
         sw.stopWatch();
         System.out.println(sw.prettyPrintFormat());

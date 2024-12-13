@@ -1,10 +1,13 @@
 package io.github.lucklike.luckyclient.api.cairh.function;
 
 import com.luckyframework.common.ConfigurationMap;
+import com.luckyframework.conversion.ConversionUtils;
 import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.core.meta.Response;
 import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
+import com.luckyframework.httpclient.proxy.CommonFunctions;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
+import com.luckyframework.httpclient.proxy.spel.FunctionAlias;
 import com.luckyframework.httpclient.proxy.spel.Namespace;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
@@ -12,6 +15,7 @@ import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
 import io.github.lucklike.luckyclient.api.cairh.BizException;
 import io.github.lucklike.luckyclient.api.cairh.annotations.LooseBind;
 import io.github.lucklike.luckyclient.api.cairh.openapi.CrhOpenApi;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.Objects;
 
@@ -27,18 +31,26 @@ public class CairhCommonFunction {
     @Var(lifecycle = Lifecycle.CLASS)
     public static final String $crh_base_url = "${cairh.openapi.url}/#{#ann($cc$, 'io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi').project}";
 
+
     /**
      * 确定转换表达式，当方法被{@link LooseBind @LooseBind}标注时使用松散绑定
      *
      * @param mc 当前方法上下文
      * @return 转换表达式
      */
-    public static String convert(MethodContext mc) {
+    @FunctionAlias("convert")
+    public static Object convert(MethodContext mc, Response response) {
+        // 方法返回值为Response类型时直接返回响应对象
+        if (Response.class.isAssignableFrom(mc.getReturnResolvableType().resolve())) {
+            return response;
+        }
+
+        // 根据是否被@LooseBind注解标注来决定是否启用松散绑定功能
         LooseBind looseBindAnn = mc.getSameAnnotationCombined(LooseBind.class);
         if (looseBindAnn == null || !looseBindAnn.value()) {
-            return "#{$body$.data}";
+            return response.getConfigMapResult().getEntry("data", mc.getRealMethodReturnType());
         }
-        return "#{#lb($mc$, $body$.data)}";
+        return CommonFunctions.lb(mc, response.getConfigMapResult().getMap("data"));
     }
 
 //    /**
@@ -67,7 +79,7 @@ public class CairhCommonFunction {
     public static void addDefParamCallback(
             MethodContext mc,
             Request request,
-            CrhOpenApi openApi
+            @Qualifier("crhOpenApi") CrhOpenApi openApi
     ) {
         if (DescribeFunction.needToken(mc)) {
             request.addHeader("Authorization", openApi.getAccessToken());

@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 @Inherited
 @SSL
 @HttpClient("#{crh.$crh_base_url}")
-@RespConvert("``#{#crh_convert($mc$)}``")
+@RespConvert("#{#crh_convert($mc$, $resp$)}")
 @SpELImport({CairhCommonFunction.class})
 public @interface CRHApi {
 
