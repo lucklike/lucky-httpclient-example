@@ -4,6 +4,7 @@ package io.github.lucklike.luckyclient.api.cairh.basedata;
 import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.proxy.annotations.DownloadToLocal;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
+import com.luckyframework.httpclient.proxy.annotations.JsonParam;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
@@ -27,9 +28,8 @@ public interface BaseDataApi {
     Future<String> getOperName(String id);
 
     @Describe("操作员信息查询")
-    @PropertiesJson
     @Post("/operInfo/queryOne")
-    OperInfoQry queryOperInfo(String staff_no);
+    OperInfoQry queryOperInfo(@JsonParam String staff_no);
 
     @Describe("系统操作流水查询")
     @Post("/journal/queryByPage")
@@ -53,7 +53,6 @@ public interface BaseDataApi {
 
     @PrintLogProhibition
     @Describe("查询单个生僻字")
-    @PropertiesJson
     @Post("/rareword/queryOne")
-    RareWordResponse getOneRareWord(String serial_id);
+    RareWordResponse getOneRareWord(@JsonParam String serial_id);
 }

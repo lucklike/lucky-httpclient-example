@@ -5,6 +5,8 @@ import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.JsonParam;
 import com.luckyframework.httpclient.proxy.annotations.Post;
+import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
+import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonArray;
 import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
@@ -32,11 +34,21 @@ public interface AnnUserApi extends LuckyServerApi {
     @Get("/user/error?d=123")
     void error();
 
+    @PropertiesJson({"a.b=123", "a.c=567"})
     @Post("/user/post")
     void postTest(@JsonParam String name, @JsonParam Integer age);
 
 
-    @StaticJsonBody("#{#read('classpath:books.json')}")
+    @PropertiesJsonArray({
+            "$[0].a.b=12",
+            "$[0].a.c=llll",
+            "$[1].a.b=2212",
+            "$[1].a.c=gggg"})
     @Post("/user/post")
-    void postTest2();
+    void postTest2(Integer b, String c);
+
+
+    @StaticJsonBody("``#{#read('classpath:books.json')}``")
+    @Post("/user/post")
+    void postTest3(Integer a, String c);
 }

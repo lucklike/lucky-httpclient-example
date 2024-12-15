@@ -3,6 +3,7 @@ package io.github.lucklike.luckyclient.api.cairh.openapi;
 import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.generalapi.describe.TokenApi;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
+import com.luckyframework.httpclient.proxy.annotations.JsonParam;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi;
@@ -15,9 +16,8 @@ import java.util.Map;
 public abstract class CrhOpenApi extends JsonFileTokenManager<Token> {
 
     @Describe("产品查询")
-    @PropertiesJson
     @Post("/common/queryProduct")
-    public abstract Map<String, Object> queryProduct(String productNo);
+    public abstract Map<String, Object> queryProduct(@JsonParam String productNo);
 
     @Describe("获取访问Token")
     @PropertiesJson({

@@ -70,8 +70,14 @@ public class AnnUserApiTest {
 
     @Test
     void postTest2() {
-        api.postTest2();
+        api.postTest2(333, "aaaaaa");
     }
+
+    @Test
+    void postTest3() {
+        api.postTest3(333, "aaaaaa");
+    }
+
 
     @Test
     void fuseTest2() {

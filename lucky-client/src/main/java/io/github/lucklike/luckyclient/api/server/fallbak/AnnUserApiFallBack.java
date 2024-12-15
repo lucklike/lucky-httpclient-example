@@ -39,7 +39,12 @@ public class AnnUserApiFallBack implements AnnUserApi {
     }
 
     @Override
-    public void postTest2() {
+    public void postTest2(Integer b, String c) {
+
+    }
+
+    @Override
+    public void postTest3(Integer b, String c) {
 
     }
 
