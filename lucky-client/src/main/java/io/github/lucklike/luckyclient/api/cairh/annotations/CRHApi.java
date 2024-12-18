@@ -5,6 +5,7 @@ import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.core.meta.Response;
 import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
 import com.luckyframework.httpclient.proxy.CommonFunctions;
+import com.luckyframework.httpclient.proxy.annotations.AsyncExecutor;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.SSL;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
@@ -18,6 +19,7 @@ import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 import io.github.lucklike.luckyclient.api.cairh.BizException;
 import io.github.lucklike.luckyclient.api.cairh.openapi.CrhOpenApi;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.Documented;
@@ -26,6 +28,7 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.lang.reflect.Method;
 import java.util.Objects;
 
 /**
@@ -50,6 +53,7 @@ public @interface CRHApi {
 /**
  * CRH-OPENAPI公共方法
  */
+@Slf4j
 @Namespace("crh")
 class CairhCommonFunction {
 
@@ -123,5 +127,10 @@ class CairhCommonFunction {
         }
 
         return null;
+    }
+
+    @Callback(lifecycle = Lifecycle.METHOD, async = true)
+    public static void asyncCallback(Method method) {
+        log.info("-----------------------[{}]asyncCallback-----------------------", method.getName());
     }
 }

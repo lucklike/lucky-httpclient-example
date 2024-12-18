@@ -14,6 +14,12 @@ lucky:
       core-pool-size: 10
       blocking-queue-size: 100
       maximum-pool-size: 20
+      alternative:
+        callback-pool:
+          core-pool-size: 5
+          blocking-queue-size: 20
+          maximum-pool-size: 10
+          name-format: callback-
     #使用JDK执行器
     http-executor: jdk
     #日志相关的配置

@@ -20,6 +20,7 @@ import java.util.Map;
     value = {AuthUtils.class},
     pack = {"java.util"}
 )
+@Condition(assertion = "#{$status$ != 200}", exception = "讯飞火星API调用失败，异常的HTTP状态码[#{$status$}]: #{$body$.header.message}")
 public interface AnnSparkOpenApi {
 
     /**
@@ -34,7 +35,7 @@ public interface AnnSparkOpenApi {
         "messages[0].content=#{content}"
     })
     @StaticHeader({"Authorization: Bearer ${spark.completions.APIKey}:${spark.completions.APISecret}"})
-    @Sse(listener = @ObjectGenerate(SparkCompletionsEventListener.class))
+    @Sse(listenerClass = SparkCompletionsEventListener.class)
     @Post("https://spark-api-open.xf-yun.com/v1/chat/completions")
     @PrintLogProhibition
     void completions(String content);
@@ -58,7 +59,6 @@ public interface AnnSparkOpenApi {
         "X-CheckSum: #{#md5(APIKey + currTime + base64Param)}"
     })
     @StaticForm({ "image=#{#base64(#resource(path))}"})
-    @Condition(assertion = "#{$status$ != 200}", exception = "讯飞火星API调用失败，异常的HTTP状态码[#{$status$}]: #{$body$.header.message}")
     @Condition(assertion = "#{$body$.code != '0'}", exception = "【身份证识别】讯飞火星API调用失败，异常的CODE状态码：[#{$body$.code}]: #{$body$.error_msg}")
     @RespConvert( "#{$body$.data}")
     @Post("https://webapi.xfyun.cn/v1/service/v1/ocr/idcard")
