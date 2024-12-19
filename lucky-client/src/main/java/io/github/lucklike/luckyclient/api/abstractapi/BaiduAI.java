@@ -15,10 +15,13 @@ import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.context.MethodMetaContext;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
+import com.luckyframework.httpclient.proxy.sse.AnnotationEventListener;
 import com.luckyframework.httpclient.proxy.sse.Event;
 import com.luckyframework.httpclient.proxy.sse.EventListener;
 import com.luckyframework.httpclient.proxy.sse.Message;
+import com.luckyframework.httpclient.proxy.sse.OnMessage;
 import com.luckyframework.httpclient.proxy.sse.Sse;
+import com.luckyframework.reflect.Param;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 import io.github.lucklike.luckyclient.api.baiduai.Token;
 import io.github.lucklike.luckyclient.api.util.DelayedOutput;
@@ -33,8 +36,8 @@ import java.util.Scanner;
  */
 @Retryable
 @PrintLogProhibition
-@HttpClient(name = "BAI-DU-AI", value = "https://aip.baidubce.com")
-public abstract class BaiduAI extends JsonFileTokenManager<Token> implements EventListener {
+@HttpClient(name = "annBaiduAI", value = "https://aip.baidubce.com")
+public abstract class BaiduAI extends JsonFileTokenManager<Token> {
 
     //---------------------------------------------------------------------
     //                          Service Method
@@ -54,29 +57,12 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
     //                         Callback Method
     //---------------------------------------------------------------------
 
-    @Callback(lifecycle = Lifecycle.METHOD_META)
-    static void paramAddCallback1(MethodMetaContext context) {
-        System.out.println("METHOD_META---》" + context.getCurrentAnnotatedElement());
-    }
-
-    @Callback(lifecycle = Lifecycle.REQUEST)
-    static void paramAddCallback2(MethodContext context) {
-        System.out.println("paramAddCallback2---》" + context.getCurrentAnnotatedElement());
-    }
-
     @Callback(lifecycle = Lifecycle.REQUEST)
     static void paramAddCallback(MethodContext context, Request request, BaiduAI baiduAI) {
-        request.addHeader("Content-Type", "application/json");
         if (DescribeFunction.needToken(context)) {
             request.addQueryParameter("access_token", baiduAI.getAccessToken());
         }
     }
-
-    @Callback(lifecycle = Lifecycle.REQUEST)
-    static void paramAddCallback3(MethodContext context) {
-        System.out.println("paramAddCallback3---》" + context.getCurrentAnnotatedElement());
-    }
-
 
     //---------------------------------------------------------------------
     //                          Api Method
@@ -97,27 +83,10 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
             "messages[0].content=#{content}",
             "stream=#{true}"
     })
-    @Sse(expression = "#{$this$}")
+    @Sse(listenerClass = BaiduSseEventListener.class)
     @Post("/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k")
     abstract void questionsAndAnswers(String content);
 
-
-    //---------------------------------------------------------------------
-    //                          EventListener Method
-    //---------------------------------------------------------------------
-
-    @Override
-    public void onMessage(Event<Message> event) {
-        Message message = event.getMessage();
-        ConfigurationMap confMap = message.jsonDataToMap();
-        if (!confMap.getBoolean("is_end")) {
-            String result = confMap.getString("result");
-            DelayedOutput.output(result, 70, 20);
-        } else {
-            Console.printlnMulberry("\n");
-            DelayedOutput.clearOutputLength();
-        }
-    }
 
     //---------------------------------------------------------------------
     //                         Token Method
@@ -142,6 +111,21 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
     @Override
     protected boolean isExpires(Token token) {
         return token.isExpires();
+    }
+
+
+    public static class BaiduSseEventListener extends AnnotationEventListener {
+
+        @OnMessage("#{$data$.is_end}")
+        public void clear() {
+            Console.printlnMulberry("\n");
+            DelayedOutput.clearOutputLength();
+        }
+
+        @OnMessage
+        public void printContext(@Param("#{$data$.result}") String context) {
+            DelayedOutput.output(context, 70, 20);
+        }
     }
 
 }

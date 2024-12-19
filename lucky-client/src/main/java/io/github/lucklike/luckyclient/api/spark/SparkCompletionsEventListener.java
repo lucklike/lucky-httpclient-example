@@ -4,7 +4,6 @@ package io.github.lucklike.luckyclient.api.spark;
 import com.luckyframework.common.Console;
 import com.luckyframework.httpclient.proxy.sse.AnnotationEventListener;
 import com.luckyframework.httpclient.proxy.sse.OnMessage;
-import com.luckyframework.reflect.Order;
 import com.luckyframework.reflect.Param;
 import io.github.lucklike.luckyclient.api.util.DelayedOutput;
 
@@ -26,22 +25,19 @@ public class SparkCompletionsEventListener extends AnnotationEventListener {
     }};
 
 
-    @Order(1)
     @OnMessage("#{($data$ eq ' [DONE]') or (#nonText($data$))}")
     public void onClear() {
         DelayedOutput.clearOutputLength();
         System.out.println("\n");
     }
 
-    @Order(2)
     @OnMessage("#{$JData$.code == 0}")
     public void contentPrint(@Param("#{$JData$.choices[0].delta.content}") String content) {
         DelayedOutput.output(content, 70, 40);
     }
 
-    @Order(3)
     @OnMessage("#{$JData$.code != 0}")
-    public void errorPrint(@Param("#{$JData$.code}") int code) {
+    public void errorPrint(@Param("#{$JData$.code}") int code, boolean[] booleans) {
         Console.printRed(errCodeMap.getOrDefault(code, "未知错误码：" + code));
     }
 

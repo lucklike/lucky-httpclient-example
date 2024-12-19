@@ -17,7 +17,7 @@ public abstract class CrhOpenApi extends JsonFileTokenManager<Token> {
 
     @Describe("产品查询")
     @Post("/common/queryProduct")
-    public abstract Map<String, Object> queryProduct(@JsonParam String productNo);
+    public abstract Map<String, Object> queryProduct(@JsonParam int productNo);
 
     @Describe("获取访问Token")
     @PropertiesJson({

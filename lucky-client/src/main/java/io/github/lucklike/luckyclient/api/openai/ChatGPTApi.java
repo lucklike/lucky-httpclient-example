@@ -11,15 +11,16 @@ import io.github.lucklike.httpclient.annotation.HttpClient;
  * @date 2024/12/15 18:28
  */
 @HttpClient("${ChatGPT.url}")
+@StaticHeader("Authorization: Bearer ${ChatGPT.apiKey}")
 public interface ChatGPTApi {
 
 
     @PropertiesJson({
-        "prompt=#{prompt}",
-        "max_tokens=${ChatGPT.maxTokens}",
-        "temperature=${ChatGPT.temperature}"
+        "model=gpt-3.5-turbo-0125",
+        "stream=#{true}",
+        "messages[0].role=user",
+        "messages[0].content=#{content}"
     })
-    @Post
-    @StaticHeader("Authorization: Bearer ${ChatGPT.apiKey}")
-    String send(String prompt);
+    @Post("v1/chat/completions")
+    String send(String content);
 }

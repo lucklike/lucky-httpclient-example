@@ -2,7 +2,6 @@
 io.github.lucklike.luckyclient.api.baiduai.BaiduAI:
   logger:
     enable: false
-    enable-req-log: false
   url: https://aip.baidubce.com
   method: POST
   query:

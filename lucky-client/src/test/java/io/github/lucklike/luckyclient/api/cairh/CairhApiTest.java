@@ -51,7 +51,11 @@ class CairhApiTest {
 
     @Test
     void queryProduct() {
-        System.out.println(crhOpenApi.queryProduct("000086"));
+        StopWatch sw = new StopWatch();
+        sw.start("queryProduct");
+        System.out.println(crhOpenApi.queryProduct(86));
+        sw.stopWatch();
+        System.out.println(sw.prettyPrintFormat());
     }
 
     @Test

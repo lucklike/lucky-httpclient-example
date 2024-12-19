@@ -57,7 +57,7 @@ class LooseBindApiTest {
 
     @Test
     void t3Test() {
-        System.out.println(commonT3ServiceApi.test());
+        System.out.println(commonT3ServiceApi.test(new T3Request()));
     }
 
     public static void main(String[] args) throws URISyntaxException {

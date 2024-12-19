@@ -18,8 +18,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @HttpClientComponent
-@InterceptorRegister(intercept = @ObjectGenerate(msg = "commonT3ServiceInterceptor"), priority = Integer.MAX_VALUE-3)
-@Combination({InterceptorRegister.class})
+//@InterceptorRegister(intercept = @ObjectGenerate(msg = "commonT3ServiceInterceptor"), priority = Integer.MAX_VALUE-3)
+//@Combination({InterceptorRegister.class})
 public @interface CommonT3Service {
 
     @AliasFor(annotation = HttpClientComponent.class, attribute = "name")
