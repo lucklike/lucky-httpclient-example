@@ -12,6 +12,7 @@ import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.spel.FunctionAlias;
 import com.luckyframework.httpclient.proxy.spel.Namespace;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
+import com.luckyframework.httpclient.proxy.spel.hook.AsyncHook;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Pack;
@@ -129,8 +130,9 @@ class CairhCommonFunction {
         return null;
     }
 
-    @Callback(lifecycle = Lifecycle.METHOD, async = true)
-    public static void asyncCallback(Method method) {
+    @Callback(lifecycle = Lifecycle.METHOD)
+    public static void asyncCallback(Method method) throws InterruptedException {
+        Thread.sleep(1000L);
         log.info("-----------------------[{}]asyncCallback-----------------------", method.getName());
     }
 }

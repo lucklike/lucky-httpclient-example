@@ -117,7 +117,7 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> {
     public static class BaiduSseEventListener extends AnnotationEventListener {
 
         @OnMessage("#{$data$.is_end}")
-        public void clear() {
+        public void clear(Message message) {
             Console.printlnMulberry("\n");
             DelayedOutput.clearOutputLength();
         }
