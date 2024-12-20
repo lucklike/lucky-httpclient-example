@@ -25,20 +25,21 @@ public class SparkCompletionsEventListener extends AnnotationEventListener {
     }};
 
 
-    @OnMessage("#{($data$ eq ' [DONE]') or (#nonText($data$))}")
+    @OnMessage("#{($jdata$ eq ' [DONE]') or (#nonText($jdata$))}")
     public void onClear() {
         DelayedOutput.clearOutputLength();
         System.out.println("\n");
-    }
-
-    @OnMessage("#{$JData$.code == 0}")
-    public void contentPrint(@Param("#{$JData$.choices[0].delta.content}") String content) {
-        DelayedOutput.output(content, 70, 40);
     }
 
     @OnMessage("#{$JData$.code != 0}")
     public void errorPrint(@Param("#{$JData$.code}") int code, boolean[] booleans) {
         Console.printRed(errCodeMap.getOrDefault(code, "未知错误码：" + code));
     }
+
+    @OnMessage
+    public void contentPrint(@Param("#{$JData$.choices[0].delta.content}") String content) {
+        DelayedOutput.output(content, 70, 40);
+    }
+
 
 }

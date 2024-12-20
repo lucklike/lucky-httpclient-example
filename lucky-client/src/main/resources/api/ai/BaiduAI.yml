@@ -27,11 +27,11 @@ io.github.lucklike.luckyclient.api.baiduai.BaiduAI:
   questionsAndAnswers:
     sse: /rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k
     mock:
-      enable: false
+      enable: true
       cache: false
       response: "#{#questionsAndAnswersMock($mc$, $req$)}"
     sse-listener:
-      class-name: io.github.lucklike.luckyclient.api.baiduai.BaiduAIEventListener
+      class-name: io.github.lucklike.luckyclient.api.baiduai.BaiduAISseEventListener
     body:
       json: >-
         {
