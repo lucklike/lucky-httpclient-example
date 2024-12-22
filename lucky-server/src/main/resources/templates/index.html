@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT-like Q&A</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #202123;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #D1D5DB;
+            overflow: hidden;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            background: #343541;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            height: 85vh;
+            overflow: hidden;
+            font-size: 18px;
+        }
+
+        .messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 14px 18px;
+            background-color: #3C3F47;
+            border: 1px solid #555D66;
+            border-radius: 10px;
+            color: #E1E4EB;
+            font-size: 18px;
+            outline: none;
+            height: 56px;
+        }
+
+        .input-container button {
+            padding: 14px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 12px;
+            height: 56px;
+        }
+
+        .input-container button.send-btn {
+            background-color: #50D7F4;
+            color: #fff;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .input-container button.send-btn:hover {
+            background-color: #4cb6e0;
+        }
+
+        .input-container button.stop-btn {
+            background-color: #FF4F4F;
+            color: #fff;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .input-container button.stop-btn:hover {
+            background-color: #ff2a2a;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message .bubble {
+            max-width: 70%;
+            padding: 14px;
+            border-radius: 15px;
+            font-size: 18px;
+            line-height: 1.5;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .message.user .bubble {
+            background-color: #50D7F4;
+            color: #fff;
+            text-align: right;
+        }
+
+        .message.bot .bubble {
+            background-color: #5A5F70;
+            color: #E1E4EB;
+            text-align: left;
+        }
+
+        .typing-indicator {
+            font-style: italic;
+            color: #A0A0A0;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            .chat-container {
+                padding: 15px;
+            }
+
+            .input-container input {
+                font-size: 16px;
+            }
+
+            .input-container button {
+                font-size: 16px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="chat-container">
+    <div class="messages" id="messages">
+        <!-- Messages will appear here -->
+    </div>
+    <div class="input-container">
+        <input type="text" id="userInput" placeholder="Type your message..." />
+        <button class="send-btn" onclick="sendMessage()">Send</button>
+        <button class="stop-btn" id="stopButton" onclick="stopTyping()">Stop</button>
+    </div>
+</div>
+
+<script>
+    const messagesContainer = document.getElementById('messages');
+    const userInput = document.getElementById('userInput');
+    const stopButton = document.getElementById('stopButton');
+
+    let isTypingStopped = false;
+    let typingTimeouts = {};
+    let currentMessageId = null;
+    let partialMessage = '';
+
+    // Function to stop typing for a particular message
+    function stopTypingForMessage(messageId) {
+        clearTimeout(typingTimeouts[messageId]);
+        delete typingTimeouts[messageId];
+    }
+
+    // Function to display message with typing effect for bot
+    function displayMessageWithTypingEffect(message, messageDiv) {
+        const bubble = messageDiv.querySelector('.bubble');
+        let charIndex = bubble.innerText.length;
+        const typingSpeed = 50;
+
+        function typeCharacter() {
+            if (charIndex < message.length && !isTypingStopped) {
+                bubble.innerText += message.charAt(charIndex);
+                charIndex++;
+                typingTimeouts[currentMessageId] = setTimeout(typeCharacter, typingSpeed);
+            }
+        }
+
+        typeCharacter();
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Function to display message immediately
+    function displayMessage(message, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', sender);
+
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        bubble.innerText = message;
+        messageDiv.appendChild(bubble);
+
+        messagesContainer.appendChild(messageDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        return messageDiv;
+    }
+
+    // Send message to the server using SSE
+    function sendMessage() {
+        const userMessage = userInput.value.trim();
+        if (userMessage === '') return;
+
+        // Display the user's message
+        displayMessage(userMessage, 'user');
+        userInput.value = '';
+
+        // Create a bot message container but don't display text yet
+        const botMessageDiv = document.createElement('div');
+        botMessageDiv.classList.add('message', 'bot');
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        botMessageDiv.appendChild(bubble);
+        messagesContainer.appendChild(botMessageDiv);
+
+        currentMessageId = Date.now();
+        partialMessage = ''; // Clear previous message content
+
+        // Start the SSE request
+        const eventSource = new EventSource(`/sse/events?content=${encodeURIComponent(userMessage)}`);
+
+        eventSource.onmessage = function(event) {
+            const newMessage = event.data;
+            partialMessage += newMessage; // Accumulate messages
+
+            bubble.innerText = ''; // Clear the current bubble text
+            displayMessageWithTypingEffect(partialMessage, botMessageDiv); // Show the new part with typing effect
+        };
+
+        eventSource.onerror = function() {
+            eventSource.close();
+        };
+    }
+
+    // Stop typing effect
+    function stopTyping() {
+        isTypingStopped = true;
+        stopButton.innerText = 'Resumed'; // Change button text when stopped
+    }
+
+    // Handle enter key for sending messages
+    userInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    });
+</script>
+</body>
+</html>

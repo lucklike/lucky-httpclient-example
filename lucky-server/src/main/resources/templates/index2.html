@@ -1,0 +1,43 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE Example</title>
+</head>
+<body>
+<h1>Server-Sent Events Example</h1>
+<label>
+    <input id="user-input" type="text"/> <button onclick="sendMessage()">发送</button>
+</label>
+<div id="messages"></div>
+
+<script>
+    function sendMessage() {
+        const userInput = document.getElementById('user-input');
+        // 创建一个EventSource连接到服务器的 /events 路径
+        const eventSource = new EventSource(`/sse/events?content=${encodeURIComponent(userInput.value)}`);
+
+        // 监听消息事件
+        eventSource.onmessage = function(event) {
+            console.log(event)
+            // 解析服务器发送的JSON数据
+            const messagesDiv = document.getElementById('messages');
+
+            // 显示消息和时间戳
+            const messageElement = document.createElement('div');
+            messageElement.innerHTML = event.data;
+            messagesDiv.appendChild(messageElement);
+        };
+
+        // 处理错误
+        eventSource.onerror = function(error) {
+            console.error('Error occurred:', error);
+            eventSource.close();  // 关闭连接
+        };
+    }
+
+</script>
+</body>
+</html>

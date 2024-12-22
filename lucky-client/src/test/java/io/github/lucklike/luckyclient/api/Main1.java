@@ -13,7 +13,7 @@ public class Main1 {
 
 
     public static void main(String[] args) throws IOException {
-        fieldTest();
+        methodTest   ();
     }
 
     private static void methodTest() {

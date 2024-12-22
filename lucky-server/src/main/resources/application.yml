@@ -1,2 +1,34 @@
 server:
   port: 8864
+
+spring:
+  thymeleaf:
+    enabled: true  #开启thymeleaf视图解析
+    encoding: utf-8  #编码
+    prefix: classpath:/templates/  #前缀
+    cache: false  #是否使用缓存
+    mode: HTML  #严格的HTML语法模式
+    suffix: .html  #后缀名
+
+
+baidu:
+  API:
+    AppID: "#{#sm4('241df7de7503ee767a8c76da60c52a5a')}"
+    APIKey: "#{#sm4('0b20d1285fe25dddac14d6183dd57b212a4ee038f595d4a71b5af40f37ed3697')}"
+    SecretKey: "#{#sm4('1da70abf8e194477386e39e0ad9c26b26abcb4c8ed06da51a474002baaa4ffde80097781df3b0e52d5b9af3b2f1efdf4')}"
+
+lucky:
+  http-client:
+    async-thread-pool:
+      core-pool-size: 10
+      blocking-queue-size: 100
+      maximum-pool-size: 20
+      alternative:
+        callback-pool:
+          core-pool-size: 5
+          blocking-queue-size: 20
+          maximum-pool-size: 10
+          name-format: callback-
+    spring-el:
+      classes:
+        - clazz: io.github.lucklike.server.ai.util.SM4Function

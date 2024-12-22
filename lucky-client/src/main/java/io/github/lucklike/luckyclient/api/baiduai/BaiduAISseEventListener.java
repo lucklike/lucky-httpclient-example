@@ -16,7 +16,7 @@ public class BaiduAISseEventListener extends AnnotationEventListener {
     }
 
     @OnMessage
-    public void printContext(@Param("#{$jdata$.result}") String context, Message message) {
+    public void printContext(@Param("#{$jdata$.result}") String context) {
         DelayedOutput.output(context, 70, 20);
     }
 }

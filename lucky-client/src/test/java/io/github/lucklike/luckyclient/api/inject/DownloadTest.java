@@ -12,6 +12,7 @@ import io.github.lucklike.httpclient.annotation.HttpReference;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -33,12 +34,22 @@ public class DownloadTest {
     @HttpReference
     BaseApi baseApi;
 
+    @Resource
+    ISODownloadApi isoDownloadApi;
+
+    @Test
+    void rangeTest1() {
+        File download = isoDownloadApi.download();
+        System.out.println(download.getAbsolutePath());
+    }
+
     @Test
     void download() throws Exception {
         String url = "https://github.com/docmirror/dev-sidecar/releases/download/v1.8.9/DevSidecar-1.8.9-node16.exe";
         File file = downloadApi.downloadRetryIfFail(url, "D:/test/dev-sidecar");
         System.out.println(file.getAbsolutePath());
     }
+
 
 
     @Test
