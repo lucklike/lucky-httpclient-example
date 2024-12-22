@@ -82,12 +82,12 @@ public class DownloadTest {
     }
 
     public static void main(String[] args) throws IOException {
-        File file = new File("/Users/fukang/Downloads/EdgeDownload/CentOS-Stream-10-20241112.0-x86_64-boot.iso");
+        File file = new File("/Users/fukang/Desktop/test/IDEA.dmg");
         long length = file.length();
         System.out.println(length);
         System.out.println(UnitUtils.byteTo(length));
 
-        File file1 = new File("/Users/fukang/Desktop/test/CentOS-Stream-10-20241112.0-x86_64-boot.iso");
+        File file1 = new File("/Users/fukang/Downloads/ArcDownload/ideaIU-2024.3.dmg");
         long length1 = file1.length();
         System.out.println(length1);
         System.out.println(UnitUtils.byteTo(length1));
