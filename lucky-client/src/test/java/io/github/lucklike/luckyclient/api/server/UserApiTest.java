@@ -5,6 +5,7 @@ import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.luckyclient.api.server.configapi.UserApi;
 import io.github.lucklike.luckyclient.api.server.configapi.net.NetUserApi;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
@@ -17,7 +18,7 @@ import javax.annotation.Resource;
 @SpringBootTest
 public class UserApiTest {
 
-    @Resource
+    @Autowired
     private UserApi api;
 
     @Test
