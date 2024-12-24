@@ -16,6 +16,6 @@ import java.net.Proxy;
 @HttpExec.okhttp
 @PrintRequestLog
 @BrowserFeign
-@UseProxy(type = Proxy.Type.SOCKS, ip = "118.25.42.139", port = "8882", username = "marry", password = "pass123")
+//@UseProxy(type = Proxy.Type.SOCKS, ip = "118.25.42.139", port = "8882", username = "marry", password = "pass123")
 public abstract class MyDownloadApi extends RangeDownloadApi {
 }

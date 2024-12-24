@@ -2,6 +2,7 @@ package io.github.lucklike.luckyclient.api.baiduai;
 
 import com.luckyframework.common.Console;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 @SpringBootTest
 public class BaiduAITest {
 
-    @Resource
+    @Autowired
     private BaiduAI baiduAI;
 
     @Test

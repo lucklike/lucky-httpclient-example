@@ -44,6 +44,12 @@ public class DownloadTest {
     }
 
     @Test
+    void testJarDownload() {
+        File download = isoDownloadApi.jarDownload();
+        System.out.println(download.getAbsolutePath());
+    }
+
+    @Test
     void download() throws Exception {
         String url = "https://github.com/docmirror/dev-sidecar/releases/download/v1.8.9/DevSidecar-1.8.9-node16.exe";
         File file = downloadApi.downloadRetryIfFail(url, "D:/test/dev-sidecar");
@@ -82,12 +88,12 @@ public class DownloadTest {
     }
 
     public static void main(String[] args) throws IOException {
-        File file = new File("/Users/fukang/Desktop/test/IDEA.dmg");
+        File file = new File("D:\\test\\iso\\IDEA-1.dmg");
         long length = file.length();
         System.out.println(length);
         System.out.println(UnitUtils.byteTo(length));
 
-        File file1 = new File("/Users/fukang/Downloads/ArcDownload/ideaIU-2024.3.dmg");
+        File file1 = new File("D:\\test\\iso\\ideaIU-2024.3.dmg");
         long length1 = file1.length();
         System.out.println(length1);
         System.out.println(UnitUtils.byteTo(length1));
