@@ -123,6 +123,11 @@ class LuckyApiTest {
     }
 
     @Test
+    void userInfo() {
+        luckyApi.ref2("S2");
+    }
+
+    @Test
     void jsonParam() {
         luckyApi.jsonParam("Jack", 18);
     }

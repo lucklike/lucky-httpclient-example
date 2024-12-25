@@ -16,12 +16,16 @@ import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonArray;
 import com.luckyframework.httpclient.proxy.annotations.ProtobufBody;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
+import com.luckyframework.httpclient.proxy.annotations.RefParam;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
+import com.luckyframework.httpclient.proxy.annotations.StaticRef;
+import com.luckyframework.httpclient.proxy.annotations.StaticUserInfo;
 import com.luckyframework.httpclient.proxy.annotations.StaticXmlBody;
 import com.luckyframework.httpclient.proxy.annotations.URLEncoder;
 import com.luckyframework.httpclient.proxy.annotations.URLEncoderQuery;
 import com.luckyframework.httpclient.proxy.annotations.Url;
+import com.luckyframework.httpclient.proxy.annotations.UserInfo;
 import com.luckyframework.httpclient.proxy.annotations.XmlBody;
 import io.github.lucklike.entity.request.proto.PersonOuterClass;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
@@ -131,4 +135,22 @@ public interface LuckyApi {
 
     @Post("http://localhost:8864/protobuf/person")
     PersonOuterClass.Person protobuf(@ProtobufBody PersonOuterClass.Person person);
+
+
+
+    @Get("http://localhost:8080/userInfo")
+    String userInfo(@UserInfo String userInfo);
+
+
+    @StaticUserInfo("#{username}:#{password}")
+    @Get("http://localhost:8080/userInfo")
+    String userInfo(String username, String password);
+
+
+    @Get("http://localhost:8080/ref")
+    String ref(@RefParam String ref);
+
+    @StaticRef("section1=#{section}")
+    @Get("http://localhost:8080/ref")
+    String ref2(String section);
 }
