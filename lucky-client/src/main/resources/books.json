@@ -8,8 +8,8 @@
       "book-author": "JACKFU",
       "book-publisher": "发布人测试",
       "book-price": 123.6,
-      "book-a": "#{a}",
-      "book-b": "#{c}"
+      "book-a": "#{bookA}",
+      "book-b": "#{bookB}"
     }
   ]
 }

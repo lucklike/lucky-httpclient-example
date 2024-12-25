@@ -1,5 +1,7 @@
 package io.github.lucklike.luckyclient.doc;
 
+import io.github.lucklike.entity.request.proto.PersonOuterClass;
+import io.github.lucklike.luckyclient.api.mock.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -80,6 +82,54 @@ class LuckyApiTest {
     void byteFile() {
         String string = "Lucky Hello World!";
         luckyApi.byteFile(string.getBytes());
+    }
+
+    @Test
+    void byteFil2e() {
+        String string = "Lucky Hello World!";
+        luckyApi.byteFile(string.getBytes(), "lucky.txt");
+    }
+
+    @Test
+    void jsonTest() {
+        Map<String, Object> jsonMap = new LinkedHashMap<>();
+        jsonMap.put("name", "Tom");
+        jsonMap.put("age", "28");
+        jsonMap.put("interest", Arrays.asList("篮球", "羽毛球", "写代码"));
+        luckyApi.jsonTest(jsonMap);
+    }
+
+    @Test
+    void jsonTest2() {
+        User user = new User();
+        user.setId("1234");
+        user.setName("Tom");
+        user.setPhone("17366542234");
+        user.setEmail("tom@gmail.com");
+        user.setUserAddress(new String[]{"地址1", "地址2"});
+
+        luckyApi.xmlTest(user);
+    }
+
+    @Test
+    void protobufTest() {
+        PersonOuterClass.Person responsePerson = PersonOuterClass.Person.newBuilder()
+                .setName("Jack")
+                .setId(12)
+                .setEmail("jack@gmail.com")
+                .build();
+        PersonOuterClass.Person protobuf = luckyApi.protobuf(responsePerson);
+        System.out.println(protobuf);
+    }
+
+    @Test
+    void jsonParam() {
+        luckyApi.jsonParam("Jack", 18);
+    }
+
+    @Test
+    void staticJsonBody() {
+        luckyApi.propertiesJsonArray();
     }
 
     @Test

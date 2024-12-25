@@ -2,8 +2,11 @@ package io.github.lucklike.luckyclient.api.server.ann;
 
 import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.proxy.annotations.Get;
+import com.luckyframework.httpclient.proxy.annotations.HttpExec;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.JsonParam;
+import com.luckyframework.httpclient.proxy.annotations.MultiData;
+import com.luckyframework.httpclient.proxy.annotations.MultiFile;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonArray;
@@ -11,6 +14,8 @@ import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author fukang
@@ -51,4 +56,8 @@ public interface AnnUserApi extends LuckyServerApi {
     @StaticJsonBody("``#{#read('classpath:books.json')}``")
     @Post("/user/post")
     void postTest3(Integer a, String c);
+
+    @HttpExec.okhttp
+    @Post("/file/upload")
+    String upload(@MultiData String id, @MultiFile String file);
 }

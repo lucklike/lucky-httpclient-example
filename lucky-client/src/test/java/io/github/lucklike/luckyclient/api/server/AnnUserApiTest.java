@@ -78,6 +78,12 @@ public class AnnUserApiTest {
         api.postTest3(333, "aaaaaa");
     }
 
+    @Test
+    void testUpload() {
+        String hello = api.upload("Hello", "classpath:books.json");
+        System.out.println(hello);
+    }
+
 
     @Test
     void fuseTest2() {
