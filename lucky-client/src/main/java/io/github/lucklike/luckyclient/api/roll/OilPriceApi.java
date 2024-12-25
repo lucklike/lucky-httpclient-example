@@ -5,6 +5,7 @@ import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.Retryable;
+import com.luckyframework.httpclient.proxy.annotations.SocksProxy;
 import com.luckyframework.httpclient.proxy.annotations.StaticQuery;
 import com.luckyframework.httpclient.proxy.annotations.Wrapper;
 import io.github.lucklike.httpclient.annotation.HttpClient;
@@ -26,6 +27,7 @@ public interface OilPriceApi {
     @Wrapper("#{$this$.query0(province).data}")
     Map<String, Object> query(String province);
 
+    @SocksProxy(ip = "118.25.42.139", port = "8882", username = "marry", password = "pass123")
     @Retryable(retryCount = 10, waitMillis = 2000L)
     @Get("https://www.mxnzp.com/api/oil/search")
     Map<String, Object> query0(@QueryParam String province);
