@@ -118,7 +118,7 @@ class LuckyApiTest {
                 .setId(12)
                 .setEmail("jack@gmail.com")
                 .build();
-        PersonOuterClass.Person protobuf = luckyApi.protobuf(responsePerson);
+        PersonOuterClass.Person protobuf = luckyApi.protobufB(responsePerson.toByteArray());
         System.out.println(protobuf);
     }
 

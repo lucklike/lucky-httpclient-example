@@ -130,6 +130,7 @@ class CairhCommonFunction {
         return null;
     }
 
+    @AsyncHook
     @Callback(lifecycle = Lifecycle.METHOD)
     public static void asyncCallback(Method method) throws InterruptedException {
         Thread.sleep(1000L);

@@ -2,6 +2,7 @@ package io.github.lucklike.luckyclient.doc;
 
 import com.luckyframework.httpclient.core.meta.RequestMethod;
 import com.luckyframework.httpclient.proxy.annotations.BasicAuth;
+import com.luckyframework.httpclient.proxy.annotations.BinaryBody;
 import com.luckyframework.httpclient.proxy.annotations.CookieParam;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.HttpRequest;
@@ -136,7 +137,8 @@ public interface LuckyApi {
     @Post("http://localhost:8864/protobuf/person")
     PersonOuterClass.Person protobuf(@ProtobufBody PersonOuterClass.Person person);
 
-
+    @Post("http://localhost:8864/protobuf/person")
+    PersonOuterClass.Person protobufB(@BinaryBody(mimeType = "application/x-protobuf") byte[] bytes);
 
     @Get("http://localhost:8080/userInfo")
     String userInfo(@UserInfo String userInfo);

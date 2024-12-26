@@ -65,6 +65,7 @@ class CairhApiTest {
         enhanceFuture.addFuture(compFrontApi.getOperatorName("1163"));
         enhanceFuture.addFuture(compFrontApi.getOperatorName("001157"));
         enhanceFuture.addFuture(compFrontApi.getOperatorName("000000"));
+        enhanceFuture.addFuture(compFrontApi.getOperatorName("616161"));
         System.out.println(enhanceFuture.getResultMap());
     }
 
