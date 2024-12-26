@@ -6,6 +6,7 @@ import com.luckyframework.httpclient.proxy.annotations.BinaryBody;
 import com.luckyframework.httpclient.proxy.annotations.CookieParam;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.HttpRequest;
+import com.luckyframework.httpclient.proxy.annotations.JavaBody;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.JsonParam;
 import com.luckyframework.httpclient.proxy.annotations.MethodParam;
@@ -83,6 +84,10 @@ public interface LuckyApi {
     Map<String, Object> jsonTest2(@JsonBody User user);
 
     @Post("http://localhost:8080/json")
+    Map<String, Object> javaTest2(@JavaBody User user);
+
+
+    @Post("http://localhost:8080/json")
     Map<String, Object> jsonParam(@JsonParam("userName") String name, @JsonParam Integer age);
 
     @StaticJsonBody("``#{#read(#resource('classpath:books.json'))}``")
@@ -142,6 +147,9 @@ public interface LuckyApi {
 
     @Get("http://localhost:8080/userInfo")
     String userInfo(@UserInfo String userInfo);
+
+    @Get("http://localhost:8080/userInfo")
+    void br(@BinaryBody String path);
 
 
     @StaticUserInfo("#{username}:#{password}")

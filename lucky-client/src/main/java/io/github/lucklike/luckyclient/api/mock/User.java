@@ -3,6 +3,7 @@ package io.github.lucklike.luckyclient.api.mock;
 import lombok.Data;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  * @author fukang
@@ -11,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Data
 @XmlRootElement
-public class User {
+public class User implements Serializable {
     private String id;
     private String name;
     private String email;

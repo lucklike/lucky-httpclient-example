@@ -108,7 +108,7 @@ class LuckyApiTest {
         user.setEmail("tom@gmail.com");
         user.setUserAddress(new String[]{"地址1", "地址2"});
 
-        luckyApi.xmlTest(user);
+        luckyApi.jsonTest2(user);
     }
 
     @Test
@@ -124,7 +124,7 @@ class LuckyApiTest {
 
     @Test
     void userInfo() {
-        luckyApi.ref2("S2");
+        luckyApi.br("file:/Users/fukang/Pictures/avatar.jpg");
     }
 
     @Test
