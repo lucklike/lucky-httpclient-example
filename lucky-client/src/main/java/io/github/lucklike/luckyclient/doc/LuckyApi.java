@@ -1,7 +1,9 @@
 package io.github.lucklike.luckyclient.doc;
 
 import com.luckyframework.httpclient.core.meta.RequestMethod;
+import com.luckyframework.httpclient.core.meta.Response;
 import com.luckyframework.httpclient.proxy.annotations.Async;
+import com.luckyframework.httpclient.proxy.annotations.AutoRedirect;
 import com.luckyframework.httpclient.proxy.annotations.BasicAuth;
 import com.luckyframework.httpclient.proxy.annotations.BinaryBody;
 import com.luckyframework.httpclient.proxy.annotations.CookieParam;
@@ -21,6 +23,7 @@ import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonArray;
 import com.luckyframework.httpclient.proxy.annotations.ProtobufBody;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
 import com.luckyframework.httpclient.proxy.annotations.RefParam;
+import com.luckyframework.httpclient.proxy.annotations.SocksProxy;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
 import com.luckyframework.httpclient.proxy.annotations.StaticRef;
@@ -31,6 +34,8 @@ import com.luckyframework.httpclient.proxy.annotations.URLEncoderQuery;
 import com.luckyframework.httpclient.proxy.annotations.Url;
 import com.luckyframework.httpclient.proxy.annotations.UserInfo;
 import com.luckyframework.httpclient.proxy.annotations.XmlBody;
+import com.luckyframework.httpclient.proxy.mock.Mock;
+import com.luckyframework.httpclient.proxy.mock.MockResponse;
 import io.github.lucklike.entity.request.proto.PersonOuterClass;
 import io.github.lucklike.httpclient.annotation.HttpClient;import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 import io.github.lucklike.luckyclient.api.mock.User;
@@ -198,4 +203,24 @@ public interface LuckyApi {
     @HttpProxy(host = "192.168.0.111", port = "8080", username = "You User Name", password = "You Password")
     @Get("/proxy/http")
     String httpProxy();
+
+    @SocksProxy(host = "118.25.42.139", port = "8882", username = "marry", password = "pass123")
+    @Get("/proxy/socks")
+    String socksProxy();
+
+    @Mock
+    @AutoRedirect
+    @Get("/redirect")
+    String redirect();
+
+
+    static Response redirectMock() {
+        return MockResponse
+                .create()
+                .status(302)
+                .setHeader("Location", "http://localhost:8080/redirect2")
+                .txt("Moved Permanently");
+    }
+
+
 }

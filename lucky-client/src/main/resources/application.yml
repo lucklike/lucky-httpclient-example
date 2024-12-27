@@ -10,6 +10,17 @@ server:
 
 lucky:
   http-client:
+    redirect:
+      # 开启重定向功能
+      enable: false
+      # 一次请求允许的最大重定向次数
+      max-count: 5
+      # 默认需要进行重定向操作的状态码
+      status: [301, 302, 303, 304, 307, 308]
+      # 获取重定向地址的SpEL表达式
+      location: "#{$repHeader$.Location}"
+      # 决定是否进行重定向的SpEL表达式，注：该配置的优先级要大于status
+      condition: "#{You Condition}"
     # 连接超时时间
     connection-timeout: 2000
     # 读取超时时间

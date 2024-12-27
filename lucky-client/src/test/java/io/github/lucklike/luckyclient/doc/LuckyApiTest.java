@@ -3,6 +3,8 @@ package io.github.lucklike.luckyclient.doc;
 import com.luckyframework.httpclient.proxy.HttpClientProxyObjectFactory;
 import com.luckyframework.httpclient.proxy.creator.Scope;
 import com.luckyframework.httpclient.proxy.interceptor.PrintLogInterceptor;
+import com.luckyframework.httpclient.proxy.interceptor.PriorityConstant;
+import com.luckyframework.httpclient.proxy.interceptor.RedirectInterceptor;
 import com.luckyframework.threadpool.NamedThreadFactory;
 import io.github.lucklike.entity.request.proto.PersonOuterClass;
 import io.github.lucklike.luckyclient.api.mock.User;
@@ -154,7 +156,25 @@ class LuckyApiTest {
 
     @Test
     void binary3() throws IOException {
-        luckyApi.httpProxy();
+        luckyApi.socksProxy();
+        HttpClientProxyObjectFactory httpProxy = new HttpClientProxyObjectFactory();
+// 注册重定向拦截器配置
+        httpProxy.addInterceptor(RedirectInterceptor.class, Scope.METHOD, ri -> {
+            // 一次请求允许的最大重定向次数
+            ri.setMaxRedirectCount(5);
+            // 默认需要进行重定向操作的状态码
+            ri.setRedirectStatus(new Integer[]{301, 302, 303, 304, 307, 308});
+            // # 获取重定向地址的SpEL表达式
+            ri.setRedirectLocationExp("#{$respHeader$.Location}");
+            // 决定是否进行重定向的SpEL表达式，注：该配置的优先级要大于status
+            ri.setRedirectCondition("#{You Condition}");
+        }, PriorityConstant.REDIRECT_PRIORITY);
+    }
+
+    @Test
+    void testRedirect() {
+        String redirect = luckyApi.redirect();
+        System.out.println(redirect);
     }
 
     @Test

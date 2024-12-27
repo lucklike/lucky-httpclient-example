@@ -27,7 +27,7 @@ public interface OilPriceApi {
     @Wrapper("#{$this$.query0(province).data}")
     Map<String, Object> query(String province);
 
-    @SocksProxy(ip = "118.25.42.139", port = "8882", username = "marry", password = "pass123")
+    @SocksProxy(host = "118.25.42.139", port = "8882", username = "marry", password = "pass123")
     @Retryable(retryCount = 10, waitMillis = 2000L)
     @Get("https://www.mxnzp.com/api/oil/search")
     Map<String, Object> query0(@QueryParam String province);
