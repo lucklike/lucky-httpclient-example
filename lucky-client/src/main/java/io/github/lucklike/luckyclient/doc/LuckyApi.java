@@ -1,11 +1,13 @@
 package io.github.lucklike.luckyclient.doc;
 
 import com.luckyframework.httpclient.core.meta.RequestMethod;
+import com.luckyframework.httpclient.proxy.annotations.Async;
 import com.luckyframework.httpclient.proxy.annotations.BasicAuth;
 import com.luckyframework.httpclient.proxy.annotations.BinaryBody;
 import com.luckyframework.httpclient.proxy.annotations.CookieParam;
 import com.luckyframework.httpclient.proxy.annotations.Get;
-import com.luckyframework.httpclient.proxy.annotations.HttpRequest;
+import com.luckyframework.httpclient.proxy.annotations.HeaderParam;
+import com.luckyframework.httpclient.proxy.annotations.HttpProxy;import com.luckyframework.httpclient.proxy.annotations.HttpRequest;
 import com.luckyframework.httpclient.proxy.annotations.JavaBody;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.JsonParam;
@@ -30,15 +32,18 @@ import com.luckyframework.httpclient.proxy.annotations.Url;
 import com.luckyframework.httpclient.proxy.annotations.UserInfo;
 import com.luckyframework.httpclient.proxy.annotations.XmlBody;
 import io.github.lucklike.entity.request.proto.PersonOuterClass;
-import io.github.lucklike.httpclient.annotation.HttpClientComponent;
+import io.github.lucklike.httpclient.annotation.HttpClient;import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 import io.github.lucklike.luckyclient.api.mock.User;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.Reader;
+import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Map;
 
 @PrintLog
-@HttpClientComponent
+@HttpClient("http://localhost:8080/")
 public interface LuckyApi {
 
     @StaticHeader("Accept: text/plain")
@@ -149,7 +154,7 @@ public interface LuckyApi {
     String userInfo(@UserInfo String userInfo);
 
     @Get("http://localhost:8080/userInfo")
-    void br(@BinaryBody String path);
+    void br(@BinaryBody File path);
 
 
     @StaticUserInfo("#{username}:#{password}")
@@ -163,4 +168,34 @@ public interface LuckyApi {
     @StaticRef("section1=#{section}")
     @Get("http://localhost:8080/ref")
     String ref2(String section);
+
+    @Post("http://localhost:8080/binary")
+    void binary(@BinaryBody byte[] bytes, @QueryParam String filename);
+
+    @Post("http://localhost:8080/binary")
+    void binary(@BinaryBody Byte[] bytes, @HeaderParam("X-FILE-NAME") String filename);
+
+    @Post("http://localhost:8080/binary")
+    void binary(@BinaryBody String resourcePath);
+
+    @StaticHeader("X-FILE-NAME: #{file.getName()}")
+    @Post("http://localhost:8080/binary")
+    void binary(@BinaryBody File file);
+
+    @Post("http://localhost:8080/binary")
+    void binary(@BinaryBody InputStream in);
+
+    @Post("http://localhost:8080/binary")
+    void binary(@BinaryBody ByteBuffer byteBuffer);
+
+    @Post("http://localhost:8080/binary")
+    void binary(@BinaryBody Reader reader);
+
+//    @Async
+    @Post("http://localhost:8080/async/void")
+    void async(@MultiFile File file);
+
+    @HttpProxy(host = "192.168.0.111", port = "8080", username = "You User Name", password = "You Password")
+    @Get("/proxy/http")
+    String httpProxy();
 }

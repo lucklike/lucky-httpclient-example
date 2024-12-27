@@ -10,16 +10,31 @@ server:
 
 lucky:
   http-client:
+    # 连接超时时间
+    connection-timeout: 2000
+    # 读取超时时间
+    read-timeout: 2000
+    # 写入超时时间
+    write-timeout: 2000
     async-thread-pool:
       core-pool-size: 10
       blocking-queue-size: 100
       maximum-pool-size: 20
+      keep-alive-time: 1000
       alternative:
-        callback-pool:
+        pool1:
           core-pool-size: 5
           blocking-queue-size: 20
           maximum-pool-size: 10
-          name-format: callback-
+          name-format: pool1-
+          keep-alive-time: 1000
+        pool2:
+          core-pool-size: 6
+          blocking-queue-size: 12
+          maximum-pool-size: 12
+          name-format:  pool2-
+          keep-alive-time: 1000
+
     #使用JDK执行器
     http-executor: http_client
     #日志相关的配置
@@ -51,6 +66,8 @@ lucky:
     spring-el:
       classes:
         - clazz: io.github.lucklike.luckyclient.util.SM4Function
+
+
 
 
 

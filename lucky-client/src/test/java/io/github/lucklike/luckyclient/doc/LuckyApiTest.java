@@ -1,5 +1,9 @@
 package io.github.lucklike.luckyclient.doc;
 
+import com.luckyframework.httpclient.proxy.HttpClientProxyObjectFactory;
+import com.luckyframework.httpclient.proxy.creator.Scope;
+import com.luckyframework.httpclient.proxy.interceptor.PrintLogInterceptor;
+import com.luckyframework.threadpool.NamedThreadFactory;
 import io.github.lucklike.entity.request.proto.PersonOuterClass;
 import io.github.lucklike.luckyclient.api.mock.User;
 import org.junit.jupiter.api.Test;
@@ -8,12 +12,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -96,7 +109,7 @@ class LuckyApiTest {
         jsonMap.put("name", "Tom");
         jsonMap.put("age", "28");
         jsonMap.put("interest", Arrays.asList("篮球", "羽毛球", "写代码"));
-        luckyApi.jsonTest(jsonMap);
+        luckyApi.propertiesJson3("tom@gmail.com", "111", "Tom");
     }
 
     @Test
@@ -108,7 +121,7 @@ class LuckyApiTest {
         user.setEmail("tom@gmail.com");
         user.setUserAddress(new String[]{"地址1", "地址2"});
 
-        luckyApi.jsonTest2(user);
+        luckyApi.javaTest2(user);
     }
 
     @Test
@@ -118,14 +131,44 @@ class LuckyApiTest {
                 .setId(12)
                 .setEmail("jack@gmail.com")
                 .build();
-        PersonOuterClass.Person protobuf = luckyApi.protobufB(responsePerson.toByteArray());
+        PersonOuterClass.Person protobuf = luckyApi.protobuf(responsePerson);
         System.out.println(protobuf);
     }
 
     @Test
     void userInfo() {
-        luckyApi.br("file:/Users/fukang/Pictures/avatar.jpg");
+        luckyApi.br(new File(""));
     }
+
+    @Test
+    void binary1() throws IOException {
+        luckyApi.binary(Files.newInputStream(Paths.get("D:\\Lucky\\lucky-httpclient-example\\lucky-client\\src\\main\\resources\\books.json")));
+    }
+
+    @Test
+    void binary2() throws IOException {
+        byte[] bytes = FileCopyUtils.copyToByteArray(new File("D:\\Lucky\\lucky-httpclient-example\\lucky-client\\src\\main\\resources\\books.json"));
+        ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+        luckyApi.binary(byteBuffer);
+    }
+
+    @Test
+    void binary3() throws IOException {
+        luckyApi.httpProxy();
+    }
+
+    @Test
+    void async1() throws IOException, InterruptedException {
+        luckyApi.async(new File("D:\\Lucky\\lucky-httpclient-example\\lucky-client\\src\\main\\resources\\books.json"));
+        Thread.sleep(5000L);
+
+        HttpClientProxyObjectFactory httpFactory = new HttpClientProxyObjectFactory();
+        httpFactory.setConnectionTimeout(2000);
+        httpFactory.setReadTimeout(2000);
+        httpFactory.setWriteTimeout(2000);
+    }
+
+
 
     @Test
     void jsonParam() {
