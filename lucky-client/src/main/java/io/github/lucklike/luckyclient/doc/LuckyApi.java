@@ -209,7 +209,7 @@ public interface LuckyApi {
     String socksProxy();
 
     @Mock
-    @AutoRedirect
+    @AutoRedirect(enable = false)
     @Get("/redirect")
     String redirect();
 
