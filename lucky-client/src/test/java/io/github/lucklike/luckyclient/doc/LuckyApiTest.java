@@ -2,10 +2,8 @@ package io.github.lucklike.luckyclient.doc;
 
 import com.luckyframework.httpclient.proxy.HttpClientProxyObjectFactory;
 import com.luckyframework.httpclient.proxy.creator.Scope;
-import com.luckyframework.httpclient.proxy.interceptor.PrintLogInterceptor;
 import com.luckyframework.httpclient.proxy.interceptor.PriorityConstant;
 import com.luckyframework.httpclient.proxy.interceptor.RedirectInterceptor;
-import com.luckyframework.threadpool.NamedThreadFactory;
 import io.github.lucklike.entity.request.proto.PersonOuterClass;
 import io.github.lucklike.luckyclient.api.mock.User;
 import org.junit.jupiter.api.Test;
@@ -14,29 +12,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class LuckyApiTest {
 
     @Autowired
     private LuckyApi luckyApi;
+
 
     @Test
     void hello() {
