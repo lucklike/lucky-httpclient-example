@@ -8,6 +8,7 @@ import com.luckyframework.httpclient.proxy.annotations.BasicAuth;
 import com.luckyframework.httpclient.proxy.annotations.BinaryBody;
 import com.luckyframework.httpclient.proxy.annotations.CookieParam;
 import com.luckyframework.httpclient.proxy.annotations.Get;
+import com.luckyframework.httpclient.proxy.annotations.GzipCompress;
 import com.luckyframework.httpclient.proxy.annotations.HeaderParam;
 import com.luckyframework.httpclient.proxy.annotations.HttpProxy;import com.luckyframework.httpclient.proxy.annotations.HttpRequest;
 import com.luckyframework.httpclient.proxy.annotations.JavaBody;
@@ -48,7 +49,7 @@ import java.util.List;
 import java.util.Map;
 
 @PrintLog
-@HttpClient("http://localhost:8080/")
+@HttpClient(value = "http://localhost:8080/", name = "LUCKY-API")
 public interface LuckyApi {
 
     @StaticHeader("Accept: text/plain")
@@ -212,6 +213,10 @@ public interface LuckyApi {
     @AutoRedirect(enable = false)
     @Get("/redirect")
     String redirect();
+
+    @GzipCompress
+    @Get("compress/gzip")
+    File gzip();
 
 
     static Response redirectMock() {

@@ -1,13 +1,13 @@
-package io.github.lucklike.luckyclient.api;
+package io.github.lucklike.luckyclient.api.lucky;
 
 import com.luckyframework.httpclient.core.meta.BodyObject;
 import com.luckyframework.httpclient.core.meta.ContentType;
 import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.proxy.annotations.Post;
+import com.luckyframework.httpclient.proxy.annotations.Retryable;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
-import io.github.lucklike.httpclient.annotation.HttpClient;
 
 /**
  * May you be warm in the three winters, and may you not be cold in the spring.
@@ -16,16 +16,17 @@ import io.github.lucklike.httpclient.annotation.HttpClient;
  * @version 1.0.0
  * @date 2024/12/31 00:00
  */
-@HttpClient
+@LAPI
 public interface LuckyApi {
 
     @StaticHeader({
-        "_id_: 768976",
         "date: 2024-12-01",
-        "_say: #{#_base64ToStr('772e55Sf5pel5b+r5LmQ772e')"
+        "name: #{['768976']}",
+        "say_: #{#_base64ToStr('772e55Sf5pel5b+r5LmQ772e')}"
     })
+    @Retryable
     @Post("/benediction")
-    String benediction();
+    void benediction();
 
     /**
      * Callback Function
@@ -37,7 +38,7 @@ public interface LuckyApi {
         request.setBody(
             BodyObject.builder(
                 ContentType.TEXT_PLAIN,
-                "Don't feel any debt, just live your life well."
+                "Just live your life well."
             )
         );
     }
