@@ -1,5 +1,7 @@
 package io.github.lucklike.luckyclient.api.roll;
 
+import com.luckyframework.exception.LuckyRuntimeException;
+import com.luckyframework.httpclient.core.meta.Response;
 import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
@@ -19,6 +21,7 @@ import java.util.Map;
 @Condition(assertion = "#{$status$ != 200}", exception = "【ROLL】油价查询接口调用异常，响应码：'#{$status$}'")
 @Condition(assertion = "#{$body$.code != 1}", exception = "【ROLL】油价查询接口调用异常，状态码：'#{$body$.code}', 错误信息：#{$body$.msg}")
 @StaticQuery({"app_id=${ROLL.AppID}", "app_secret=${ROLL.AppSecret}"})
+@RespConvert
 public interface OilPriceApi {
 
     @Wrapper("#{$this$.query(p).t92}")
@@ -31,5 +34,12 @@ public interface OilPriceApi {
     @Retryable(retryCount = 10, waitMillis = 2000L)
     @Get("https://www.mxnzp.com/api/oil/search")
     Map<String, Object> query0(@QueryParam String province);
+
+    @Get("https://www.mxnzp.com/api/oil/search")
+    Map<String, Object> query1(@QueryParam String province);
+
+    static Map<String, Object> oilPriceApi$Convert(Response response) {
+        return (Map<String, Object>) response.getMapResult().get("data");
+    }
 
 }
