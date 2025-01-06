@@ -10,6 +10,9 @@ server:
 
 lucky:
   http-client:
+    http-connection-pool:
+      max-idle-connections: 15
+      keep-alive-duration: 7
     redirect:
       # 开启重定向功能
       enable: false
