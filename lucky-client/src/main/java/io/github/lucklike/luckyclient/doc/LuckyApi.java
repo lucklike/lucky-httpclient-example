@@ -1,22 +1,18 @@
 package io.github.lucklike.luckyclient.doc;
 
-import com.luckyframework.httpclient.core.meta.RequestMethod;
 import com.luckyframework.httpclient.core.meta.Response;
-import com.luckyframework.httpclient.proxy.annotations.Async;
 import com.luckyframework.httpclient.proxy.annotations.AutoRedirect;
-import com.luckyframework.httpclient.proxy.annotations.BasicAuth;
 import com.luckyframework.httpclient.proxy.annotations.BinaryBody;
-import com.luckyframework.httpclient.proxy.annotations.CookieParam;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.GzipCompress;
 import com.luckyframework.httpclient.proxy.annotations.HeaderParam;
-import com.luckyframework.httpclient.proxy.annotations.HttpProxy;import com.luckyframework.httpclient.proxy.annotations.HttpRequest;
+import com.luckyframework.httpclient.proxy.annotations.HttpProxy;
 import com.luckyframework.httpclient.proxy.annotations.JavaBody;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.JsonParam;
-import com.luckyframework.httpclient.proxy.annotations.MethodParam;
 import com.luckyframework.httpclient.proxy.annotations.MultiData;
 import com.luckyframework.httpclient.proxy.annotations.MultiFile;
+import com.luckyframework.httpclient.proxy.annotations.MultipartFormData;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLog;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
@@ -30,15 +26,13 @@ import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
 import com.luckyframework.httpclient.proxy.annotations.StaticRef;
 import com.luckyframework.httpclient.proxy.annotations.StaticUserInfo;
 import com.luckyframework.httpclient.proxy.annotations.StaticXmlBody;
-import com.luckyframework.httpclient.proxy.annotations.URLEncoder;
-import com.luckyframework.httpclient.proxy.annotations.URLEncoderQuery;
 import com.luckyframework.httpclient.proxy.annotations.Url;
 import com.luckyframework.httpclient.proxy.annotations.UserInfo;
 import com.luckyframework.httpclient.proxy.annotations.XmlBody;
 import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
 import io.github.lucklike.entity.request.proto.PersonOuterClass;
-import io.github.lucklike.httpclient.annotation.HttpClient;import io.github.lucklike.httpclient.annotation.HttpClientComponent;
+import io.github.lucklike.httpclient.annotation.HttpClient;
 import io.github.lucklike.luckyclient.api.mock.User;
 
 import java.io.File;
@@ -83,6 +77,17 @@ public interface LuckyApi {
 
     @Post("http://localhost:8080/multipartFormData")
     String byteMap(@MultiFile Map<String, Byte[]> byteMap);
+
+    @MultipartFormData(
+        txt = {
+            "@if(#{name != null}): name=#{name}"
+        },
+        file = {
+            "files=#{#resources('classpath*:*.yml')}"
+        }
+    )
+    @Post("http://localhost:8080/multipartFormData")
+    String mf(String name);
 
 
     @Post("http://localhost:8080/multipartFormData")

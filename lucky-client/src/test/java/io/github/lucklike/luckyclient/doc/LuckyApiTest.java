@@ -1,9 +1,6 @@
 package io.github.lucklike.luckyclient.doc;
 
 import com.luckyframework.httpclient.proxy.HttpClientProxyObjectFactory;
-import com.luckyframework.httpclient.proxy.creator.Scope;
-import com.luckyframework.httpclient.proxy.interceptor.PriorityConstant;
-import com.luckyframework.httpclient.proxy.interceptor.RedirectInterceptor;
 import io.github.lucklike.entity.request.proto.PersonOuterClass;
 import io.github.lucklike.luckyclient.api.mock.User;
 import org.junit.jupiter.api.Test;
@@ -45,7 +42,7 @@ class LuckyApiTest {
     }
 
     @Test
-    void fileArray(){
+    void fileArray() {
         Map<String, Object> txtForm = new LinkedHashMap<>();
         txtForm.put("name", "Tom");
         txtForm.put("sex", "男");
@@ -53,16 +50,16 @@ class LuckyApiTest {
 
         // 构建文件参数
         File[] files = {
-            new File("/Users/fukang/Pictures/1234.jpg"),
-            new File("/Users/fukang/Pictures/avatar.jpg"),
-            new File("/Users/fukang/Pictures/R-C.jpeg"),
+                new File("/Users/fukang/Pictures/1234.jpg"),
+                new File("/Users/fukang/Pictures/avatar.jpg"),
+                new File("/Users/fukang/Pictures/R-C.jpeg"),
         };
 
         luckyApi.fileArray(txtForm, files);
     }
 
     @Test
-    void fileList(){
+    void fileList() {
         Map<String, Object> txtForm = new LinkedHashMap<>();
         txtForm.put("name", "Tom");
         txtForm.put("sex", "男");
@@ -94,6 +91,13 @@ class LuckyApiTest {
         String string = "Lucky Hello World!";
         luckyApi.byteFile(string.getBytes(), "lucky.txt");
     }
+
+    @Test
+    void mf() {
+
+        luckyApi.mf("Jack");
+    }
+
 
     @Test
     void jsonTest() {
@@ -167,7 +171,6 @@ class LuckyApiTest {
     }
 
 
-
     @Test
     void jsonParam() {
         luckyApi.jsonParam("Jack", 18);
@@ -180,7 +183,7 @@ class LuckyApiTest {
 
     @Test
     void byteFiles() throws IOException {
-        byte[][] bytesArray= new byte[2][];
+        byte[][] bytesArray = new byte[2][];
         bytesArray[0] = FileCopyUtils.copyToByteArray(new File("//Users/fukang/Pictures/avatar.jpg"));
         bytesArray[1] = FileCopyUtils.copyToByteArray(new File("/Users/fukang/Pictures/1234.jpg"));
         luckyApi.byteFiles(bytesArray);
@@ -190,12 +193,13 @@ class LuckyApiTest {
     void byteMap() throws IOException {
         Map<String, Byte[]> byteMap = new LinkedHashMap<>();
         byteMap.put("text.txt", new Byte[]{'t', 'e', 's', 't'});
-        byteMap.put("1234.jpg", toByteObjectArray(FileCopyUtils.copyToByteArray(new File("/Users/fukang/Pictures/1234.jpg"))) );
+        byteMap.put("1234.jpg", toByteObjectArray(FileCopyUtils.copyToByteArray(new File("/Users/fukang/Pictures/1234.jpg"))));
         luckyApi.byteMap(byteMap);
     }
 
     /**
      * 将 byte[] 转换为 Byte[]
+     *
      * @param byteArray 基本类型数组
      * @return 包装类型数组
      */

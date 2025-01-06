@@ -46,13 +46,4 @@ public interface LuckyApi {
             )
         );
     }
-
-    static boolean benedictionNeedRetry(MethodContext context, TaskResult<Response> taskResult) {
-
-        return false;
-    }
-
-//    static void benedictionExceptionHandle(TaskResult<Response> taskResult, Exception e) {
-//        System.out.println(e);
-//    }
 }

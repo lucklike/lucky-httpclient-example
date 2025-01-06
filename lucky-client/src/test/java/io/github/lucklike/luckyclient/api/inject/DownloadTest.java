@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.inject;
 
-import com.luckyframework.async.EnhanceFutureFactory;
+import com.luckyframework.common.StopWatch;
 import com.luckyframework.common.UnitUtils;
 import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.generalapi.BaseApi;
@@ -39,14 +39,22 @@ public class DownloadTest {
 
     @Test
     void rangeTest1() {
+        StopWatch sw = new StopWatch();
+        sw.start("IDEA");
         File download = isoDownloadApi.download();
         System.out.println(download.getAbsolutePath());
+        sw.stopWatch();
+        System.out.println(sw.prettyPrintFormat());
     }
 
     @Test
     void testJarDownload() {
+        StopWatch sw = new StopWatch();
+        sw.start("jar");
         File download = isoDownloadApi.jarDownload();
         System.out.println(download.getAbsolutePath());
+        sw.stopWatch();
+        System.out.println(sw.prettyPrintFormat());
     }
 
     @Test
