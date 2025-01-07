@@ -41,7 +41,7 @@ public class DownloadTest {
     void rangeTest1() {
         StopWatch sw = new StopWatch();
         sw.start("IDEA");
-        File download = isoDownloadApi.download();
+        File download = isoDownloadApi. download();
         System.out.println(download.getAbsolutePath());
         sw.stopWatch();
         System.out.println(sw.prettyPrintFormat());

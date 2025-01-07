@@ -50,7 +50,7 @@ lucky:
           keep-alive-time: 1000
 
     #使用JDK执行器
-    http-executor: http_client
+    http-executor: okhttp
     #日志相关的配置
     logger:
       packages:

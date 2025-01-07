@@ -4,7 +4,7 @@ io.github.lucklike.luckyclient.api.ssl.configapi.SSLUserApi:
     protocol: TLSv1.2
     enable: true
     key-store: test
-    trust-store: test1
+    trust-store: test2
   #    key-store-info:
   #      key-store-type: PKCS12
   #      key-store-password: ClientKeyStore@2024
