@@ -31,6 +31,8 @@ import com.luckyframework.httpclient.proxy.annotations.UserInfo;
 import com.luckyframework.httpclient.proxy.annotations.XmlBody;
 import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
+import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
+import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
 import io.github.lucklike.entity.request.proto.PersonOuterClass;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 import io.github.lucklike.luckyclient.api.mock.User;
@@ -41,6 +43,7 @@ import java.io.Reader;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @PrintLog
 @HttpClient(value = "http://localhost:8080/", name = "LUCKY-API")
@@ -214,8 +217,11 @@ public interface LuckyApi {
     @Get("/proxy/socks")
     String socksProxy();
 
-    @Mock
-    @AutoRedirect(enable = false)
+    @Var(lifecycle = Lifecycle.METHOD_META)
+    AtomicInteger redirectCount = new AtomicInteger(0);
+
+    @Mock(enable = "#{redirectCount.getAndIncrement() == 0}")
+    @AutoRedirect(cacheLocation = true)
     @Get("/redirect")
     String redirect();
 
@@ -224,11 +230,11 @@ public interface LuckyApi {
     File gzip();
 
 
-    static Response redirectMock() {
+    static Response redirect$Mock() {
         return MockResponse
                 .create()
                 .status(302)
-                .setHeader("Location", "http://localhost:8080/redirect2")
+                .setHeader("Location", "http://www.google.com")
                 .txt("Moved Permanently");
     }
 

@@ -156,6 +156,9 @@ class LuckyApiTest {
     @Test
     void testRedirect() {
         String redirect = luckyApi.redirect();
+        String redirect1 = luckyApi.redirect();
+        String redirect2 = luckyApi.redirect();
+        String redirect3 = luckyApi.redirect();
         System.out.println(redirect);
     }
 
