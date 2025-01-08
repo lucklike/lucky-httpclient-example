@@ -12,6 +12,6 @@ public interface ItrusApi {
 
     @Describe("天威合同创建用户")
     @Post("/user/create")
-    ItrusBaseResponse<CreateUserResponse> createUser(@JsonBody ItrusContractCreateUserRequest request);
+    CreateUserResponse createUser(@JsonBody ItrusContractCreateUserRequest request);
 
 }

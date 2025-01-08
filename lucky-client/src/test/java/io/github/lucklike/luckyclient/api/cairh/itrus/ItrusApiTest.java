@@ -26,7 +26,7 @@ class ItrusApiTest {
         request.setPhone("15904836592");
         request.setAuthentication("true");
 
-        ItrusBaseResponse<CreateUserResponse> user = itrusApi.createUser(request);
+        CreateUserResponse user = itrusApi.createUser(request);
         System.out.println(user);
     }
 }
