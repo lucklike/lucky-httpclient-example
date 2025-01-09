@@ -5,7 +5,6 @@ import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.ItrusContractCreateUserRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.resp.CreateUserResponse;
-import io.github.lucklike.luckyclient.api.cairh.itrus.resp.ItrusBaseResponse;
 
 @ItrusHttpApi
 public interface ItrusApi {

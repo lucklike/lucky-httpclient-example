@@ -7,6 +7,7 @@ import com.luckyframework.httpclient.generalapi.describe.ApiDescribe;
 import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
+import com.luckyframework.httpclient.proxy.spel.Namespace;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
@@ -25,7 +26,7 @@ import static com.luckyframework.httpclient.proxy.CommonFunctions.sha1;
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-@RespConvert(resultFunc = "itrusConvert")
+@RespConvert(resultFunc = "itrus_autoConvert")
 @SpELImport(ItrusHttpApi.ItrusFunctions.class)
 @HttpClient("#{@itrusCommonParam.url}")
 public @interface ItrusHttpApi {
@@ -34,10 +35,11 @@ public @interface ItrusHttpApi {
     /**
      * 用于添加公共参数的函数
      */
+    @Namespace("itrus")
     class ItrusFunctions {
 
         @Callback(lifecycle = Lifecycle.REQUEST)
-        public static void addCommonParam(Request request, ItrusCommonParam commonParam) throws Exception {
+        static void addCommonParam(Request request, ItrusCommonParam commonParam) throws Exception {
             String bodyStr = request.getBody().getBodyAsString();
             String key = commonParam.getAppSecret() + commonParam.getServiceCode();
             request.addHeader("Content-Signature", "HMAC-SHA1 " + base64(sha1(key, bodyStr)));
@@ -54,7 +56,7 @@ public @interface ItrusHttpApi {
          * @param response 响应对象
          * @return 目标对象
          */
-        public static Object itrusConvert(MethodContext context, Response response) {
+        static Object autoConvert(MethodContext context, Response response) {
             ApiDescribe desc = DescribeFunction.describe(context);
             int status = response.getStatus();
             if (status != 200) {
