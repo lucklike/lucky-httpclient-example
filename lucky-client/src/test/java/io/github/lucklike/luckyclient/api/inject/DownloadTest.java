@@ -95,7 +95,7 @@ public class DownloadTest {
         System.out.println(file.getAbsolutePath());
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         File file = new File("D:\\test\\iso\\IDEA-1.dmg");
         long length = file.length();
         System.out.println(length);
@@ -122,8 +122,8 @@ public class DownloadTest {
 //        System.out.println(length4);
 //        System.out.println(UnitUtils.byteTo(length4));
 
-        String md5 = CommonFunctions.md5(file);
-        String md51 = CommonFunctions.md5(file1);
+        String md5 = CommonFunctions.md5Hex(file);
+        String md51 = CommonFunctions.md5Hex(file1);
 //        String md52 = CommonFunctions.md5(file2);
 //        String md53 = CommonFunctions.md5(file3);
 //        String md54 = CommonFunctions.md5(file4);

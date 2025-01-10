@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static com.luckyframework.httpclient.proxy.CommonFunctions.base64;
+import static com.luckyframework.httpclient.proxy.CommonFunctions.macSha256Base64;
+
 /**
  * @author fukang
  * @version 1.0.0
@@ -31,13 +34,14 @@ public class AuthUtils {
         String preStr = "host: " + url.getHost() + "\n" + "date: " + date + "\n" + "POST " + url.getPath() + " HTTP/1.1";
         // System.err.println(preStr);
         // SHA256加密
-        Mac mac = Mac.getInstance("hmacsha256");
-        SecretKeySpec spec = new SecretKeySpec(apiSecret.getBytes(StandardCharsets.UTF_8), "hmacsha256");
-        mac.init(spec);
-
-        byte[] hexDigits = mac.doFinal(preStr.getBytes(StandardCharsets.UTF_8));
-        // Base64加密
-        String sha = Base64.getEncoder().encodeToString(hexDigits);
+//        Mac mac = Mac.getInstance("hmacsha256");
+//        SecretKeySpec spec = new SecretKeySpec(apiSecret.getBytes(StandardCharsets.UTF_8), "hmacsha256");
+//        mac.init(spec);
+//
+//        byte[] hexDigits = mac.doFinal(preStr.getBytes(StandardCharsets.UTF_8));
+//        // Base64加密
+//        String sha = Base64.getEncoder().encodeToString(hexDigits);
+        String sha = macSha256Base64(apiSecret,preStr);
         // System.err.println(sha);
         // 拼接
         String authorization = String.format("api_key=\"%s\", algorithm=\"%s\", headers=\"%s\", signature=\"%s\"", apiKey, "hmac-sha256", "host date request-line", sha);
@@ -45,7 +49,7 @@ public class AuthUtils {
 
         String urlStr = StringUtils.format("https://{}?authorization={}&date={}&host={}",
                 url.getHost() + url.getPath(),
-                Base64.getEncoder().encodeToString(authorization.getBytes(StandardCharsets.UTF_8)),
+                base64(authorization),
                 date,
                 url.getHost()
         );
