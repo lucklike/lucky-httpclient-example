@@ -20,8 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions.base64;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.sha1;
+import static com.luckyframework.httpclient.proxy.CommonFunctions.macSha1Base64;
 
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -42,7 +41,7 @@ public @interface ItrusHttpApi {
         static void addCommonParam(Request request, ItrusCommonParam commonParam) throws Exception {
             String bodyStr = request.getBody().getBodyAsString();
             String key = commonParam.getAppSecret() + commonParam.getServiceCode();
-            request.addHeader("Content-Signature", "HMAC-SHA1 " + base64(sha1(key, bodyStr)));
+            request.addHeader("Content-Signature", "HMAC-SHA1 " + macSha1Base64(key, bodyStr));
             request.addHeader("appId", commonParam.getAppId());
             request.addHeader("serviceCode", commonParam.getServiceCode());
             request.addHeader("Accept", "application/json; charset=utf-8");
