@@ -34,8 +34,6 @@ import static io.github.lucklike.luckyclient.api.spark.AuthUtils.getAuthUrl;
 @Condition(assertion = "#{$body$.header.code != 0}", exception = "【图片生成】讯飞火星API调用失败，异常的CODE状态码：[#{$body$.header.code}]: #{$body$.header.message}")
 public interface ImageGenerationApi {
 
-    String URL = "https://spark-api.cn-huabei-1.xf-yun.com/v2.1/tti";
-
     /**
      * 负责参数初始化的回调函数
      *
@@ -47,10 +45,11 @@ public interface ImageGenerationApi {
     static Map<String, Object> initSpELVar(ClassContext cc) throws Exception {
         Map<String, Object> paramMap = new HashMap<>();
         String AppId = cc.parseExpression("${spark.appId}");
+        String Url = cc.parseExpression("${spark.imageGenerate.URL}");
         String APIKey = cc.parseExpression("${spark.imageGenerate.APIKey}");
         String APISecret = cc.parseExpression("${spark.imageGenerate.APISecret}");
 
-        paramMap.put("url2", getAuthUrl(URL, APIKey, APISecret));
+        paramMap.put("url", getAuthUrl(Url, APIKey, APISecret));
         paramMap.put("appId", AppId);
         return paramMap;
     }
@@ -62,8 +61,10 @@ public interface ImageGenerationApi {
      * @param appId   APPID
      * @param content 图片内容
      */
-    @Callback(lifecycle = Lifecycle.REQUEST_INIT)
-    static void addCommonParams(Request request, @Param("#{appId}") String appId, @Param("#{p0}") String content) {
+    @Callback(lifecycle = Lifecycle.REQUEST_INIT, enable = "#{'imageGenerate' eq $method$.getName()}")
+    static void addCommonParams(Request request,
+                                @Param("#{appId}") String appId,
+                                @Param("#{p0}") String content) {
         ConfigurationMapBodyObjectFactory jsonBodyFactory = ConfigurationMapBodyObjectFactory.json();
         jsonBodyFactory.addProperty("header.app_id", appId);
         jsonBodyFactory.addProperty("parameter.chat.domain", "general");
