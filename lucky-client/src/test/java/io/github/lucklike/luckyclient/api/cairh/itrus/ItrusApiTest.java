@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -26,7 +28,7 @@ class ItrusApiTest {
         request.setPhone("15904836592");
         request.setAuthentication("true");
 
-        CreateUserResponse user = itrusApi.createUser(request).get();
-        System.out.println(user);
+        Optional<CreateUserResponse> userOptional = itrusApi.createUser(request);
+        System.out.println(userOptional);
     }
 }
