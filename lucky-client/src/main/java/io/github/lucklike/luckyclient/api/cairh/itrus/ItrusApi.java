@@ -6,11 +6,13 @@ import com.luckyframework.httpclient.proxy.annotations.Post;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.ItrusContractCreateUserRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.resp.CreateUserResponse;
 
-@ItrusHttpApi
+import java.util.Optional;
+
+@ItrusHttpClient
 public interface ItrusApi {
 
     @Describe("天威合同创建用户")
     @Post("/user/create")
-    CreateUserResponse createUser(@JsonBody ItrusContractCreateUserRequest request);
+    Optional<CreateUserResponse> createUser(@JsonBody ItrusContractCreateUserRequest request);
 
 }

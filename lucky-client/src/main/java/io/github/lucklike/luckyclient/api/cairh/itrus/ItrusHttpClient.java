@@ -26,9 +26,9 @@ import static com.luckyframework.httpclient.proxy.CommonFunctions.macSha1Base64;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @RespConvert(resultFunc = "itrus_autoConvert")
-@SpELImport(ItrusHttpApi.ItrusFunctions.class)
+@SpELImport(ItrusHttpClient.ItrusFunctions.class)
 @HttpClient("#{@itrusCommonParam.url}")
-public @interface ItrusHttpApi {
+public @interface ItrusHttpClient {
 
 
     /**
@@ -67,7 +67,7 @@ public @interface ItrusHttpApi {
                 throw new BizException("【{}】接口调用异常，status={}, message={}", desc.getName(), configMap.getInt("status"), configMap.getString("message"));
             }
 
-            return configMap.getEntry("data", context.getRealMethodResolvableType());
+            return configMap.getEntry("data", context.getRealMethodReturnResolvableType());
         }
     }
 }

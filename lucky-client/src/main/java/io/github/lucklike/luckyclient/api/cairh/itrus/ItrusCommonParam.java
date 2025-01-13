@@ -14,9 +14,29 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "cairh.itrus")
 public class ItrusCommonParam {
+
+    /**
+     * 接口地址
+     */
     private String url;
+
+    /**
+     * AppID
+     */
     private String appId;
+
+    /**
+     * AppSecret
+     */
     private String appSecret;
+
+    /**
+     * ServiceCode
+     */
     private String serviceCode;
+
+    /**
+     * CompanyUUID
+     */
     private String companyUUID;
 }
