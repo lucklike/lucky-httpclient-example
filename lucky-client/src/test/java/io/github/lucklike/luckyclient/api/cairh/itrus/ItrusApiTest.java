@@ -1,16 +1,12 @@
 package io.github.lucklike.luckyclient.api.cairh.itrus;
 
-import io.github.lucklike.luckyclient.api.cairh.itrus.req.ItrusContractCreateUserRequest;
+import io.github.lucklike.luckyclient.api.cairh.itrus.api.ItrusApi;
+import io.github.lucklike.luckyclient.api.cairh.itrus.req.CreateUserRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.resp.CreateUserResponse;
-import io.github.lucklike.luckyclient.api.cairh.itrus.resp.ItrusBaseResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ItrusApiTest {
@@ -20,7 +16,7 @@ class ItrusApiTest {
 
     @Test
     void createUser() {
-        ItrusContractCreateUserRequest request = new ItrusContractCreateUserRequest();
+        CreateUserRequest request = new CreateUserRequest();
         request.setDisplayName("刘祥");
         request.setIdCardType("0");
         request.setIdCardNum("541522200305023907");
@@ -28,7 +24,7 @@ class ItrusApiTest {
         request.setPhone("15904836592");
         request.setAuthentication("true");
 
-        Optional<CreateUserResponse> userOptional = itrusApi.createUser(request);
-        System.out.println(userOptional);
+        CreateUserResponse user = itrusApi.createUser(request);
+        System.out.println(user);
     }
 }

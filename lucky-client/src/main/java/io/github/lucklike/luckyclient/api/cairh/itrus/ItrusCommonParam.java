@@ -31,11 +31,6 @@ public class ItrusCommonParam {
     private String appSecret;
 
     /**
-     * ServiceCode
-     */
-    private String serviceCode;
-
-    /**
      * CompanyUUID
      */
     private String companyUUID;

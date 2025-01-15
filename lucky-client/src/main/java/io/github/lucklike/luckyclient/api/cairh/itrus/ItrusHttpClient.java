@@ -40,12 +40,9 @@ public @interface ItrusHttpClient {
         @Callback(lifecycle = Lifecycle.REQUEST)
         static void addCommonParam(Request request, ItrusCommonParam commonParam) throws Exception {
             String bodyStr = request.getBody().getBodyAsString();
-            String key = commonParam.getAppSecret() + commonParam.getServiceCode();
-            request.addHeader("Content-Signature", "HMAC-SHA1 " + macSha1Base64(key, bodyStr));
+            request.addHeader("Content-Signature", "HMAC-SHA1 " + macSha1Base64(commonParam.getAppSecret(), bodyStr));
             request.addHeader("appId", commonParam.getAppId());
-            request.addHeader("serviceCode", commonParam.getServiceCode());
             request.addHeader("Accept", "application/json; charset=utf-8");
-            request.addHeader("companyUUID", commonParam.getCompanyUUID());
         }
 
         /**
@@ -59,12 +56,12 @@ public @interface ItrusHttpClient {
             ApiDescribe desc = DescribeFunction.describe(context);
             int status = response.getStatus();
             if (status != 200) {
-                throw new BizException("【{}】接口调用异常：http-status={}", desc.getName(), status);
+                throw new BizException("【{}】接口调用异常，错误的HTTP状态码：http-status={}", desc.getName(), status);
             }
 
             ConfigurationMap configMap = response.getConfigMapResult();
             if (1 != configMap.getInt("status")) {
-                throw new BizException("【{}】接口调用异常，status={}, message={}", desc.getName(), configMap.getInt("status"), configMap.getString("message"));
+                throw new BizException("【{}】接口调用异常，错误的接口响应码：status={}, message={}", desc.getName(), configMap.getInt("status"), configMap.getString("message"));
             }
 
             return configMap.getEntry("data", context.getRealMethodReturnResolvableType());

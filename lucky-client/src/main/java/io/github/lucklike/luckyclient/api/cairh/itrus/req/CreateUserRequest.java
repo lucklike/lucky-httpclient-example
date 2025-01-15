@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class ItrusContractCreateUserRequest {
+public class CreateUserRequest {
 
     /**
      * type

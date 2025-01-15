@@ -4,6 +4,7 @@ import com.luckyframework.reflect.ASMUtil;
 import com.luckyframework.reflect.ClassUtils;
 import io.github.lucklike.luckyclient.api.spark.SparkCompletionsEventListener;
 import io.github.lucklike.luckyclient.doc.LuckyApi;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -22,6 +23,7 @@ public class Main1 {
 
     public static void main(String[] args) throws Exception {
         md5Test();
+        System.out.println(StringUtils.hasText(" "));
     }
 
     private static void methodTest() {
