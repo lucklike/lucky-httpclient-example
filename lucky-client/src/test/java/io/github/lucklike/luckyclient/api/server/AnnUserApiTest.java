@@ -85,7 +85,7 @@ public class AnnUserApiTest {
 
     @Test
     void testUpload() throws IOException {
-        String hello = api.upload("Hello", RepeatableReadStreamUtil.useFileStore(resource("classpath:books.json").getInputStream()));
+        String hello = api.upload("Hello", resource("classpath:books.json").getInputStream());
         System.out.println(hello);
     }
 

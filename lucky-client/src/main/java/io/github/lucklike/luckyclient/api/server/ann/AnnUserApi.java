@@ -12,6 +12,7 @@ import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonArray;
 import com.luckyframework.httpclient.proxy.annotations.Retryable;
 import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
+import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
 import io.github.lucklike.entity.request.User;
@@ -33,6 +34,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 @HttpClientComponent
 @Describe(author = "付康", version = "1.0.0", contactWay = "17363312985")
 public interface AnnUserApi extends LuckyServerApi {
+
+    @Var(lifecycle = Lifecycle.METHOD)
+    AtomicInteger counter = new AtomicInteger();
 
     @Describe("注册用户")
     @Post("/user/post")
@@ -66,5 +70,7 @@ public interface AnnUserApi extends LuckyServerApi {
 
     @HttpExec.okhttp
     @Post("/file/upload")
+    @SpELImport(StreamConvertFunction.class)
+    @Retryable(retryExpression = "#{counter.getAndIncrement() < 2}")
     String upload(@MultiData String id, @MultiFile(fileName = "book.json") InputStream file);
 }
