@@ -3,6 +3,8 @@ package io.github.lucklike.luckyclient.api.server;
 import com.luckyframework.async.EnhanceFuture;
 import com.luckyframework.async.EnhanceFutureFactory;
 import com.luckyframework.common.DateUtils;
+import com.luckyframework.io.RepeatableReadFileInputStream;
+import com.luckyframework.io.RepeatableReadStreamUtil;
 import com.luckyframework.threadpool.ThreadPoolFactory;
 import com.luckyframework.threadpool.ThreadPoolParam;
 import io.github.lucklike.entity.request.User;
@@ -13,7 +15,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.concurrent.ThreadPoolExecutor;
+
+import static com.luckyframework.httpclient.proxy.CommonFunctions.resource;
 
 /**
  * @author fukang
@@ -79,8 +84,8 @@ public class AnnUserApiTest {
     }
 
     @Test
-    void testUpload() {
-        String hello = api.upload("Hello", "classpath:books.json");
+    void testUpload() throws IOException {
+        String hello = api.upload("Hello", RepeatableReadStreamUtil.useFileStore(resource("classpath:books.json").getInputStream()));
         System.out.println(hello);
     }
 

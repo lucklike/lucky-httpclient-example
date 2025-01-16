@@ -1,11 +1,16 @@
 package io.github.lucklike.luckyclient.api;
 
+import com.luckyframework.io.RepeatableReadByteInputStream;
+import com.luckyframework.io.RepeatableReadFileInputStream;
 import com.luckyframework.reflect.ASMUtil;
 import com.luckyframework.reflect.ClassUtils;
 import io.github.lucklike.luckyclient.api.spark.SparkCompletionsEventListener;
 import io.github.lucklike.luckyclient.doc.LuckyApi;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.stream.Stream;
@@ -13,6 +18,7 @@ import java.util.stream.Stream;
 import static com.luckyframework.httpclient.proxy.CommonFunctions.hex;
 import static com.luckyframework.httpclient.proxy.CommonFunctions.md5;
 import static com.luckyframework.httpclient.proxy.CommonFunctions.md5Hex;
+import static com.luckyframework.httpclient.proxy.CommonFunctions.resourceAsStream;
 import static com.luckyframework.httpclient.proxy.CommonFunctions.sha224;
 import static com.luckyframework.httpclient.proxy.CommonFunctions.sha256;
 import static com.luckyframework.httpclient.proxy.CommonFunctions.sha384;
@@ -22,8 +28,7 @@ public class Main1 {
 
 
     public static void main(String[] args) throws Exception {
-        md5Test();
-        System.out.println(StringUtils.hasText(" "));
+        streamTest();
     }
 
     private static void methodTest() {
@@ -61,5 +66,14 @@ public class Main1 {
         System.out.println(hex(sha384(data)));
         System.out.println(hex(sha512(data)));
 
+    }
+
+    private static void streamTest() throws IOException {
+        InputStream stream = resourceAsStream("file:D:\\Lucky\\lucky-httpclient-example\\lucky-client\\src\\main\\resources\\books.json");
+        RepeatableReadFileInputStream rin = new RepeatableReadFileInputStream(stream);
+        System.out.println(new String(FileCopyUtils.copyToByteArray(rin)));
+        System.out.println(new String(FileCopyUtils.copyToByteArray(rin)));
+        System.out.println(new String(FileCopyUtils.copyToByteArray(rin)));
+        rin.deleteStorageMedium();
     }
 }
