@@ -21,6 +21,7 @@ import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 
 import java.io.InputStream;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -69,6 +70,6 @@ public interface AnnUserApi extends LuckyServerApi {
     @HttpExec.okhttp
     @Post("/file/upload")
     @RepeatableReadStream(StreamType.LOCAL_FILE)
-    @Retryable(retryExpression = "#{counter.getAndIncrement() < 2}")
-    String upload(@MultiData String id, @MultiFile(fileName = "book.json") InputStream file);
+    @Retryable(condition = "#{counter.getAndIncrement() < 2}")
+    String upload(@MultiData String id, @MultiFile Map<String, InputStream> file);
 }

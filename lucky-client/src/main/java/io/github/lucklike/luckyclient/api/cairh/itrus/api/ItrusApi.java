@@ -43,7 +43,7 @@ public interface ItrusApi {
 
     @Describe("天威合同创建用户")
     @Post("/user/create")
-    @Retryable(retryExpression = "#{counter.getAndIncrement() < 2}")
+    @Retryable(condition = "#{counter.getAndIncrement() < 2}")
     CreateUserResponse createUser(CreateUserRequest request);
 
     @Describe("查询企业列表")

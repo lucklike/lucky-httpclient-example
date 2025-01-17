@@ -16,6 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import static com.luckyframework.httpclient.proxy.CommonFunctions.resource;
@@ -85,7 +88,11 @@ public class AnnUserApiTest {
 
     @Test
     void testUpload() throws IOException {
-        String hello = api.upload("Hello", resource("classpath:books.json").getInputStream());
+        Map<String, InputStream> map = new HashMap<>();
+        map.put("books.json", resource("classpath:books.json").getInputStream());
+        map.put("application.yml", resource("classpath:application.yml").getInputStream());
+
+        String hello = api.upload("Hello", map);
         System.out.println(hello);
     }
 

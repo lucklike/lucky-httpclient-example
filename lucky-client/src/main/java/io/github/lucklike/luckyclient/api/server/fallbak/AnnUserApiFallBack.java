@@ -8,6 +8,7 @@ import org.springframework.core.io.InputStreamSource;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -52,7 +53,7 @@ public class AnnUserApiFallBack implements AnnUserApi {
     }
 
     @Override
-    public String upload(String id, InputStream file) {
+    public String upload(String id, Map<String, InputStream> file) {
         return "";
     }
 

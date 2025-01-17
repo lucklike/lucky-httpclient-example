@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 
 @RestController
@@ -17,8 +18,14 @@ public class FileController {
 
 
     @PostMapping("upload")
-    public Result<String> upload(@RequestParam String id, MultipartFile file) throws IOException {
-        System.out.println(file.getOriginalFilename());
-        return Result.success(new String(FileCopyUtils.copyToByteArray(file.getInputStream())));
+    public Result<String> upload(@RequestParam String id, MultipartFile[] file) throws IOException {
+        System.out.println(id);
+        StringBuilder sb = new StringBuilder();
+        for (MultipartFile fileItem : file) {
+            sb.append(fileItem.getOriginalFilename());
+            sb.append(",");
+            System.out.println(FileCopyUtils.copyToString(new InputStreamReader(fileItem.getInputStream())));
+        }
+        return Result.success(sb.toString());
     }
 }
