@@ -4,17 +4,16 @@ import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.Retryable;
-import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
-import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
+import io.github.lucklike.luckyclient.api.cairh.BizException;
 import io.github.lucklike.luckyclient.api.cairh.itrus.ItrusHttpClient;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.AddSignerRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.AddSubCompanyRequest;
-import io.github.lucklike.luckyclient.api.cairh.itrus.req.CreateUserRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.ContractSignRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.ContractStampListRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.CreateAutographRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.CreateContractRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.CreateEnterpriseSealRequest;
+import io.github.lucklike.luckyclient.api.cairh.itrus.req.CreateUserRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.DownloadContractRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.EnterpriseCreateRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.QueryEnterpriseRequest;
@@ -31,19 +30,13 @@ import io.github.lucklike.luckyclient.api.cairh.itrus.resp.QueryEnterpriseRespon
 import io.github.lucklike.luckyclient.api.cairh.itrus.resp.Seal;
 import io.github.lucklike.luckyclient.api.cairh.itrus.resp.Stamp;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 @JsonBody
-@Retryable(retryCount = 5, multiplier = 2)
+@Retryable(retryCount = 5, multiplier = 2, exclude = {BizException.class})
 @ItrusHttpClient
 public interface ItrusApi {
 
-    @Var(lifecycle = Lifecycle.METHOD_META)
-    AtomicInteger counter = new AtomicInteger(0);
-
     @Describe("天威合同创建用户")
     @Post("/user/create")
-    @Retryable(condition = "#{counter.getAndIncrement() < 2}")
     CreateUserResponse createUser(CreateUserRequest request);
 
     @Describe("查询企业列表")

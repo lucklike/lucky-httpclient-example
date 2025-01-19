@@ -17,7 +17,7 @@ import java.io.File;
 public interface ISODownloadApi {
 
     @Get("idea/ideaIU-2024.3.dmg")
-    @RangeDownload(filename = "http-client-{_name_}{.ext}")
+    @RangeDownload(filename = "http-client-#{#nanoid()}-{_name_}{.ext}")
     File download();
 
     @RangeDownload

@@ -30,6 +30,7 @@ public class OilPriceApiTest {
 //        System.out.println(map);
 
         System.out.println(api.query1("广东"));
+        System.out.println(api.query1("湖北"));
 
     }
 

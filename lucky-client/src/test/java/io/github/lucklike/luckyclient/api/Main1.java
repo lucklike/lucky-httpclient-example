@@ -1,5 +1,6 @@
 package io.github.lucklike.luckyclient.api;
 
+import com.luckyframework.conversion.ConversionUtils;
 import com.luckyframework.io.RepeatableReadByteInputStream;
 import com.luckyframework.io.RepeatableReadFileInputStream;
 import com.luckyframework.reflect.ASMUtil;
@@ -28,7 +29,9 @@ public class Main1 {
 
 
     public static void main(String[] args) throws Exception {
-        streamTest();
+//        streamTest();
+        Long conversion = ConversionUtils.conversion("204955342356876891", Long.class);
+        System.out.println(conversion);
     }
 
     private static void methodTest() {

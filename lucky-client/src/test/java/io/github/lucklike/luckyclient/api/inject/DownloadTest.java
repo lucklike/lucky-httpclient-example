@@ -96,12 +96,12 @@ public class DownloadTest {
     }
 
     public static void main(String[] args) throws Exception {
-        File file = new File("D:\\test\\iso\\IDEA-1.dmg");
+        File file = new File("/private/var/folders/6v/blntps_n3ts8_4v2ls2dtgl80000gn/T/Lucky/@RangeDownload/20250119/http-client-ideaIU-2024.3.dmg");
         long length = file.length();
         System.out.println(length);
         System.out.println(UnitUtils.byteTo(length));
 
-        File file1 = new File("D:\\test\\iso\\ideaIU-2024.3.dmg");
+        File file1 = new File("/private/var/folders/6v/blntps_n3ts8_4v2ls2dtgl80000gn/T/Lucky/@RangeDownload/20250119/http-client-Za_aixQdLYZUVEU5NkZJc-ideaIU-2024.3.dmg");
         long length1 = file1.length();
         System.out.println(length1);
         System.out.println(UnitUtils.byteTo(length1));
@@ -122,8 +122,8 @@ public class DownloadTest {
 //        System.out.println(length4);
 //        System.out.println(UnitUtils.byteTo(length4));
 
-        String md5 = CommonFunctions.md5Hex(file);
-        String md51 = CommonFunctions.md5Hex(file1);
+        String md5 = CommonFunctions.sha224Hex(file);
+        String md51 = CommonFunctions.sha224Hex(file1);
 //        String md52 = CommonFunctions.md5(file2);
 //        String md53 = CommonFunctions.md5(file3);
 //        String md54 = CommonFunctions.md5(file4);
