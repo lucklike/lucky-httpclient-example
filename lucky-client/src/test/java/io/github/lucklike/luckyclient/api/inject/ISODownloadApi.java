@@ -19,7 +19,7 @@ public interface ISODownloadApi {
 
     @AsyncExecutor(concurrency = "10")
     @Get("idea/ideaIU-2024.3.dmg")
-    @RangeDownload(filename = "http-client-#{#nanoid()}-{_name_}{.ext}")
+    @RangeDownload(saveDir = "/Users/fukang/Desktop/test/bfile")
     File download();
 
     @RangeDownload

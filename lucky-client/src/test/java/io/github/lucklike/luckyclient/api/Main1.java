@@ -1,27 +1,19 @@
 package io.github.lucklike.luckyclient.api;
 
-import cn.hutool.core.compress.Gzip;
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.ZipUtil;
-import com.luckyframework.conversion.ConversionUtils;
-import com.luckyframework.httpclient.generalapi.shard.FileShardHandle;
-import com.luckyframework.httpclient.generalapi.shard.ShardFile;
-import com.luckyframework.io.RepeatableReadByteInputStream;
 import com.luckyframework.io.RepeatableReadFileInputStream;
 import com.luckyframework.reflect.ASMUtil;
 import com.luckyframework.reflect.ClassUtils;
 import io.github.lucklike.luckyclient.api.spark.SparkCompletionsEventListener;
 import io.github.lucklike.luckyclient.doc.LuckyApi;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.util.StringUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static com.luckyframework.httpclient.proxy.CommonFunctions.hex;
@@ -37,7 +29,7 @@ public class Main1 {
 
 
     public static void main(String[] args) throws Exception {
-        shardTest();
+        methodTest();
     }
 
     private static void methodTest() {
@@ -115,12 +107,5 @@ public class Main1 {
             gBytes = ZipUtil.gzip(gBytes);
         }
         return HexUtil.encodeHexStr(gBytes);
-    }
-
-    private static void shardTest() {
-        File file = new File("C:\\Users\\18143\\AppData\\Local\\Temp\\Lucky\\@RangeDownload\\20250120\\ideaIU-2024.3.dmg");
-        FileShardHandle handle = FileShardHandle.of(file);
-        List<ShardFile> shardFiles = handle.getShardFiles();
-        System.out.println(shardFiles);
     }
 }

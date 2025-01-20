@@ -1,5 +1,7 @@
 package io.github.lucklike.server.controller;
 
+import com.luckyframework.httpclient.proxy.CommonFunctions;
+import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,19 +17,41 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/shard/upload")
-public class ShardFileUploadController {
+public class FileChunkUploadController {
 
-    private static final String UPLOAD_DIR = "D:/test/uploads/"; // 上传目录
-    private static final String TEMP_DIR = "D:/test/uploads/temp/"; // 临时存储分片的目录
+    private static final String UPLOAD_DIR = "/Users/fukang/Desktop/test/shard/uploads/"; // 上传目录
+    private static final String TEMP_DIR = "/Users/fukang/Desktop/test/shard/uploads/temp/"; // 临时存储分片的目录
 
     // 初始化目录
-    public ShardFileUploadController() throws IOException {
+    public FileChunkUploadController() throws IOException {
         Files.createDirectories(Paths.get(UPLOAD_DIR));
         Files.createDirectories(Paths.get(TEMP_DIR));
+    }
+
+    /**
+     * 获取已经上传的文件列表
+     *
+     * @param fileId 文件ID
+     * @return 已经上传的文件列表
+     */
+    @GetMapping("uploadChunks")
+    public ResponseEntity<Map<Integer, String>> uploadChunks(@RequestParam("fileId") String fileId) {
+        String chunkDir = TEMP_DIR + fileId;
+        File[] chunks = new File(chunkDir).listFiles();
+        if (chunks == null) {
+            return ResponseEntity.ok(Collections.emptyMap());
+        }
+        Map<Integer, String> chunkMap = Stream.of(chunks)
+                .collect(Collectors.toMap(f -> Integer.parseInt(f.getName()), this::fileHash));
+        return ResponseEntity.ok(chunkMap);
     }
 
     /**
@@ -109,5 +133,10 @@ public class ShardFileUploadController {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File merge failed");
         }
+    }
+
+    @SneakyThrows
+    private String fileHash(File file) {
+        return CommonFunctions.md5Hex(file);
     }
 }
