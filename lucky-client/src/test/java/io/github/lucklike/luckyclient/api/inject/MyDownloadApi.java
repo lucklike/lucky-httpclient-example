@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.inject;
 
-import com.luckyframework.httpclient.generalapi.file.RangeDownloadApi;
+import com.luckyframework.httpclient.generalapi.download.RangeDownloadApi;
 import com.luckyframework.httpclient.proxy.annotations.BrowserFeign;
 import com.luckyframework.httpclient.proxy.annotations.HttpExec;
 import com.luckyframework.httpclient.proxy.annotations.PrintRequestLog;

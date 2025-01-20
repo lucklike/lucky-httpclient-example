@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.spark;
 
-import com.luckyframework.httpclient.generalapi.file.FileApi;
+import com.luckyframework.httpclient.generalapi.download.FileApi;
 import io.github.lucklike.httpclient.configapi.ResourceHttpClient;
 
 import java.util.Map;

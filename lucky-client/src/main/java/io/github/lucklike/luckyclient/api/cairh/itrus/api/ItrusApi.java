@@ -3,6 +3,7 @@ package io.github.lucklike.luckyclient.api.cairh.itrus.api;
 import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
+import com.luckyframework.httpclient.proxy.annotations.PrintLog;
 import com.luckyframework.httpclient.proxy.annotations.Retryable;
 import io.github.lucklike.luckyclient.api.cairh.BizException;
 import io.github.lucklike.luckyclient.api.cairh.itrus.ItrusHttpClient;
@@ -31,6 +32,7 @@ import io.github.lucklike.luckyclient.api.cairh.itrus.resp.Seal;
 import io.github.lucklike.luckyclient.api.cairh.itrus.resp.Stamp;
 
 @JsonBody
+@PrintLog(allowBodyMaxLength = 1024)
 @Retryable(retryCount = 5, multiplier = 2, exclude = {BizException.class})
 @ItrusHttpClient
 public interface ItrusApi {

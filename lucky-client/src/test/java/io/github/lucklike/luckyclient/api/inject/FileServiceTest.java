@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.inject;
 
-import com.luckyframework.httpclient.generalapi.file.RangeDownloadApi;
+import com.luckyframework.httpclient.generalapi.download.RangeDownloadApi;
 import io.github.lucklike.httpclient.annotation.HttpReference;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

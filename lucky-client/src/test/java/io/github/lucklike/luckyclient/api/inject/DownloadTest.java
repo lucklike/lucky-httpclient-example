@@ -4,7 +4,7 @@ import com.luckyframework.common.StopWatch;
 import com.luckyframework.common.UnitUtils;
 import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.generalapi.BaseApi;
-import com.luckyframework.httpclient.generalapi.file.RangeDownloadApi;
+import com.luckyframework.httpclient.generalapi.download.RangeDownloadApi;
 import com.luckyframework.httpclient.proxy.CommonFunctions;
 import com.luckyframework.threadpool.ThreadPoolFactory;
 import com.luckyframework.threadpool.ThreadPoolParam;
@@ -41,7 +41,7 @@ public class DownloadTest {
     void rangeTest1() {
         StopWatch sw = new StopWatch();
         sw.start("IDEA");
-        File download = isoDownloadApi. download();
+        File download = isoDownloadApi.download();
         System.out.println(download.getAbsolutePath());
         sw.stopWatch();
         System.out.println(sw.prettyPrintFormat());
