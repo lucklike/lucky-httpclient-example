@@ -17,9 +17,9 @@ import java.io.File;
 @HttpClient("https://download.jetbrains.com")
 public interface ISODownloadApi {
 
-    @AsyncExecutor(concurrency = "10")
+    @AsyncExecutor(concurrency = "15")
     @Get("idea/ideaIU-2024.3.dmg")
-    @RangeDownload(saveDir = "/Users/fukang/Desktop/test/bfile")
+    @RangeDownload(saveDir = "D:/test/bfile")
     File download();
 
     @RangeDownload

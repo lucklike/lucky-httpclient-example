@@ -31,7 +31,13 @@ public class ItrusCommonParam {
     private String appSecret;
 
     /**
+     * 主企业ID
      * CompanyUUID
      */
     private String companyUUID;
+
+    /**
+     * 主企业签章ID
+     */
+    private Long companySealId;
 }
