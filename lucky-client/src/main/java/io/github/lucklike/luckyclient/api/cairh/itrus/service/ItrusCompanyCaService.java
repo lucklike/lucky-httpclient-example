@@ -32,11 +32,12 @@ public class ItrusCompanyCaService {
     @Resource
     private ItrusCommonParam commonParam;
 
-    public byte[] createCAPdf(CaRequest caRequest) throws Exception {
+    public byte[] createCAPdf(CaRequest caRequest) {
 
         // 参数校验
         paramCheck(caRequest);
 
+        // 获取签名位置信息
         SealLocalList sealLocalList = SealLocalList.forCaRequest(caRequest);
 
         // 创建用户组件
@@ -46,7 +47,7 @@ public class ItrusCompanyCaService {
         SealComponent sealComp = SealComponent.of(itrusApi, commonParam, caRequest, userComp);
 
         // 创建天威电子合同
-        CreateContractResponse contractInfo = createContract(caRequest, userComp, sealLocalList.getSize());
+        CreateContractResponse contractInfo = createContract(caRequest, userComp, sealLocalList);
 
         // 添加天威电子合同签署人信息
         AddSignerResponse signInfo = addSignerInfo(sealLocalList, userComp, contractInfo);
@@ -55,7 +56,7 @@ public class ItrusCompanyCaService {
         signContract(signInfo, contractInfo.getContractId(), sealComp);
 
         // 调用天威电子合同下载合同接口，获取盖章的协议文件流
-        return downloadItruscontract(contractInfo.getContractId());
+        return downloadContract(contractInfo.getContractId());
     }
 
     /**
@@ -89,9 +90,9 @@ public class ItrusCompanyCaService {
      * @param userComp  用户组件
      * @return 文件合同信息
      */
-    private CreateContractResponse createContract(CaRequest caRequest, UserComponent userComp, int signCount) {
+    private CreateContractResponse createContract(CaRequest caRequest, UserComponent userComp, SealLocalList sealLocalList) {
         CreateContractRequest apiRequest = new CreateContractRequest();
-        apiRequest.setSignCount(String.valueOf(signCount));
+        apiRequest.setSignCount(String.valueOf(sealLocalList.getSize()));
         apiRequest.setName(caRequest.getAgreement_name());
         apiRequest.setDocName(caRequest.getAgreement_name());
         apiRequest.setBase64(Base64Utils.encodeToString(caRequest.getFile()));
@@ -111,72 +112,31 @@ public class ItrusCompanyCaService {
      */
     private AddSignerResponse addSignerInfo(SealLocalList sealLocalList, UserComponent userComp, CreateContractResponse contractInfo) {
 
+        String contractId = contractInfo.getContractId();
+        String docId = contractInfo.getDocId();
+
         AddSignerRequest apiRequest = new AddSignerRequest();
-        apiRequest.setContractId(contractInfo.getContractId());
+        apiRequest.setContractId(contractId);
         // 签署人集合
         List<AddSignerRequest.Signer> signerList = new ArrayList<>();
         apiRequest.setSigners(signerList);
 
         int ctrlId = 1;
 
-        //印章
-        if (sealLocalList.hasSealLocal()) {
-            AddSignerRequest.Signer sealSigner = new AddSignerRequest.Signer();
-            sealSigner.setUserId(userComp.getUserId());
-            sealSigner.setEnterpriseId(userComp.getSubCompanyId());
-            sealSigner.setSignerType("2");
-            sealSigner.setSequence("2");
-
-            // 构建印章签署文件
-            AddSignerRequest.SignFile sealSignerFile = new AddSignerRequest.SignFile();
-            sealSignerFile.setDocId(contractInfo.getDocId());
-
-            // 初始化控件
-            List<AddSignerRequest.XySignControl> xySignControlList = new ArrayList<>();
-            List<AddSignerRequest.KeywordSignControl> keywordSignControlList = new ArrayList<>();
-            for (Local sealLocal : sealLocalList.getSealLocals()) {
-                addSignControl(xySignControlList, keywordSignControlList, ctrlId++, "signet", sealLocal);
-            }
-
-            if (!xySignControlList.isEmpty()) {
-                sealSignerFile.setXySignControls(xySignControlList);
-            }
-            if (!keywordSignControlList.isEmpty()) {
-                sealSignerFile.setKeywordSignControls(keywordSignControlList);
-            }
-
-            sealSigner.setSignFiles(Collections.singletonList(sealSignerFile));
-            signerList.add(sealSigner);
-        }
-
         //签名
         if (sealLocalList.hasSignLocal()) {
-            AddSignerRequest.Signer signer = new AddSignerRequest.Signer();
-            signer.setUserId(userComp.getUserId());
-            signer.setSignerType("1");
-            signer.setSequence("1");
-
-            // 构建印章签署文件
-            AddSignerRequest.SignFile sealSignerFile = new AddSignerRequest.SignFile();
-            sealSignerFile.setDocId(contractInfo.getDocId());
-
-            // 初始化控件
-            List<AddSignerRequest.XySignControl> xySignControlList = new ArrayList<>();
-            List<AddSignerRequest.KeywordSignControl> keywordSignControlList = new ArrayList<>();
-
             for (Local signLocal : sealLocalList.getSignLocals()) {
-                addSignControl(xySignControlList, keywordSignControlList, ctrlId++, "autograph", signLocal);
+                signerList.add(signLocal.toSigner(docId, "1", userComp, ctrlId++));
             }
-            if (!xySignControlList.isEmpty()) {
-                sealSignerFile.setXySignControls(xySignControlList);
-            }
-            if (!keywordSignControlList.isEmpty()) {
-                sealSignerFile.setKeywordSignControls(keywordSignControlList);
-            }
-
-            signer.setSignFiles(Collections.singletonList(sealSignerFile));
-            signerList.add(signer);
         }
+
+        //印章
+        if (sealLocalList.hasSealLocal()) {
+            for (Local sealLocal : sealLocalList.getSealLocals()) {
+                signerList.add(sealLocal.toSigner(docId, "2", userComp, ctrlId++));
+            }
+        }
+
         return itrusApi.addSignerByFile(apiRequest);
     }
 
@@ -199,11 +159,19 @@ public class ItrusCompanyCaService {
                 if (signerType == 1) {
                     controlValue.setStampId(sealComp.getSignId());
                 } else {
-                    controlValue.setSealId(sealComp.getSubSealId());
+
+                    // 子企业
+                    if (ctrlId == 2) {
+                        controlValue.setSealId(sealComp.getSubSealId());
+                    } else {
+                        controlValue.setSealId(sealComp.getMainSealId());
+                    }
+
                 }
-                controlValue.setControlsId(ctrlId++);
+                controlValue.setControlsId(ctrlId);
                 signFile.setControlValues(Collections.singletonList(controlValue));
                 signFileList.add(signFile);
+                ctrlId++;
             }
             sign.setSignFiles(signFileList);
             signReq.setSigner(sign);
@@ -212,72 +180,17 @@ public class ItrusCompanyCaService {
         }
     }
 
-    private byte[] downloadItruscontract(String contractId) {
+    /**
+     * 下载合同
+     *
+     * @param contractId 合同ID
+     * @return 合同文件
+     */
+    private byte[] downloadContract(String contractId) {
         DownloadContractRequest apiRequest = new DownloadContractRequest();
         apiRequest.setContractId(contractId);
         DownloadContractResponse response = itrusApi.downloadContract(apiRequest);
         return response.getData();
-    }
-
-    private JSONArray createPosJsonArray(String posJsonStr, String errorMsg) {
-        try {
-            JSONArray jsonArray = JSON.parseArray(posJsonStr);
-            if (jsonArray == null || jsonArray.isEmpty()) {
-                throw new BizException("-1", errorMsg);
-            }
-            return JSON.parseArray(posJsonStr);
-        } catch (Exception e) {
-            log.error(errorMsg, e);
-            throw new BizException("-1", errorMsg);
-        }
-    }
-
-    private void addSignControl(List<AddSignerRequest.XySignControl> xySignControlList,
-                                List<AddSignerRequest.KeywordSignControl> keywordSignControlList,
-                                int id,
-                                String type,
-                                Local local) {
-
-        Float height = local.getHeight();
-        Float width = local.getWidth();
-        String index = local.getIndex().toString();
-        Float xOffset = local.getXOffset();
-        Float yOffset = local.getYOffset();
-
-
-        // 如果为1，则是位置定位，否则为关键字定位
-        if (local.isKw()) {
-            AddSignerRequest.KeywordSignControl keywordSignControl = new AddSignerRequest.KeywordSignControl();
-            keywordSignControl.setId(id);
-            keywordSignControl.setType(type);
-            keywordSignControl.setPageNum(index);
-            keywordSignControl.setOffsetX(xOffset.toString());
-            keywordSignControl.setOffsetY(yOffset.toString());
-            keywordSignControl.setKeyword(local.getKw());
-            if (height != null) {
-                keywordSignControl.setHeight(height);
-            }
-            if (width != null) {
-                keywordSignControl.setWidth(width);
-            }
-            keywordSignControlList.add(keywordSignControl);
-        } else {
-            AddSignerRequest.XySignControl xySignControl = new AddSignerRequest.XySignControl();
-            xySignControl.setId(id);
-            xySignControl.setType(type);
-            xySignControl.setPageNum(index);
-            xySignControl.setX(String.valueOf(xOffset / 100f));
-            xySignControl.setY(String.valueOf(yOffset / 100f));
-            if (height != null) {
-                xySignControl.setHeight(height);
-            }
-            if (width != null) {
-                xySignControl.setWidth(width);
-            }
-            xySignControlList.add(xySignControl);
-
-
-        }
     }
 
 }

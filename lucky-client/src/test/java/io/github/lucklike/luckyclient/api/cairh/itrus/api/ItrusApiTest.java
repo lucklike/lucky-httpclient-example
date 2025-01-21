@@ -2,8 +2,10 @@ package io.github.lucklike.luckyclient.api.cairh.itrus.api;
 
 import com.luckyframework.httpclient.proxy.CommonFunctions;
 import io.github.lucklike.luckyclient.api.cairh.itrus.ItrusCommonParam;
+import io.github.lucklike.luckyclient.api.cairh.itrus.req.QueryEnterpriseRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.QuerySealRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.resp.PageResponse;
+import io.github.lucklike.luckyclient.api.cairh.itrus.resp.QueryEnterpriseResponse;
 import io.github.lucklike.luckyclient.api.cairh.itrus.resp.Seal;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +32,12 @@ class ItrusApiTest {
 
     @Test
     void queryEnterpriseList() {
+
+        // 先执行查询，如果可以查到企业ID则直接返回
+        QueryEnterpriseRequest queryReq = new QueryEnterpriseRequest();
+        queryReq.setEnterpriseId(param.getCompanyUUID());
+        QueryEnterpriseResponse pageOrg = itrusApi.queryEnterpriseList(queryReq);
+        System.out.println(pageOrg);
     }
 
     @Test
@@ -49,11 +57,11 @@ class ItrusApiTest {
         // 先走查询接口查询印章，能查到直接返回
         QuerySealRequest queryReq = new QuerySealRequest();
         queryReq.setEnterpriseId(param.getCompanyUUID());
-        queryReq.setRequiredBase64("true");
+//        queryReq.setRequiredBase64("true");
         queryReq.setPageSize("50");
         PageResponse<Seal> queryResp = itrusApi.querySealList(queryReq);
         for (Seal seal : queryResp.getList()) {
-            File file = new File("D:/test/ca/seal", seal.getId() + ".jpg");
+            File file = new File("/Users/fukang/Desktop/test/ca/seal", seal.getId() + ".jpg");
             FileCopyUtils.copy(CommonFunctions._base64(seal.getSealFile()), file);
         }
         System.out.println(queryResp);

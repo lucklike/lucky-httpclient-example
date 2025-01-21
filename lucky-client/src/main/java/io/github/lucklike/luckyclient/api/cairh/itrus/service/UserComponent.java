@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 public class UserComponent {
 
     private final String userId;
+    private final String mainCompanyUserId;
     private final String mainCompanyId;
     private final String subCompanyId;
 
@@ -23,6 +24,7 @@ public class UserComponent {
     private UserComponent(ItrusApi itrusApi, ItrusCommonParam param, CaRequest request) {
         this.userId = createUser(itrusApi, request);
         this.mainCompanyId = param.getCompanyUUID();
+        this.mainCompanyUserId = param.getCompanyCreatorId();
         this.subCompanyId = createSubCompanyId(itrusApi, request);
     }
 

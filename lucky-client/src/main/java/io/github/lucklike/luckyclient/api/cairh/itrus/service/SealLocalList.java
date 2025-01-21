@@ -28,11 +28,11 @@ public class SealLocalList {
         String signPos = caRequest.getSign_pos();
 
         if (StringUtils.hasText(sealPos)) {
-            list.setSignLocals(JSON.parseArray(sealPos, Local.class));
+            list.setSealLocals(JSON.parseArray(sealPos, Local.class));
         }
 
         if (StringUtils.hasText(signPos)) {
-            list.setSealLocals(JSON.parseArray(signPos, Local.class));
+            list.setSignLocals(JSON.parseArray(signPos, Local.class));
         }
         list.check();
         return list;

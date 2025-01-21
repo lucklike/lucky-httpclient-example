@@ -73,7 +73,7 @@ public interface ItrusApi {
     @Post("/contract/createByFile")
     CreateContractResponse createFileContract(CreateContractRequest request);
 
-    @Describe("天威合同上添加签收人信息")
+    @Describe("天威合同上添加签署人信息")
     @Post("/contract/addSignerByFile")
     AddSignerResponse addSignerByFile(AddSignerRequest request);
 
