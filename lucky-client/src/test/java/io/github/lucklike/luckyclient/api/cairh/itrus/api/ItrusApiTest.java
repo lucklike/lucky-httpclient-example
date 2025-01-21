@@ -2,8 +2,10 @@ package io.github.lucklike.luckyclient.api.cairh.itrus.api;
 
 import com.luckyframework.httpclient.proxy.CommonFunctions;
 import io.github.lucklike.luckyclient.api.cairh.itrus.ItrusCommonParam;
+import io.github.lucklike.luckyclient.api.cairh.itrus.req.CreateEnterpriseSealRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.QueryEnterpriseRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.QuerySealRequest;
+import io.github.lucklike.luckyclient.api.cairh.itrus.resp.CreateEnterpriseSealResponse;
 import io.github.lucklike.luckyclient.api.cairh.itrus.resp.PageResponse;
 import io.github.lucklike.luckyclient.api.cairh.itrus.resp.QueryEnterpriseResponse;
 import io.github.lucklike.luckyclient.api.cairh.itrus.resp.Seal;
@@ -15,7 +17,10 @@ import javax.annotation.Resource;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
+import static com.luckyframework.httpclient.proxy.CommonFunctions.base64;
+import static com.luckyframework.httpclient.proxy.CommonFunctions.resource;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -57,7 +62,8 @@ class ItrusApiTest {
         // 先走查询接口查询印章，能查到直接返回
         QuerySealRequest queryReq = new QuerySealRequest();
         queryReq.setEnterpriseId(param.getCompanyUUID());
-//        queryReq.setRequiredBase64("true");
+        queryReq.setUserId(param.getCompanyCreatorId());
+        queryReq.setRequiredBase64("true");
         queryReq.setPageSize("50");
         PageResponse<Seal> queryResp = itrusApi.querySealList(queryReq);
         for (Seal seal : queryResp.getList()) {
@@ -68,7 +74,16 @@ class ItrusApiTest {
     }
 
     @Test
-    void createEnterpriseSeal() {
+    void createEnterpriseSeal() throws IOException {
+        CreateEnterpriseSealRequest request = new CreateEnterpriseSealRequest();
+        request.setUserId(param.getCompanyCreatorId());
+        request.setEnterpriseId(param.getCompanyUUID());
+        // 自定义方式创建
+        request.setSealType(2);
+        request.setSealName("测试公章-00123");
+        request.setSealBase64(base64(resource("file:/Users/fukang/Desktop/test/ca/seal/167044677231465389.jpg")));
+        CreateEnterpriseSealResponse response = itrusApi.createEnterpriseSeal(request);
+        System.out.println(response);
     }
 
     @Test
