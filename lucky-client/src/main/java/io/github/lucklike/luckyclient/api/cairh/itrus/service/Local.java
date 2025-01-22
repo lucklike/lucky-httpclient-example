@@ -11,10 +11,6 @@ import java.util.Objects;
 @Data
 public class Local {
 
-    public static final String TYPE_PERSONAGE = "autograph";
-    public static final String TYPE_FIRM = "signet";
-
-
     private Integer signtype;
     private Integer index;
     private Float xOffset;
@@ -26,53 +22,6 @@ public class Local {
 
     public boolean isKw() {
         return signtype == 0;
-    }
-
-    public AddSignerRequest.Signer toSigner(String docId, String contractType, UserComponent user, int ctrlId) {
-
-        boolean isPersonage = Objects.equals("1", contractType);
-
-        AddSignerRequest.Signer signer = new AddSignerRequest.Signer();
-
-        signer.setSignerType(contractType);
-        signer.setSequence(String.valueOf(ctrlId));
-
-        if (!isPersonage) {
-            // 子企业
-            if (ctrlId == 2) {
-                signer.setUserId(user.getUserId());
-                signer.setEnterpriseId(user.getSubCompanyId());
-            } else {
-                signer.setUserId(user.getMainCompanyUserId());
-                signer.setEnterpriseId(user.getMainCompanyId());
-            }
-        } else {
-            signer.setUserId(user.getUserId());
-        }
-
-        // 控件ID
-        String ctrlType = isPersonage ? TYPE_PERSONAGE : TYPE_FIRM;
-
-        // 构建印章签署文件
-        AddSignerRequest.SignFile sealSignerFile = new AddSignerRequest.SignFile();
-        sealSignerFile.setDocId(docId);
-        // 初始化控件
-        List<AddSignerRequest.XySignControl> xySignControlList = new ArrayList<>();
-        List<AddSignerRequest.KeywordSignControl> keywordSignControlList = new ArrayList<>();
-
-        if (isKw()) {
-            keywordSignControlList.add(toKwSignControl(ctrlType, ctrlId));
-        } else {
-            xySignControlList.add(toXySignControl(ctrlType, ctrlId));
-        }
-        if (!xySignControlList.isEmpty()) {
-            sealSignerFile.setXySignControls(xySignControlList);
-        }
-        if (!keywordSignControlList.isEmpty()) {
-            sealSignerFile.setKeywordSignControls(keywordSignControlList);
-        }
-        signer.setSignFiles(Collections.singletonList(sealSignerFile));
-        return signer;
     }
 
     /**

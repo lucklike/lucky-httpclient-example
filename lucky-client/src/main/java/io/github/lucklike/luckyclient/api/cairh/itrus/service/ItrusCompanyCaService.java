@@ -53,7 +53,7 @@ public class ItrusCompanyCaService {
         AddSignerResponse signInfo = addSignerInfo(sealLocalList, userComp, contractInfo);
 
         // 上传文件合同后台签署
-        signContract(signInfo, contractInfo.getContractId(), sealComp);
+        signContract(sealLocalList, signInfo, contractInfo, sealComp);
 
         // 调用天威电子合同下载合同接口，获取盖章的协议文件流
         return downloadContract(contractInfo.getContractId());
@@ -111,72 +111,77 @@ public class ItrusCompanyCaService {
      * @return 签署信息
      */
     private AddSignerResponse addSignerInfo(SealLocalList sealLocalList, UserComponent userComp, CreateContractResponse contractInfo) {
-
-        String contractId = contractInfo.getContractId();
-        String docId = contractInfo.getDocId();
-
         AddSignerRequest apiRequest = new AddSignerRequest();
-        apiRequest.setContractId(contractId);
-        // 签署人集合
-        List<AddSignerRequest.Signer> signerList = new ArrayList<>();
-        apiRequest.setSigners(signerList);
-
-        int ctrlId = 1;
-
-        //签名
-        if (sealLocalList.hasSignLocal()) {
-            for (Local signLocal : sealLocalList.getSignLocals()) {
-                signerList.add(signLocal.toSigner(docId, "1", userComp, ctrlId++));
-            }
-        }
-
-        //印章
-        if (sealLocalList.hasSealLocal()) {
-            for (Local sealLocal : sealLocalList.getSealLocals()) {
-                signerList.add(sealLocal.toSigner(docId, "2", userComp, ctrlId++));
-            }
-        }
-
+        apiRequest.setContractId(contractInfo.getContractId());
+        apiRequest.setSigners(sealLocalList.getAllSigners(contractInfo.getDocId(), userComp));
         return itrusApi.addSignerByFile(apiRequest);
     }
 
-    private void signContract(AddSignerResponse signInfo, String contractId, SealComponent sealComp) {
+    private void signContract(SealLocalList sealLocalList, AddSignerResponse signInfo, CreateContractResponse contract, SealComponent sealComp) {
 
-        int ctrlId = 1;
-        for (AddSignerResponse.Signer signer : signInfo.getSigners()) {
-            ContractSignRequest signReq = new ContractSignRequest();
+        List<AddSignerResponse.Signer> signerList = signInfo.getSigners();
 
-            Integer signerType = signer.getSignerType();
-            signReq.setContractId(contractId);
-            ContractSignRequest.Signer sign = new ContractSignRequest.Signer();
-            sign.setSignerId(signer.getSignerId());
+        // 只有一个签署人的情况
+        if (signerList.size() == 1) {
+            AddSignerResponse.Signer signer = signerList.get(0);
+            for (int i = 0; i < sealLocalList.getSize(); i++) {
+                ContractSignRequest signReq = new ContractSignRequest();
+                Integer signerType = signer.getSignerType();
+                signReq.setContractId(contract.getContractId());
 
-            List<ContractSignRequest.SignFile> signFileList = new ArrayList<>();
-            for (AddSignerResponse.Document document : signer.getDocList()) {
+                ContractSignRequest.Signer sign = new ContractSignRequest.Signer();
+                sign.setSignerId(signer.getSignerId());
+
+                List<ContractSignRequest.SignFile> signFileList = new ArrayList<>(sealLocalList.getSize());
                 ContractSignRequest.SignFile signFile = new ContractSignRequest.SignFile();
-                signFile.setDocId(document.getDocId());
+                signFile.setDocId(Long.parseLong(contract.getDocId()));
                 ContractSignRequest.ControlValue controlValue = new ContractSignRequest.ControlValue();
+                controlValue.setControlsId(++i);
                 if (signerType == 1) {
                     controlValue.setStampId(sealComp.getSignId());
                 } else {
-
-                    // 子企业
-                    if (ctrlId == 2) {
-                        controlValue.setSealId(sealComp.getSubSealId());
-                    } else {
-                        controlValue.setSealId(sealComp.getMainSealId());
-                    }
-
+                    controlValue.setSealId(sealComp.getSubSealId());
                 }
-                controlValue.setControlsId(ctrlId);
                 signFile.setControlValues(Collections.singletonList(controlValue));
                 signFileList.add(signFile);
-                ctrlId++;
+                sign.setSignFiles(signFileList);
+                signReq.setSigner(sign);
+                itrusApi.signFileContract(signReq);
             }
-            sign.setSignFiles(signFileList);
-            signReq.setSigner(sign);
+        }
+        // 两个签署人的情况
+        else {
 
-            itrusApi.signFileContract(signReq);
+            int j = 1;
+            for (int i = 0; i < signerList.size(); i++) {
+                AddSignerResponse.Signer signer = signerList.get(i);
+                int ctrlCount = i == 0 ? sealLocalList.getSignLocals().size() : sealLocalList.getSealLocals().size();
+                for (int i1 = 0; i1 < ctrlCount; i1++) {
+                    List<ContractSignRequest.SignFile> signFileList = new ArrayList<>(sealLocalList.getSignLocals().size());
+                    ContractSignRequest signReq = new ContractSignRequest();
+                    Integer signerType = signer.getSignerType();
+                    signReq.setContractId(contract.getContractId());
+
+                    ContractSignRequest.Signer sign = new ContractSignRequest.Signer();
+                    sign.setSignerId(signer.getSignerId());
+
+                    ContractSignRequest.SignFile signFile = new ContractSignRequest.SignFile();
+                    signFile.setDocId(Long.parseLong(contract.getDocId()));
+                    ContractSignRequest.ControlValue controlValue = new ContractSignRequest.ControlValue();
+                    controlValue.setControlsId(j++);
+                    if (signerType == 1) {
+                        controlValue.setStampId(sealComp.getSignId());
+                    } else {
+                        controlValue.setSealId(sealComp.getSubSealId());
+                    }
+                    signFile.setControlValues(Collections.singletonList(controlValue));
+                    signFileList.add(signFile);
+                    sign.setSignFiles(signFileList);
+                    signReq.setSigner(sign);
+                    itrusApi.signFileContract(signReq);
+                }
+
+            }
         }
     }
 
