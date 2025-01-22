@@ -17,6 +17,8 @@ import javax.annotation.Resource;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static com.luckyframework.httpclient.proxy.CommonFunctions.base64;
@@ -66,9 +68,16 @@ class ItrusApiTest {
         queryReq.setRequiredBase64("true");
         queryReq.setPageSize("50");
         PageResponse<Seal> queryResp = itrusApi.querySealList(queryReq);
-        for (Seal seal : queryResp.getList()) {
-            File file = new File("/Users/fukang/Desktop/test/ca/seal", seal.getId() + ".jpg");
-            FileCopyUtils.copy(CommonFunctions._base64(seal.getSealFile()), file);
+
+        List<Seal> sealList = new ArrayList<>(queryResp.getList());
+        queryReq.setPageNum("2");
+        sealList.addAll(itrusApi.querySealList(queryReq).getList());
+
+        for (Seal seal : sealList) {
+            if (Objects.nonNull(seal.getSealFile())) {
+                File file = new File("D:/test/ca/seal", seal.getId() + ".jpg");
+                FileCopyUtils.copy(CommonFunctions._base64(seal.getSealFile()), file);
+            }
         }
         System.out.println(queryResp);
     }

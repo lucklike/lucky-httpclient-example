@@ -7,6 +7,7 @@ import com.luckyframework.httpclient.generalapi.describe.ApiDescribe;
 import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
+import com.luckyframework.httpclient.proxy.spel.FunctionAlias;
 import com.luckyframework.httpclient.proxy.spel.Namespace;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
@@ -25,7 +26,7 @@ import static com.luckyframework.httpclient.proxy.CommonFunctions.macSha1Base64;
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-@RespConvert(resultFunc = "itrus_autoConvert")
+@RespConvert(resultFunc = "itrus_auto_convert")
 @SpELImport(ItrusHttpClient.ItrusFunctions.class)
 @HttpClient("#{@itrusCommonParam.url}")
 public @interface ItrusHttpClient {
@@ -52,6 +53,7 @@ public @interface ItrusHttpClient {
          * @param response 响应对象
          * @return 目标对象
          */
+        @FunctionAlias("auto_convert")
         static Object autoConvert(MethodContext context, Response response) {
             ApiDescribe desc = DescribeFunction.describe(context);
             int status = response.getStatus();
