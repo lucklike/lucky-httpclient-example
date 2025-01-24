@@ -3,7 +3,6 @@ package io.github.lucklike.luckyclient.api.cairh.itrus.api;
 import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import com.luckyframework.httpclient.proxy.annotations.PrintLog;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.Retryable;
 import io.github.lucklike.luckyclient.api.cairh.BizException;
@@ -66,24 +65,23 @@ public interface ItrusApi {
     @Post("/enterprise/createSeal")
     CreateEnterpriseSealResponse createEnterpriseSeal(CreateEnterpriseSealRequest request);
 
-    @Describe("添加⼦企业")
+    @Describe("添加子企业")
     @Post("/enterprise/addSubCompany")
     void addSubCompany(AddSubCompanyRequest request);
 
-    @Describe("天威合同创建合同⼦企业")
+    @Describe("创建合同")
     @Post("/contract/createByFile")
     CreateContractResponse createFileContract(CreateContractRequest request);
 
-    @Describe("天威合同上添加签署人信息")
+    @Describe("添加签署人信息")
     @Post("/contract/addSignerByFile")
     AddSignerResponse addSignerByFile(AddSignerRequest request);
 
-    @Describe("天威合同签署")
+    @Describe("合同签署")
     @Post("/contract/signByFile")
     void signFileContract(ContractSignRequest request);
 
-    @PrintLogProhibition
-    @Describe("天威合同下载签署后的合同")
+    @Describe("下载签署后的合同")
     @Post("/contract/downloadContract")
     DownloadContractResponse downloadContract(DownloadContractRequest request);
 

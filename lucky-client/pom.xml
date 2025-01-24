@@ -71,6 +71,13 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.83</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-core</artifactId>
+            <version>1.8.2</version>  <!-- 请根据需要选择最新版本 -->
+        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>

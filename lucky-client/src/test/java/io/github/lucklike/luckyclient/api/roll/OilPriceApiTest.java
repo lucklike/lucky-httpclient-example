@@ -2,6 +2,7 @@ package io.github.lucklike.luckyclient.api.roll;
 
 import com.luckyframework.common.Table;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
@@ -12,7 +13,7 @@ import java.util.Map;
 @SpringBootTest
 public class OilPriceApiTest {
 
-    @Resource
+    @Autowired
     private OilPriceApi api;
 
     @Test
@@ -34,15 +35,10 @@ public class OilPriceApiTest {
 
     }
 
-    private void sleep() throws InterruptedException {
-        Thread.sleep(2000L);
-    }
-
     private void queryList(Table table, List<String> provinceList) throws InterruptedException {
         for (String province : provinceList) {
             Map<String, Object> map = api.query(province);
             table.addDataRow(province, map.get("t0"), map.get("t89"), map.get("t92"), map.get("t95"), map.get("t98"));
-            sleep();
         }
 
     }

@@ -3,6 +3,7 @@ package io.github.lucklike.luckyclient.api.abstractapi;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 import io.github.lucklike.luckyclient.api.roll.OilPriceApi;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Resource;
@@ -13,7 +14,7 @@ import java.util.Map;
 @HttpClient
 public abstract class AbstractClassApi {
 
-    @Resource
+    @Autowired
     private OilPriceApi oilPriceApi;
 
     @Value("${lucky-server.http}")

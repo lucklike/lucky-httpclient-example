@@ -13,7 +13,10 @@ public class BilibiliApiTest {
 
     @Test
     void indexTest() {
-        System.out.println(bilibiliApi.index("hello log"));
+        while (true) {
+           bilibiliApi.index("hello log");
+        }
+
     }
 
 }
