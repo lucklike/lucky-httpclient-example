@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 @Condition(assertion = "#{$status$ != 200}", exception = "【ROLL】油价查询接口调用异常，响应码：'#{$status$}'")
 @Condition(assertion = "#{$body$.code != 1}", exception = "【ROLL】油价查询接口调用异常，状态码：'#{$body$.code}', 错误信息：#{$body$.msg}")
 @StaticQuery({"app_id=${ROLL.AppID}", "app_secret=${ROLL.AppSecret}"})
-@RespConvert
+@RespConvert("#{$body$.data}")
 @HttpClient("https://www.mxnzp.com")
 public @interface OilHttpClient {
 

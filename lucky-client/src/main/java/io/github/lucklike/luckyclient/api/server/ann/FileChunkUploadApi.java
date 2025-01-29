@@ -27,6 +27,15 @@ public interface FileChunkUploadApi {
     //                          Http Api
     //-----------------------------------------------------------------
 
+    /**
+     * 分片文件上传
+     * 具体实现逻辑在{@link FileChunkPlugin}中
+     *
+     * @param file           文件对象
+     * @param chunkSize      分片大小
+     * @param maxConcurrency 最大并发数
+     */
+    void uploadFile(File file, long chunkSize, int maxConcurrency);
 
     @Get("uploadChunks")
     @Describe("查询服务器中已上传的文件分片信息")
@@ -41,64 +50,4 @@ public interface FileChunkUploadApi {
     @Describe("通知服务器进行文件合并")
     String mergeChunks(@QueryParam String fileId, @QueryParam String fileName);
 
-    //-----------------------------------------------------------------
-    //                         Upload Method
-    //-----------------------------------------------------------------
-
-    /**
-     * 分片文件上传
-     *
-     * @param file           文件对象
-     * @param chunkSize      分片大小
-     * @param maxConcurrency 最大并发数
-     * @throws Exception 上传过程中可能出现的异常
-     */
-    default void uploadFile(File file, long chunkSize, int maxConcurrency) throws Exception {
-
-        // 获取文件名和文件hash
-        String fileId = CommonFunctions.md5Hex(file);
-        String fileName = file.getName();
-
-        // 获取已经上传到服务器中的分片文件信息
-        Map<Integer, String> uploadChunkMap = uploadChunks(fileId);
-
-        // 获取分片文件处理器进行处理
-        FileChunkHandle handle = FileChunkHandle.of(file, chunkSize);
-        handle.asyncHandle(
-                sf -> {
-                    if (isUploaded(uploadChunkMap, sf)) {
-                        return "ok";
-                    } else {
-                        return uploadChunk(fileId, sf.getIndex(), sf.getContent());
-                    }
-                },
-                rs -> {
-                    String r = mergeChunks(fileId, fileName);
-                    rs.forEach(System.out::println);
-                    System.out.println(r);
-
-                },
-                maxConcurrency
-        );
-    }
-
-    /**
-     * 检查否个分片文件是否已经上传
-     *
-     * @param chunkMap  服务器上已有的分片文件信息
-     * @param fileChunk 带检查的分片文件
-     * @return 是否已经上传到服务器了
-     */
-    @SneakyThrows
-    default boolean isUploaded(Map<Integer, String> chunkMap, @NonNull FileChunk fileChunk) {
-        if (ContainerUtils.isEmptyMap(chunkMap)) {
-            return false;
-        }
-        String hash = chunkMap.get((int) fileChunk.getIndex());
-        if (hash == null) {
-            return false;
-        }
-
-        return hash.equals(CommonFunctions.md5Hex(fileChunk.getContent()));
-    }
 }
