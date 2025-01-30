@@ -20,8 +20,11 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * 基于QPS的限流注解
+ *
  * @author fukang
  * @version 1.0.0
  * @date 2025/1/28 03:18
@@ -33,21 +36,27 @@ import java.util.List;
 @Plugin(pluginClass = CurrentLimitation.LimitPlugin.class)
 public @interface CurrentLimitation {
 
-    int qps() default 10;
+    /**
+     * 限制的QPS，默认值10
+     */
+    int limitQPS() default 10;
 
     class LimitPlugin implements ProxyPlugin {
 
+        private final AtomicBoolean invited = new AtomicBoolean(false);
 
         @Override
-        public void initOneOnly(ExecuteMeta meta) {
-            CurrentLimitation limitationAnn = meta.getMetaContext().getMergedAnnotationCheckParent(CurrentLimitation.class);
-            List<FlowRule> rules = new ArrayList<>();
-            FlowRule rule = new FlowRule();
-            rule.setResource(meta.getTargetClass().getName());
-            rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
-            rule.setCount(limitationAnn.qps());
-            rules.add(rule);
-            FlowRuleManager.loadRules(rules);
+        public void init(ExecuteMeta meta) {
+            if (invited.compareAndSet(false, true)) {
+                CurrentLimitation limitationAnn = meta.getMetaContext().getMergedAnnotationCheckParent(CurrentLimitation.class);
+                List<FlowRule> rules = new ArrayList<>();
+                FlowRule rule = new FlowRule();
+                rule.setResource(meta.getTargetClass().getName());
+                rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+                rule.setCount(limitationAnn.limitQPS());
+                rules.add(rule);
+                FlowRuleManager.loadRules(rules);
+            }
         }
 
         @Override
@@ -60,7 +69,7 @@ public @interface CurrentLimitation {
                 } catch (BlockException ex) {
                     System.out.println(method.getName() + "被限流，等待资源中.....");
                     try {
-                        Thread.sleep(1500L);
+                        Thread.sleep(1200L);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
