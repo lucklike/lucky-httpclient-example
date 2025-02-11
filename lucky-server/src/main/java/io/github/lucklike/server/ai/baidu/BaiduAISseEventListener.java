@@ -32,8 +32,7 @@ public class BaiduAISseEventListener extends AnnotationStandardEventListener {
     }
 
     @Override
-    public void onClose(Event<Void> event) {
-        super.onClose(event);
+    protected void onClosed(Event<Void> event) {
         emitter.complete();
         DelayedOutput.clearOutputLength();
     }
