@@ -118,3 +118,8 @@ baidu:
     enable: true
 
 
+ollama:
+  url: http://localhost:11434
+  model: deepseek-r1:1.5b
+
+
