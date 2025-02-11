@@ -2,15 +2,15 @@ package io.github.lucklike.luckyclient.api.spark;
 
 
 import com.luckyframework.common.Console;
-import com.luckyframework.httpclient.proxy.sse.AnnotationEventListener;
 import com.luckyframework.httpclient.proxy.sse.OnMessage;
+import com.luckyframework.httpclient.proxy.sse.standard.AnnotationStandardEventListener;
 import com.luckyframework.reflect.Param;
 import io.github.lucklike.luckyclient.api.util.DelayedOutput;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SparkCompletionsEventListener extends AnnotationEventListener {
+public class SparkCompletionsEventListener extends AnnotationStandardEventListener {
 
     private final Map<Integer, String> errCodeMap = new HashMap<Integer, String>() {{
         put(11200, "授权错误：该appId没有相关功能的授权 或者 业务量超过限制!");

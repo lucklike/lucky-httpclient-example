@@ -5,9 +5,9 @@ import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
-import com.luckyframework.httpclient.proxy.sse.AnnotationEventListener;
 import com.luckyframework.httpclient.proxy.sse.OnMessage;
 import com.luckyframework.httpclient.proxy.sse.Sse;
+import com.luckyframework.httpclient.proxy.sse.standard.AnnotationStandardEventListener;
 import com.luckyframework.reflect.Param;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 import io.github.lucklike.luckyclient.api.util.DelayedOutput;
@@ -36,7 +36,7 @@ public interface DeepSeekApi {
     @Post("/chat/completions")
     void completions(String content);
 
-    class DeepSeekEventListener extends AnnotationEventListener {
+    class DeepSeekEventListener extends AnnotationStandardEventListener {
 
         @OnMessage("#{$data$ eq ' [DONE]'}")
         public void end() {

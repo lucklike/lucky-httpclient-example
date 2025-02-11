@@ -15,6 +15,6 @@ class OllamaApiTest {
 
     @Test
     void generate() {
-        api.generate("为什么草是绿的？");
+        api.generate("花为什么是红色的？");
     }
 }

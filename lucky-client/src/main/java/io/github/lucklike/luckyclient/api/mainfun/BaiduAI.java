@@ -13,8 +13,9 @@ import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.StaticQuery;
 import com.luckyframework.httpclient.proxy.sse.Event;
 import com.luckyframework.httpclient.proxy.sse.EventListener;
-import com.luckyframework.httpclient.proxy.sse.Message;
 import com.luckyframework.httpclient.proxy.sse.Sse;
+import com.luckyframework.httpclient.proxy.sse.standard.Message;
+import com.luckyframework.httpclient.proxy.sse.standard.StandardEventListener;
 import io.github.lucklike.luckyclient.api.baiduai.Token;
 import io.github.lucklike.luckyclient.api.util.DelayedOutput;
 
@@ -98,27 +99,10 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
             "messages[0].content=#{content}",
             "stream=#{true}"
     })
-    @Sse(expression = "#{$this$}")
+    @Sse(listenerClass = BaiduAISseEventListener.class)
     @Post("/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k")
     abstract void questionsAndAnswers(String content);
 
-
-    //---------------------------------------------------------------------
-    //                          EventListener Method
-    //---------------------------------------------------------------------
-
-    @Override
-    public void onMessage(Event<Message> event) {
-        Message message = event.getMessage();
-        ConfigurationMap confMap = message.jsonDataToMap();
-        if (!confMap.getBoolean("is_end")) {
-            String result = confMap.getString("result");
-            DelayedOutput.output(result, outputMaxLength, outputDelayTime);
-        } else {
-            Console.printlnMulberry("\n");
-            DelayedOutput.clearOutputLength();
-        }
-    }
 
     //---------------------------------------------------------------------
     //                         Token Method
@@ -143,5 +127,21 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> implements Eve
     @Override
     protected boolean isExpires(Token token) {
         return token.isExpires();
+    }
+
+    class BaiduAISseEventListener extends StandardEventListener {
+
+        @Override
+        public void onMessage(Event<Message> event) {
+            Message message = event.getMessage();
+            ConfigurationMap confMap = message.jsonDataToMap();
+            if (!confMap.getBoolean("is_end")) {
+                String result = confMap.getString("result");
+                DelayedOutput.output(result, outputMaxLength, outputDelayTime);
+            } else {
+                Console.printlnMulberry("\n");
+                DelayedOutput.clearOutputLength();
+            }
+        }
     }
 }

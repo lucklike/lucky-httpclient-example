@@ -1,17 +1,17 @@
 package io.github.lucklike.server.ai.baidu;
 
-import com.luckyframework.common.Console;
 import com.luckyframework.httpclient.generalapi.DelayedOutput;
-import com.luckyframework.httpclient.proxy.sse.AnnotationEventListener;
+
 import com.luckyframework.httpclient.proxy.sse.Event;
 import com.luckyframework.httpclient.proxy.sse.OnMessage;
+import com.luckyframework.httpclient.proxy.sse.standard.AnnotationStandardEventListener;
 import com.luckyframework.reflect.Param;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 
 
-public class BaiduAISseEventListener extends AnnotationEventListener {
+public class BaiduAISseEventListener extends AnnotationStandardEventListener {
 
     private final SseEmitter emitter;
 
@@ -33,6 +33,7 @@ public class BaiduAISseEventListener extends AnnotationEventListener {
 
     @Override
     public void onClose(Event<Void> event) {
+        super.onClose(event);
         emitter.complete();
         DelayedOutput.clearOutputLength();
     }

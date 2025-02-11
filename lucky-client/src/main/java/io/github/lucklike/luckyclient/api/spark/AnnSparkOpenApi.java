@@ -1,7 +1,6 @@
 package io.github.lucklike.luckyclient.api.spark;
 
 import com.luckyframework.httpclient.proxy.annotations.Condition;
-import com.luckyframework.httpclient.proxy.annotations.ObjectGenerate;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
