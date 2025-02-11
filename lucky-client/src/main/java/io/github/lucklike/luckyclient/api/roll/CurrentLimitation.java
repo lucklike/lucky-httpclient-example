@@ -43,16 +43,20 @@ public @interface CurrentLimitation {
 
     class LimitPlugin implements ProxyPlugin {
 
+        private final AtomicBoolean initialized = new AtomicBoolean(false);
+
         @Override
-        public void initOnlyOne(ExecuteMeta meta) {
-            CurrentLimitation limitationAnn = meta.getMetaContext().getMergedAnnotationCheckParent(CurrentLimitation.class);
-            List<FlowRule> rules = new ArrayList<>();
-            FlowRule rule = new FlowRule();
-            rule.setResource(meta.getTargetClass().getName());
-            rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
-            rule.setCount(limitationAnn.limitQPS());
-            rules.add(rule);
-            FlowRuleManager.loadRules(rules);
+        public void init(ExecuteMeta meta) {
+            if (initialized.compareAndSet(false, true)) {
+                CurrentLimitation limitationAnn = meta.getMetaContext().getMergedAnnotationCheckParent(CurrentLimitation.class);
+                List<FlowRule> rules = new ArrayList<>();
+                FlowRule rule = new FlowRule();
+                rule.setResource(meta.getTargetClass().getName());
+                rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+                rule.setCount(limitationAnn.limitQPS());
+                rules.add(rule);
+                FlowRuleManager.loadRules(rules);
+            }
         }
 
         @Override

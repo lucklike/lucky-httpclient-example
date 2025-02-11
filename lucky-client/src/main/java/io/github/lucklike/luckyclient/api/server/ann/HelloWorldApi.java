@@ -38,16 +38,15 @@ public interface HelloWorldApi extends LuckyServerApi {
     @Get("http://localhost:8080/getFile")
     MultipartFile getFile();
 
-    static MockResponse exceptionMock() {
+    static MockResponse exception$Mock() {
         ClientCookie cookie = new ClientCookie("NAME", "FUKANG");
         cookie.setComment("username");
         cookie.setMaxAge(2147483647);
-        cookie.setDomain(".baidu.com");
         cookie.setHttpOnly(true);
         return MockResponse.create()
                 .status(500)
-                .cookie("BIDUPSID=DA9ED3306B7BBCF49B26FC7AB2172567; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com")
-                .cookie("BAIDUID=DA9ED3306B7BBCF49B26FC7AB2172567:FG=1; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com")
+                .cookie("BIDUPSID=DA9ED3306B7BBCF49B26FC7AB2172567; max-age=2147483647; path=/")
+                .cookie("BAIDUID=DA9ED3306B7BBCF49B26FC7AB2172567:FG=1;  max-age=2147483647; path=/")
                 .cookie(cookie)
                 .json(Result.fail(500, "exception"));
     }

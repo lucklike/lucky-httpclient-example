@@ -25,4 +25,13 @@ public interface ISODownloadApi {
     @RangeDownload
     @Get("http://maven.cairenhui.com/nexus/content/repositories/crh_dev/com/cairh/cpe-common-backend/0.1.7/cpe-common-backend-0.1.7.jar")
     File jarDownload();
+
+
+    @RangeDownload(saveDir =  "D:/test/bfile")
+    @Get("https://ollama.com/download/OllamaSetup.exe")
+    File ollamaDownload();
+
+    @RangeDownload(saveDir =  "D:/test/bfile")
+    @Get("https://chatboxai.app/zh/install?download=win64")
+    File chatboxaiDownload();
 }

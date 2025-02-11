@@ -77,6 +77,10 @@
             <artifactId>sentinel-core</artifactId>
             <version>1.8.2</version>  <!-- 请根据需要选择最新版本 -->
         </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
 
     </dependencies>
     <dependencyManagement>

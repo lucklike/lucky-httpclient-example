@@ -40,8 +40,8 @@ public class DownloadTest {
     @Test
     void rangeTest1() {
         StopWatch sw = new StopWatch();
-        sw.start("IDEA");
-        File download = isoDownloadApi.download();
+        sw.start("chatboxai");
+        File download = isoDownloadApi.chatboxaiDownload();
         System.out.println(download.getAbsolutePath());
         sw.stopWatch();
         System.out.println(sw.prettyPrintFormat());

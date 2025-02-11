@@ -15,15 +15,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyPlugin2 implements ProxyPlugin {
 
-    public MyPlugin2() {
-        System.out.println("MyPlugin2 initialized");
-    }
-
     @Override
     public Object decorate(ProxyDecorator decorator) throws Throwable {
         System.out.println("MyPlugin2 -- Start");
-        String a1 = "MyPlugin2" + decorator.getMeta().getArgs()[0];
-        String a2 = "MyPlugin2" + decorator.getMeta().getArgs()[1];
+        String a1 = "MyPlugin2--" + decorator.getMeta().getArgs()[0];
+        String a2 = "MyPlugin2--" + decorator.getMeta().getArgs()[1];
         Object result = decorator.proceed(a1, a2);
         System.out.println("MyPlugin2 -- End");
         return result;
@@ -33,4 +29,5 @@ public class MyPlugin2 implements ProxyPlugin {
     public boolean match(ExecuteMeta meta) {
         return meta.getMetaContext().isAnnotatedCheckParent(UseMyPlugin.class);
     }
+
 }

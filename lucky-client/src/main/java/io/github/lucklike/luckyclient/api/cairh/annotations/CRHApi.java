@@ -62,7 +62,7 @@ class CairhCommonFunction {
      * 构建代理对象时生成URL
      */
     @Var(lifecycle = Lifecycle.CLASS)
-    public static final String $crh_base_url = "${cairh.openapi.url}/#{#annc($cc$, T(CRHApi)).project}";
+    public static final String $crh_base_url = "${cairh.openapi.url}/#{#ann($cc$, T(CRHApi)).project}";
 
 
     /**

@@ -22,6 +22,7 @@ public class BaiduAISseEventListener extends AnnotationEventListener {
 
     @OnMessage("#{!$jdata$.is_end}")
     public void printContext(@Param("#{$jdata$.result}") String context) throws IOException, InterruptedException {
+        DelayedOutput.output(context);
         emitter.send(SseEmitter.event().data(context.replace("\n", "<br/>")));
     }
 
@@ -33,5 +34,6 @@ public class BaiduAISseEventListener extends AnnotationEventListener {
     @Override
     public void onClose(Event<Void> event) {
         emitter.complete();
+        DelayedOutput.clearOutputLength();
     }
 }

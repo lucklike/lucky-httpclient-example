@@ -20,5 +20,7 @@ class PluginApiTest {
     @Test
     void pluginTest() {
         pluginApi.pluginTest("12", "34");
+        System.out.println("------------------");
+        pluginApi.pluginTest("aaaa", "bbbb");
     }
 }
