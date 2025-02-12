@@ -1,22 +1,94 @@
 package io.github.lucklike.luckyclient.api.ollama;
 
-import com.luckyframework.httpclient.proxy.annotations.JsonParam;
+import com.luckyframework.httpclient.generalapi.describe.Describe;
+import com.luckyframework.httpclient.proxy.annotations.Delete;
+import com.luckyframework.httpclient.proxy.annotations.Get;
+import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
+import com.luckyframework.httpclient.proxy.sse.EventListener;
 import com.luckyframework.httpclient.proxy.sse.Sse;
+import io.github.lucklike.luckyclient.api.ollama.req.ChatRequest;
+import io.github.lucklike.luckyclient.api.ollama.req.GenerateRequest;
+import io.github.lucklike.luckyclient.api.ollama.req.ModelPullRequest;
+import io.github.lucklike.luckyclient.api.ollama.req.ModelRequest;
+import io.github.lucklike.luckyclient.api.ollama.resp.ChatResponse;
+import io.github.lucklike.luckyclient.api.ollama.resp.GenerateResponse;
+import io.github.lucklike.luckyclient.api.ollama.resp.ModelDetails;
+import io.github.lucklike.luckyclient.api.ollama.resp.ModelList;
 
 /**
- * Ollama API
- * Ollama 提供了强大的 REST API，
- * 使开发者能够方便地与大语言模型进行交互。通过 Ollama API，
- * 用户可以发送请求并接收模型生成的响应，应用于自然语言处理、文本生成等任务。
- * 本文将详细介绍生成补全、对话生成的基本操作，并对创建模型、复制模型、删除模型等常见操作也进行了说明。
+ * Ollama REST API
  */
 @OllamaClient
 public interface OllamaApi {
 
-    @Sse(listenerClass = OllamaEventListener.class)
-    @PropertiesJson("model=#{@ollamaConfigProperties.model}")
-    @Post("api/generate")
-    void generate(@JsonParam String prompt);
+    //----------------------------------------------------------------------
+    //                          回答补全(api/generate)
+    //----------------------------------------------------------------------
+
+    @Sse
+    @Post("/api/generate")
+    @Describe("（流式）回答补全")
+    void streamGenerate(@JsonBody GenerateRequest request, EventListener listener);
+
+    @Post("/api/generate")
+    @Describe("（非流式）回答补全")
+    GenerateResponse generate(@JsonBody GenerateRequest request);
+
+
+    //----------------------------------------------------------------------
+    //                          对话补全(/api/chat)
+    //----------------------------------------------------------------------
+
+
+    @Sse
+    @Post("/api/chat")
+    @Describe("（流式）对话补全")
+    void streamChat(@JsonBody ChatRequest request, EventListener listener);
+
+    @Post("/api/chat")
+    @Describe("（非流式）对话补全")
+    ChatResponse chat(@JsonBody ChatRequest request);
+
+    //----------------------------------------------------------------------
+    //                          列出本地模型(/api/tags)
+    //----------------------------------------------------------------------
+
+    @Get("/api/tags")
+    @Describe("列出本地模型")
+    ModelList localModels();
+
+    //----------------------------------------------------------------------
+    //                          列出运行模型(/api/ps)
+    //----------------------------------------------------------------------
+
+    @Get("/api/ps")
+    @Describe("列出运行模型")
+    ModelList psModels();
+
+    //----------------------------------------------------------------------
+    //                          显示模型信息(/api/show)
+    //----------------------------------------------------------------------
+
+    @Post("/api/show")
+    @Describe("显示模型信息")
+    ModelDetails showModel(@JsonBody ModelRequest request);
+
+    //----------------------------------------------------------------------
+    //                          拉取模型(/api/pull)
+    //----------------------------------------------------------------------
+
+    @Sse
+    @Post("/api/pull")
+    @Describe("（流式返回）拉取模型")
+    void streamPullModel(@JsonBody ModelPullRequest request, EventListener listener);
+
+
+    //----------------------------------------------------------------------
+    //                          删除模型(/api/delete)
+    //----------------------------------------------------------------------
+
+    @Delete("/api/delete")
+    @Describe("删除模型")
+    String deleteModel(@JsonBody ModelRequest request);
 }

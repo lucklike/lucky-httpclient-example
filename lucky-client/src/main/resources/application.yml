@@ -57,7 +57,6 @@ lucky:
         - io.github.lucklike.luckyclient.api
         - com.luckyframework.httpclient.generalapi
       body-max-length: -1
-      force-print-body: true
 
     cookie-manage:
       enable: true
