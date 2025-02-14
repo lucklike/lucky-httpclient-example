@@ -8,6 +8,7 @@ import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.sse.EventListener;
 import com.luckyframework.httpclient.proxy.sse.Sse;
 import io.github.lucklike.luckyclient.api.ollama.req.ChatRequest;
+import io.github.lucklike.luckyclient.api.ollama.req.CopyRequest;
 import io.github.lucklike.luckyclient.api.ollama.req.GenerateRequest;
 import io.github.lucklike.luckyclient.api.ollama.req.ModelPullRequest;
 import io.github.lucklike.luckyclient.api.ollama.req.ModelRequest;
@@ -91,4 +92,13 @@ public interface OllamaApi {
     @Delete("/api/delete")
     @Describe("删除模型")
     String deleteModel(@JsonBody ModelRequest request);
+
+
+    //----------------------------------------------------------------------
+    //                          复制模型(/api/copy)
+    //----------------------------------------------------------------------
+
+    @Post("/api/copy")
+    @Describe("复制模型")
+    String copyModel(@JsonBody CopyRequest request);
 }

@@ -7,6 +7,7 @@ import io.github.lucklike.luckyclient.api.ollama.listener.OllamaChatEventListene
 import io.github.lucklike.luckyclient.api.ollama.listener.OllamaGenerateEventListener;
 import io.github.lucklike.luckyclient.api.ollama.listener.OllamaModelPullEventListener;
 import io.github.lucklike.luckyclient.api.ollama.req.ChatRequest;
+import io.github.lucklike.luckyclient.api.ollama.req.CopyRequest;
 import io.github.lucklike.luckyclient.api.ollama.req.GenerateRequest;
 import io.github.lucklike.luckyclient.api.ollama.req.Message;
 import io.github.lucklike.luckyclient.api.ollama.req.ModelPullRequest;
@@ -116,6 +117,7 @@ class OllamaApiTest {
         for (Model model : models) {
             System.out.println(model);
         }
+        System.out.println(api.toString());
     }
 
     @Test
@@ -130,7 +132,7 @@ class OllamaApiTest {
     @Test
     void showModel() {
         ModelRequest request = new ModelRequest();
-        request.setName("deepseek-r1:7b");
+        request.setName("deepseek-r1:7b-copy");
         request.setVerbose(true);
         ModelDetails modelDetails = api.showModel(request);
         System.out.println(modelDetails);
@@ -148,8 +150,18 @@ class OllamaApiTest {
     @Test
     void deleteModel() {
         ModelRequest request = new ModelRequest();
-        request.setName("deepseek-r1:8b");
+        request.setName("deepseek-r1:7b-copy");
         String s = api.deleteModel(request);
         System.out.println(s);
     }
+
+    @Test
+    void copyModel() {
+        CopyRequest request = new CopyRequest();
+        request.setSource("deepseek-r1:7b");
+        request.setDestination("deepseek-r1:7b-copy");
+        String s = api.copyModel(request);
+        System.out.println(s);
+    }
+
 }
