@@ -151,8 +151,7 @@ class OllamaApiTest {
     void deleteModel() {
         ModelRequest request = new ModelRequest();
         request.setName("deepseek-r1:7b-copy");
-        String s = api.deleteModel(request);
-        System.out.println(s);
+        api.deleteModel(request);
     }
 
     @Test
@@ -160,8 +159,7 @@ class OllamaApiTest {
         CopyRequest request = new CopyRequest();
         request.setSource("deepseek-r1:7b");
         request.setDestination("deepseek-r1:7b-copy");
-        String s = api.copyModel(request);
-        System.out.println(s);
+        api.copyModel(request);
     }
 
 }

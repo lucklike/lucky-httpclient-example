@@ -91,7 +91,7 @@ public interface OllamaApi {
 
     @Delete("/api/delete")
     @Describe("删除模型")
-    String deleteModel(@JsonBody ModelRequest request);
+    void deleteModel(@JsonBody ModelRequest request);
 
 
     //----------------------------------------------------------------------
@@ -100,5 +100,5 @@ public interface OllamaApi {
 
     @Post("/api/copy")
     @Describe("复制模型")
-    String copyModel(@JsonBody CopyRequest request);
+    void copyModel(@JsonBody CopyRequest request);
 }
