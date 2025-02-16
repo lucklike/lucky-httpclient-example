@@ -1,15 +1,12 @@
 package io.github.lucklike.luckyclient.api.cairh.ttd;
 
-import com.luckyframework.common.ConfigurationMap;
-import io.github.lucklike.luckyclient.api.cairh.ttd.resp.TtdResponse;
+import io.github.lucklike.luckyclient.api.cairh.ttd.req.Page;
+import io.github.lucklike.luckyclient.api.cairh.ttd.resp.Product;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 @SpringBootTest
 class TTDApiTest {
@@ -19,8 +16,8 @@ class TTDApiTest {
 
     @Test
     void productList() {
-        TtdResponse<Map<String, Object>> ttdResp = ttdApi.productList(1, 10);
-        System.out.println(ttdResp.getData().getList());
+        List<Product> productList = ttdApi.productList(Page.of(1, 10));
+        System.out.println(productList);
     }
 
     @Test

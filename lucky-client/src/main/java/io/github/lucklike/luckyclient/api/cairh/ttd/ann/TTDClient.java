@@ -1,20 +1,25 @@
-package io.github.lucklike.luckyclient.api.cairh.ttd;
+package io.github.lucklike.luckyclient.api.cairh.ttd.ann;
 
 import com.luckyframework.common.ConfigurationMap;
+import com.luckyframework.common.StringUtils;
 import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.core.meta.Response;
-import com.luckyframework.httpclient.proxy.annotations.RespConvert;
+import com.luckyframework.httpclient.generalapi.HttpStatus;
+import com.luckyframework.httpclient.generalapi.HttpStatusException;
+import com.luckyframework.httpclient.generalapi.describe.ApiDescribe;
+import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
 import com.luckyframework.httpclient.proxy.annotations.Timeout;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.context.ParameterContext;
-import com.luckyframework.httpclient.proxy.spel.FunctionFilter;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
 import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.luckyclient.api.cairh.BizException;
+import io.github.lucklike.luckyclient.api.cairh.ttd.TTDApi;
+import io.github.lucklike.luckyclient.api.cairh.ttd.TTDConfig;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -26,24 +31,27 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
 
 import static com.luckyframework.httpclient.proxy.CommonFunctions._json;
 import static com.luckyframework.httpclient.proxy.CommonFunctions.json;
 import static com.luckyframework.httpclient.proxy.CommonFunctions.time;
+import static io.github.lucklike.luckyclient.api.cairh.ttd.ann.TTDClient.EncodeUtils.aesEncipherString;
+import static io.github.lucklike.luckyclient.api.cairh.ttd.ann.TTDClient.EncodeUtils.decryptString;
+import static io.github.lucklike.luckyclient.api.cairh.ttd.ann.TTDClient.EncodeUtils.getIv;
+import static io.github.lucklike.luckyclient.api.cairh.ttd.ann.TTDClient.EncodeUtils.getKey;
 
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-@RespConvert(resultFunc = "ttdConvert")
-@SpELImport(TTDClient.TTDFunction.class)
+@SpELImport(TTDClient.TTDCallback.class)
 @HttpClient("#{@TTDConfig.url}")
 @Timeout(connectionTimeoutExp = "#{@TTDConfig.connectionTimeout}", readTimeoutExp = "#{@TTDConfig.readTimeout}")
 public @interface TTDClient {
 
-    class TTDFunction {
+    /**
+     * TTD回调函数集合类
+     */
+    class TTDCallback {
 
         /**
          * 用于添加公共参数的回调函数
@@ -66,84 +74,129 @@ public @interface TTDClient {
             String appId = ttdConfig.getAppId();
 
             String token = null;
-            String methodName = mc.getCurrentAnnotatedElement().getName();
-            if (Objects.equals(methodName, "getAccessToken")) {
-                req.addFormParameter("appid", aesEncipherString(getKey(key), getIv(iv), appId));
-            } else {
+            if (DescribeFunction.needToken(mc)) {
                 token = api.getAccessToken();
                 req.addHeader("accesstoken", token);
                 req.addHeader("appid", aesEncipherString(getKey(token), getIv(token), appId));
                 req.addHeader("serialnumber", time());
 
-                Map<String, Object> argsMap = new LinkedHashMap<>();
+                ConfigurationMap cm = new ConfigurationMap();
                 for (ParameterContext pc : mc.getParameterContexts()) {
-                    argsMap.put(pc.getName(), pc.getValue());
+                    TTDJForm ttdJFAnn = pc.getMergedAnnotationCheckParent(TTDJForm.class);
+                    if (ttdJFAnn != null) {
+                        if (pc.isSimpleBaseType()) {
+                            cm.put(pc.getName(), pc.getValue());
+                        } else {
+                            cm = new ConfigurationMap(pc.getValue());
+                        }
+                    }
                 }
-                String json = json(argsMap);
+                String json = json(cm);
                 req.addFormParameter("body", aesEncipherString(getKey(token), getIv(appId), json));
                 req.addHeader("cm", DigestUtils.md5Hex(json));
+            } else {
+                req.addFormParameter("appid", aesEncipherString(getKey(key), getIv(iv), appId));
             }
             return token;
         }
 
-        /**
-         * 接口响应转换逻辑
-         *
-         * @param resp      响应对象
-         * @param mc        当前方法上下文对象
-         * @param ttdConfig TTD配置对象
-         * @return 转换后的结果
-         * @throws Exception 转换过程中可能会出现的异常
-         */
-        public static Object ttdConvert(Response resp,
-                                        MethodContext mc,
-                                        TTDConfig ttdConfig) throws Exception {
 
+        /**
+         * 响应解码与校验
+         *
+         * @param mc        当前方法上下文对象
+         * @param resp      当前响应对象
+         * @param ttdConfig TTD配置对象
+         * @return 解码之后的响应体
+         */
+        @Callback(lifecycle = Lifecycle.RESPONSE, storeOrNot = true, storeName = "$ttd_data")
+        public static Object responseDecryptAndCheck(MethodContext mc,
+                                                     Response resp,
+                                                     TTDConfig ttdConfig) throws Exception {
+            ApiDescribe apiDesc = DescribeFunction.describe(mc);
+            Request request = resp.getRequest();
+
+            // HTTP状态码异常
+            HttpStatus status = HttpStatus.getStatus(resp.getStatus());
+            if (status.isErr()) {
+                throw new HttpStatusException(
+                        "Http Status Error! Status:{}, Api: {}, [{}] {}",
+                        status.getCode(),
+                        apiDesc.getName(),
+                        request.getRequestMethod(),
+                        request.getUrl());
+            }
+
+            // 校验响应体
+            String stringResult = resp.getStringResult();
+            if (!StringUtils.hasText(stringResult)) {
+                throw new BizException(
+                        "An empty response body. api: {}, [{}] {}",
+                        apiDesc.getName(),
+                        request.getRequestMethod(),
+                        request.getUrl());
+            }
+
+            // 解码并校验接口响应码，校验通过之后将解码后的响应体存入上下文中
             String key = ttdConfig.getKey();
             String iv = ttdConfig.getIv();
             String appId = ttdConfig.getAppId();
 
-            String methodName = mc.getCurrentAnnotatedElement().getName();
-            if (Objects.equals(methodName, "getAccessToken")) {
-                ConfigurationMap configMap = _json(decryptString(getKey(key), getIv(iv), resp.getStringResult()), ConfigurationMap.class);
-                return configMap.getString("data.bean.access_token");
+            ConfigurationMap decryptRespMap;
+            if (DescribeFunction.needToken(mc)) {
+                String token = mc.getRootVar("$ttd_token", String.class);
+                decryptRespMap = _json(decryptString(getKey(token), getIv(appId), resp.getStringResult()), ConfigurationMap.class);
+            } else {
+                decryptRespMap = _json(decryptString(getKey(key), getIv(iv), resp.getStringResult()), ConfigurationMap.class);
             }
-            String token = mc.getRootVar("$ttd_token", String.class);
-            return _json(decryptString(getKey(token), getIv(appId), resp.getStringResult()), mc.getRealMethodReturnResolvableType());
+
+            if (decryptRespMap.getInt("code") != 0) {
+                throw new BizException(
+                        "The interface status code is error!, [code: {}], [api: {}], [message: {}], [{}] {}",
+                        decryptRespMap.getInt("code"),
+                        apiDesc.getName(),
+                        decryptRespMap.getString("msg"),
+                        request.getRequestMethod(),
+                        request.getUrl()
+                );
+            }
+
+            return decryptRespMap.getMap("data");
         }
 
+    }
 
-        @FunctionFilter
+
+    /**
+     * 报文的加密与解密工具类
+     */
+    class EncodeUtils {
+
         public static String getIv(String key) {
             return DigestUtils.sha256Hex(getKey(key) + key).substring(0, 16);
         }
 
-        @FunctionFilter
         public static String getKey(String iv) {
             return DigestUtils.sha256Hex(iv).substring(0, 16);
         }
 
-        @FunctionFilter
         public static String aesEncipherString(String key, String iv, String body) throws Exception {
             String enc = Base64.encodeBase64String(aesEncipherByte(key, iv, body));
             enc = Base64.encodeBase64String(enc.getBytes());
             return enc.replaceAll("[\\s*\t\n\r]", "");
         }
 
-        @FunctionFilter
         public static String decryptString(String key, String iv, String body) throws Exception {
             SecretKeySpec secreKey = getSecretKey(key.getBytes());
-            return new String(decrypt(Base64.decodeBase64(Base64.decodeBase64(body.getBytes())), secreKey, iv), "UTF-8");
+            return new String(decrypt(Base64.decodeBase64(Base64.decodeBase64(body.getBytes())), secreKey, iv), StandardCharsets.UTF_8);
         }
 
-        @FunctionFilter
         private static byte[] decrypt(byte[] data, Key key, String iv) throws Exception {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(2, key, new IvParameterSpec(iv.getBytes()));
             return cipher.doFinal(data);
         }
 
-        @FunctionFilter
         private static byte[] aesEncipherByte(String key, String iv, String data) throws Exception {
             SecretKeySpec secreKey = getSecretKey(key.getBytes());
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
@@ -152,7 +205,6 @@ public @interface TTDClient {
             return cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
         }
 
-        @FunctionFilter
         private static SecretKeySpec getSecretKey(byte[] key) {
             return new SecretKeySpec(key, "AES");
         }
