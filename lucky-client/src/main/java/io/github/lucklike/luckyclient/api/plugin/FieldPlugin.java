@@ -1,7 +1,12 @@
 package io.github.lucklike.luckyclient.api.plugin;
 
+import com.luckyframework.common.Console;
+import com.luckyframework.common.UnitUtils;
+import com.luckyframework.httpclient.proxy.logging.FontUtil;
+import com.luckyframework.httpclient.proxy.plugin.Around;
 import com.luckyframework.httpclient.proxy.plugin.Before;
 import com.luckyframework.httpclient.proxy.plugin.ExecuteMeta;
+import com.luckyframework.httpclient.proxy.plugin.ProxyDecorator;
 import io.github.lucklike.httpclient.plugin.HttpPlugin;
 import org.springframework.stereotype.Component;
 
@@ -17,9 +22,17 @@ import java.util.Arrays;
 @Component
 public class FieldPlugin {
 
-    @Before("true")
-    public void before(ExecuteMeta meta) {
-        Method method = meta.getMethod();
-        System.out.println("Running " + method.getName() + ", Args:" + Arrays.toString(meta.getArgs()));
+    @Around("true")
+    public Object around(ProxyDecorator decorator) throws Throwable {
+        ExecuteMeta meta = decorator.getMeta();
+        String method = meta.getMethod().getName();
+        long startTime = System.currentTimeMillis();
+        Object result = decorator.proceed();
+        Console.println(
+                "{} method takes {} time to run. args:{}",
+                FontUtil.getGreenUnderline(method),
+                FontUtil.getMulberryStr(UnitUtils.millisToTime((System.currentTimeMillis() - startTime))),
+                Arrays.toString(meta.getArgs()));
+        return result;
     }
 }

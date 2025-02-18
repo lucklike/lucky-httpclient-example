@@ -50,7 +50,7 @@ lucky:
           keep-alive-time: 1000
 
     #使用JDK执行器
-    http-executor: http_client
+    http-executor: jdk
     #日志相关的配置
     logger:
       packages:
@@ -79,10 +79,6 @@ lucky:
     spring-el:
       classes:
         - clazz: io.github.lucklike.luckyclient.util.SM4Function
-
-
-
-
 
 
 lucky-server:
@@ -119,5 +115,19 @@ baidu:
 ollama:
   url: http://localhost:11434
   model: deepseek-r1:1.5b
+
+crh:
+  nacos:
+    server-addr: 111.229.161.129:8848
+    namespace: fukang
+    username: nacos
+    password: nacos
+    services:
+      comp-backend:
+        group: fukang
+        service-name: cpe-products-component-backend
+      front:
+        group: fukang
+        service-name: cpe-products-component-front
 
 
