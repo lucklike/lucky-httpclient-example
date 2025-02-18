@@ -20,7 +20,7 @@ class LuckyNacosServerApiTest {
     void hello() {
         for (int i = 0; i < 20; i++) {
             System.out.println(luckyNacosServerApi.hello());
-            System.out.println(luckyNacosServerApi.getUser(i));
+            System.out.println(luckyNacosServerApi.getUser(i+1));
         }
     }
 }
