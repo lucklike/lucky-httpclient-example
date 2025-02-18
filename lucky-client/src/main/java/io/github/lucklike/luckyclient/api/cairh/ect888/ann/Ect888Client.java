@@ -223,9 +223,9 @@ public @interface Ect888Client {
      * SHA512 加解密工具类
      */
     class SHA512 {
-        private static Logger logger = LoggerFactory.getLogger(SHA512.class);
+        private static final Logger logger = LoggerFactory.getLogger(SHA512.class);
 
-        private final static char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+        private final static char[] hexDigits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
         private static String getSHA512(byte[] source) {
             String s = null;

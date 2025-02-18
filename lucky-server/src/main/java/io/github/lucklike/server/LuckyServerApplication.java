@@ -4,6 +4,7 @@ import io.github.lucklike.httpclient.annotation.EnableLuckyHttpClient;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import java.security.Security;
 
@@ -14,6 +15,7 @@ import java.security.Security;
  * @version 1.0.0
  * @date 2024/7/7 02:58
  */
+@EnableDiscoveryClient
 @EnableLuckyHttpClient
 @SpringBootApplication
 public class LuckyServerApplication {

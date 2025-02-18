@@ -39,7 +39,7 @@ import java.util.Objects;
 @HttpClientComponent
 @RespConvert(resultFunc = "convert")
 @SpELImport({NacosClient.CallbackAndFunction.class})
-@DomainNameMeta(getter = @ObjectGenerate(msg = "nacosDomainGetter"))
+@DomainNameMeta(getter = @ObjectGenerate(NacosClient.NacosDomainGetter.class))
 public @interface NacosClient {
 
     /**
@@ -61,7 +61,7 @@ public @interface NacosClient {
     /**
      * nacos扩展组件，根据nacos服务名获取服务IP端口等信息
      */
-    @Component("nacosDomainGetter")
+    @Component
     class NacosDomainGetter implements DomainNameGetter {
         @Autowired
         @Qualifier("crhNamingService")
