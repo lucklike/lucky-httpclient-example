@@ -19,8 +19,8 @@ class LuckyNacosServerApiTest {
     @Test
     void hello() {
         for (int i = 0; i < 20; i++) {
-            String hello = luckyNacosServerApi.hello();
-            System.out.println(hello);
+            System.out.println(luckyNacosServerApi.hello());
+            System.out.println(luckyNacosServerApi.getUser(i));
         }
     }
 }

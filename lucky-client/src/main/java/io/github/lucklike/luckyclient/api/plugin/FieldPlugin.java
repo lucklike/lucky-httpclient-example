@@ -4,13 +4,11 @@ import com.luckyframework.common.Console;
 import com.luckyframework.common.UnitUtils;
 import com.luckyframework.httpclient.proxy.logging.FontUtil;
 import com.luckyframework.httpclient.proxy.plugin.Around;
-import com.luckyframework.httpclient.proxy.plugin.Before;
 import com.luckyframework.httpclient.proxy.plugin.ExecuteMeta;
 import com.luckyframework.httpclient.proxy.plugin.ProxyDecorator;
 import io.github.lucklike.httpclient.plugin.HttpPlugin;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
 import java.util.Arrays;
 
 /**
@@ -25,14 +23,13 @@ public class FieldPlugin {
     @Around("true")
     public Object around(ProxyDecorator decorator) throws Throwable {
         ExecuteMeta meta = decorator.getMeta();
-        String method = meta.getMethod().getName();
         long startTime = System.currentTimeMillis();
         Object result = decorator.proceed();
         Console.println(
                 "{} method takes {} time to run. args:{}",
-                FontUtil.getGreenUnderline(method),
+                FontUtil.getGreenUnderline(meta.getMetaContext().getSimpleSignature()),
                 FontUtil.getMulberryStr(UnitUtils.millisToTime((System.currentTimeMillis() - startTime))),
-                Arrays.toString(meta.getArgs()));
+                FontUtil.getBackYellowStr(Arrays.toString(meta.getArgs())));
         return result;
     }
 }

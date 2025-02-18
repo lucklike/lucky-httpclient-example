@@ -31,13 +31,13 @@ public class UserController {
     }
 
     @GetMapping("get")
-    public Result<User> getUser() throws InterruptedException {
+    public Result<User> getUser(Integer idLength) throws InterruptedException {
         int s = RandomUtil.randomInt(1000, 3000);
         System.out.println(getCount.getAndAdd(1) + "[GET]==>" + s);
         Thread.sleep(s);
         User user = new User();
         user.setId((int)(10000 * Math.random()));
-        user.setName(NanoId.randomNanoId());
+        user.setName(NanoId.randomNanoId(idLength));
         user.setPhone("1234567890");
         user.setEmail("1234567890@qq.com");
         user.setPassword("**********");
