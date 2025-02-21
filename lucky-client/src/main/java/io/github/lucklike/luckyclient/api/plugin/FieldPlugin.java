@@ -16,7 +16,7 @@ import java.util.Arrays;
  * @version 1.0.0
  * @date 2025/2/16 12:55
  */
-@HttpPlugin
+//@HttpPlugin
 @Component
 public class FieldPlugin {
 

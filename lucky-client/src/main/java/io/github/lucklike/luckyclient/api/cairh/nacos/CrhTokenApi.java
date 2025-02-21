@@ -1,24 +1,19 @@
 package io.github.lucklike.luckyclient.api.cairh.nacos;
 
 import com.luckyframework.httpclient.generalapi.describe.Describe;
-import com.luckyframework.httpclient.generalapi.describe.TokenApi;
 import com.luckyframework.httpclient.generalapi.token.MemoryTokenManager;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
+import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
 import io.github.lucklike.luckyclient.api.cairh.openapi.Token;
 
 import java.util.Date;
 
-@NacosClient("front")
+@NacosClient(value = "base-backend", contextPath = "basedata")
 public abstract class CrhTokenApi extends MemoryTokenManager<Token> {
 
-    @Describe("获取访问Token")
-    @PropertiesJson({
-        "secret_key=${cairh.openapi.secretKey}",
-        "app_id=${cairh.openapi.appId}"
-    })
-    @TokenApi
     @Post("/authless/token")
+    @Describe(name = "获取访问Token", needToken = false)
+    @StaticJsonBody("#{#read('classpath:crh.json')}")
     public abstract Token token();
 
 

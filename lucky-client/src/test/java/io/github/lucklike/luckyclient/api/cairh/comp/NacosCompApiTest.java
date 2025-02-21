@@ -1,5 +1,6 @@
 package io.github.lucklike.luckyclient.api.cairh.comp;
 
+import com.luckyframework.common.ConfigurationMap;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -16,5 +17,12 @@ class NacosCompApiTest {
     @Test
     void queryExamDetail() {
         System.out.println(api.queryExamDetail("202407081649230130135"));
+    }
+
+    @Test
+    void queryByPage() {
+        ConfigurationMap map = api.queryByPage();
+        ConfigurationMap map2 = api.queryByPage();
+        System.out.println(map);
     }
 }
