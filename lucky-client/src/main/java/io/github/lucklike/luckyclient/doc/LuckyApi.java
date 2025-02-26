@@ -1,5 +1,7 @@
 package io.github.lucklike.luckyclient.doc;
 
+import com.luckyframework.httpclient.core.meta.BodyObject;
+import com.luckyframework.httpclient.core.meta.BodyObjectFactory;
 import com.luckyframework.httpclient.core.meta.Response;
 import com.luckyframework.httpclient.proxy.annotations.AutoRedirect;
 import com.luckyframework.httpclient.proxy.annotations.BinaryBody;
@@ -20,6 +22,7 @@ import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonArray;
 import com.luckyframework.httpclient.proxy.annotations.ProtobufBody;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
 import com.luckyframework.httpclient.proxy.annotations.RefParam;
+import com.luckyframework.httpclient.proxy.annotations.SSL;
 import com.luckyframework.httpclient.proxy.annotations.SocksProxy;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
@@ -238,5 +241,17 @@ public interface LuckyApi {
                 .txt("Moved Permanently");
     }
 
+    // 接口定义
+    @Post("http://localhost:8080/customBody")
+    String customBody(BodyObject body);
 
+
+    // 接口定义
+    @Post("http://localhost:8080/customBodyFactory")
+    String customBodyFactory(BodyObjectFactory bodyFactory);
+
+    // 接口定义
+    @SSL
+    @Post("http://localhost:8080/customBodyFactory")
+    String ssl(BodyObjectFactory bodyFactory);
 }

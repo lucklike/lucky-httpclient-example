@@ -1,6 +1,7 @@
 package io.github.lucklike.server.controller;
 
 import com.luckyframework.httpclient.proxy.CommonFunctions;
+import io.github.lucklike.entity.response.Result;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,8 @@ import java.util.stream.Stream;
 @RequestMapping("/shard/upload")
 public class FileChunkUploadController {
 
-    private static final String UPLOAD_DIR = "/Users/fukang/Desktop/test/shard/uploads/"; // 上传目录
-    private static final String TEMP_DIR = "/Users/fukang/Desktop/test/shard/uploads/temp/"; // 临时存储分片的目录
+    private static final String UPLOAD_DIR = "D:/test/shard/uploads/"; // 上传目录
+    private static final String TEMP_DIR = "D:/test/shard/uploads/temp/"; // 临时存储分片的目录
 
     // 初始化目录
     public FileChunkUploadController() throws IOException {
@@ -43,35 +44,35 @@ public class FileChunkUploadController {
      * @return 已经上传的文件列表
      */
     @GetMapping("uploadChunks")
-    public ResponseEntity<Map<Integer, String>> uploadChunks(@RequestParam("fileId") String fileId) {
+    public Result<Map<Integer, String>> uploadChunks(@RequestParam("fileId") String fileId) {
         String chunkDir = TEMP_DIR + fileId;
         File[] chunks = new File(chunkDir).listFiles();
         if (chunks == null) {
-            return ResponseEntity.ok(Collections.emptyMap());
+            return Result.success(Collections.emptyMap());
         }
         Map<Integer, String> chunkMap = Stream.of(chunks)
                 .collect(Collectors.toMap(f -> Integer.parseInt(f.getName()), this::fileHash));
-        return ResponseEntity.ok(chunkMap);
+        return Result.success(chunkMap);
     }
 
     /**
      * 检查分片是否已存在
      */
     @GetMapping("/check")
-    public ResponseEntity<Boolean> checkChunk(
+    public Result<Boolean> checkChunk(
             @RequestParam("fileId") String fileId,
             @RequestParam("chunkNumber") int chunkNumber
     ) {
         String chunkPath = TEMP_DIR + fileId + "/" + chunkNumber;
         File chunkFile = new File(chunkPath);
-        return ResponseEntity.ok(chunkFile.exists());
+        return Result.success(chunkFile.exists());
     }
 
     /**
      * 上传分片文件
      */
     @PostMapping("/chunk")
-    public ResponseEntity<String> uploadChunk(
+    public Result<String> uploadChunk(
             @RequestParam("fileId") String fileId,
             @RequestParam("chunkNumber") int chunkNumber,
             @RequestParam("file") MultipartFile file
@@ -84,13 +85,13 @@ public class FileChunkUploadController {
             String chunkFilePath = chunkDir + "/" + chunkNumber;
             File chunkFile = new File(chunkFilePath);
             if (chunkFile.exists()) {
-                return ResponseEntity.ok("Chunk already exists"); // 分片已存在
+                return Result.fail(100,"分片已存在"); // 分片已存在
             }
 
             file.transferTo(chunkFile); // 保存分片
-            return ResponseEntity.ok("Chunk uploaded successfully");
+            return Result.success("分片上传成功");
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Chunk upload failed");
+            return Result.fail(500, "分片上传失败");
         }
     }
 
@@ -98,7 +99,7 @@ public class FileChunkUploadController {
      * 合并分片文件
      */
     @PostMapping("/merge")
-    public ResponseEntity<String> mergeChunks(
+    public Result<String> mergeChunks(
             @RequestParam("fileId") String fileId,
             @RequestParam("fileName") String fileName
     ) {
@@ -107,7 +108,7 @@ public class FileChunkUploadController {
             File[] chunks = new File(chunkDir).listFiles();
 
             if (chunks == null || chunks.length == 0) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No chunks found");
+                return Result.fail(100, "为找到分片文件");
             }
 
             // 按文件序号排序
@@ -129,9 +130,9 @@ public class FileChunkUploadController {
             }
             new File(chunkDir).delete();
 
-            return ResponseEntity.ok("File merged successfully: " + fileName);
+            return Result.success("文件合并成功");
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File merge failed");
+            return Result.fail(500, "文件合并失败");
         }
     }
 

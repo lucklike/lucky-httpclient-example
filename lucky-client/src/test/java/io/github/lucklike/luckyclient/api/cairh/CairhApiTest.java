@@ -6,6 +6,7 @@ import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.MutableMap;
 import com.luckyframework.common.StopWatch;
 import com.luckyframework.common.StringUtils;
+import com.luckyframework.common.Table;
 import io.github.lucklike.luckyclient.api.cairh.basedata.BaseDataApi;
 import io.github.lucklike.luckyclient.api.cairh.comp.CompApi;
 import io.github.lucklike.luckyclient.api.cairh.comp.CompFrontApi;
@@ -214,6 +215,15 @@ class CairhApiTest {
         Set<String> allSeriesId = mallApi.getAllSeriesId();
         allSeriesId.forEach(System.out::println);
         System.out.println(allSeriesId.size());
+    }
+
+    public static void main(String[] args) {
+        Table table = new Table();
+        table.setHeader("ID", "USER_NAME", "EMAIL", "AGE", "SEX");
+        table.addDataRow("1", "Jack", "jack@qq.com", 23, 1);
+        table.addDataRow("2", "Lucy", "lucy@gmail.com", 18, 0);
+        table.addDataRow("3", "Tom", "tom@qq.com", 33, 1);
+        System.out.println(table.format());
     }
 
 }

@@ -37,6 +37,7 @@ lucky:
       keep-alive-time: 1000
       alternative:
         pool1:
+          lazy: false
           core-pool-size: 5
           blocking-queue-size: 20
           maximum-pool-size: 10

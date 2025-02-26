@@ -26,6 +26,7 @@ import io.github.lucklike.luckyclient.nacos.NacosConfigProperties;
 import io.github.lucklike.luckyclient.nacos.ServiceInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.ElementType;
@@ -50,7 +51,14 @@ public @interface NacosClient {
     /**
      * 服务名
      */
-    String value();
+    @AliasFor("server")
+    String value() default "";
+
+    /**
+     * 服务名
+     */
+    @AliasFor("value")
+    String server() default "";
 
     /**
      * context-path
@@ -77,7 +85,7 @@ public @interface NacosClient {
             NacosClient nacosAnn = context.toAnnotation(NacosClient.class);
 
             String protocol = nacosAnn.protocol();
-            String serviceKey = nacosAnn.value();
+            String serviceKey = nacosAnn.server();
             String contextPath = nacosAnn.contextPath();
 
             ServiceInfo serviceInfo = config.getServices().get(serviceKey);

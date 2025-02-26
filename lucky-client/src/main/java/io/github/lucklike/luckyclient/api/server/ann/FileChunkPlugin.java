@@ -3,10 +3,12 @@ package io.github.lucklike.luckyclient.api.server.ann;
 import com.luckyframework.common.ContainerUtils;
 import com.luckyframework.httpclient.generalapi.chunk.FileChunk;
 import com.luckyframework.httpclient.generalapi.chunk.FileChunkHandle;
+import com.luckyframework.httpclient.generalapi.chunk.ResultClassify;
 import com.luckyframework.httpclient.proxy.CommonFunctions;
 import com.luckyframework.httpclient.proxy.plugin.ExecuteMeta;
 import com.luckyframework.httpclient.proxy.plugin.ProxyDecorator;
 import com.luckyframework.httpclient.proxy.plugin.ProxyPlugin;
+import io.github.lucklike.entity.response.Result;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.NonNull;
@@ -52,15 +54,24 @@ public class FileChunkPlugin implements ProxyPlugin {
         handle.asyncHandle(
                 sf -> {
                     if (isUploaded(uploadChunkMap, sf)) {
-                        return "ok";
+                        return Result.success("分片文件已上传");
                     } else {
                         return uploadApi.uploadChunk(fileId, sf.getIndex(), sf.getContent());
                     }
                 },
                 rs -> {
-                    String r = uploadApi.mergeChunks(fileId, fileName);
-                    rs.forEach(System.out::println);
-                    System.out.println(r);
+                    ResultClassify<Result<String>> classify = rs.classify((r -> r.getCode() == 200));
+                    // 全部成功时调用合并接口进行数据合并
+                    if (classify.isAllSuccess()) {
+                        uploadApi.mergeChunks(fileId, fileName);
+                        classify.successForEach(    r -> System.out.println(r.getResult().getData()));
+                    } else {
+                        classify.failureForEach(r -> {
+                            FileChunk fileChunk = r.getFileChunk();
+                            // 处理失败的结果
+                            System.out.println(r.getResult().getMessage() + "->" + fileChunk);
+                        });
+                    }
 
                 },
                 maxConcurrency

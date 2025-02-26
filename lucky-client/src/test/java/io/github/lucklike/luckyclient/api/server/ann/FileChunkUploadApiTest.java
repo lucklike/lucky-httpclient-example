@@ -17,7 +17,7 @@ class FileChunkUploadApiTest {
 
     @Test
     void chunkUploadTest() throws Exception {
-        File file = new File("/Users/fukang/Lucky/lucky-httpclient-example/lucky-client/src/main/resources/application.yml");
+        File file = new File("D:\\Lucky\\lucky-httpclient-example\\lucky-server\\src\\main\\resources\\application.yml");
         api.uploadFile(file, 100L, 10);
     }
 

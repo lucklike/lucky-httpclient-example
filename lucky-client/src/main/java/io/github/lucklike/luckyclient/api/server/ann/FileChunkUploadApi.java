@@ -10,6 +10,8 @@ import com.luckyframework.httpclient.proxy.annotations.MultiData;
 import com.luckyframework.httpclient.proxy.annotations.MultiFile;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
+import com.luckyframework.httpclient.proxy.annotations.RespConvert;
+import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 import lombok.SneakyThrows;
 import org.springframework.lang.NonNull;
@@ -38,16 +40,17 @@ public interface FileChunkUploadApi {
     void uploadFile(File file, long chunkSize, int maxConcurrency);
 
     @Get("uploadChunks")
+    @RespConvert("#{$body$.data}")
     @Describe("查询服务器中已上传的文件分片信息")
     Map<Integer, String> uploadChunks(@QueryParam String fileId);
 
     @Post("/chunk")
     @MultiData
     @Describe("上传分片文件")
-    String uploadChunk(String fileId, long chunkNumber, @MultiFile(fileName = "file-#{p1}") byte[] file);
+    Result<String> uploadChunk(String fileId, long chunkNumber, @MultiFile(fileName = "file-#{p1}") byte[] file);
 
     @Post("/merge")
     @Describe("通知服务器进行文件合并")
-    String mergeChunks(@QueryParam String fileId, @QueryParam String fileName);
+    Result<String> mergeChunks(@QueryParam String fileId, @QueryParam String fileName);
 
 }

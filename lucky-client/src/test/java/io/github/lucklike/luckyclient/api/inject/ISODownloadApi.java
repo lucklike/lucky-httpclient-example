@@ -5,6 +5,7 @@ import com.luckyframework.httpclient.proxy.annotations.AsyncExecutor;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.annotation.HttpReference;
 
 import java.io.File;
 

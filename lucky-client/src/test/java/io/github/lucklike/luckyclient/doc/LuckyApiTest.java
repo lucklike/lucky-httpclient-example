@@ -1,6 +1,8 @@
 package io.github.lucklike.luckyclient.doc;
 
+import com.luckyframework.httpclient.core.meta.BodyObject;
 import com.luckyframework.httpclient.proxy.HttpClientProxyObjectFactory;
+import com.luckyframework.httpclient.proxy.configapi.Body;
 import io.github.lucklike.entity.request.proto.PersonOuterClass;
 import io.github.lucklike.luckyclient.api.mock.User;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,7 @@ import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,6 +138,34 @@ class LuckyApiTest {
     void userInfo() {
         luckyApi.gzip();
     }
+
+    @Test
+    void customBody() {
+        String mimeType = "application/my-table";
+        String charset = "UTF-8";
+        String context =
+                "1,,Jack,,jack@qq.com,,23,,1\n" +
+                "2,,Lucy,,lucy@gmail.com,,18,,0\n" +
+                "3,,Tom,,tom@qq.com,,18,,1\n" +
+                "4,,Karl,,karl@gmail.com,,35,,1";
+        BodyObject tableBody = BodyObject.builder(mimeType, charset, context);
+        luckyApi.customBody(tableBody);
+    }
+
+    @Test
+    void customBodyFactory() {
+        String mimeType = "application/my-table";
+        String charset = "UTF-8";
+        String context =
+                "1,,Jack,,jack@qq.com,,23,,1\n" +
+                "2,,Lucy,,lucy@gmail.com,,18,,0\n" +
+                "3,,Tom,,tom@qq.com,,18,,1\n" +
+                "4,,Karl,,karl@gmail.com,,35,,1";
+        BodyObject tableBody = BodyObject.builder(mimeType, charset, context);
+        luckyApi.customBodyFactory(() -> tableBody);
+    }
+
+
 
     @Test
     void binary1() throws IOException {
