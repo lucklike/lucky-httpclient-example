@@ -124,6 +124,9 @@ crh:
     username: nacos
     password: nacos
     services:
+      archive-backend:
+        group: fukang
+        service-name: cpe-products-archive-backend
       base-backend:
         group: fukang
         service-name: cpe-products-basedata-backend
