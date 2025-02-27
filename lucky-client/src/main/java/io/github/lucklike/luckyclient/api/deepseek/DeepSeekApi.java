@@ -19,7 +19,7 @@ import io.github.lucklike.luckyclient.api.util.DelayedOutput;
  * @version 1.0.0
  * @date 2025/2/6 10:43
  */
-@PrintLogProhibition
+
 @HttpClient("${DeepSeek.url}")
 public interface DeepSeekApi {
 
