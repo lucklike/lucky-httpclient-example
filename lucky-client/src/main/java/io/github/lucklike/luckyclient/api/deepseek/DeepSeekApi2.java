@@ -17,7 +17,7 @@ import io.github.lucklike.httpclient.annotation.HttpClient;
 public interface DeepSeekApi2 {
 
 
-    @Sse(listenerClass = DeepSeekEventListener.class)
+    @Sse(listenerClass = DeepSeekAnnotationStandardEventListener.class)
     @StaticJsonBody("``#{#read(#resource('classpath:deepseek-param.json'))}``")
     @StaticHeader("Authorization: Bearer ${DeepSeek.apiKey}")
     @Post("/chat/completions")

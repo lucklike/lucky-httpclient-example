@@ -5,6 +5,10 @@ import com.luckyframework.httpclient.proxy.annotations.Delete;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
+import com.luckyframework.httpclient.proxy.annotations.PrintLog;
+import com.luckyframework.httpclient.proxy.mock.Mock;
+import com.luckyframework.httpclient.proxy.mock.MockResponse;
+import com.luckyframework.httpclient.proxy.mock.NdJsonMock;
 import com.luckyframework.httpclient.proxy.sse.EventListener;
 import com.luckyframework.httpclient.proxy.sse.Sse;
 import io.github.lucklike.luckyclient.api.ollama.req.ChatRequest;
@@ -28,6 +32,7 @@ public interface OllamaApi {
     //----------------------------------------------------------------------
 
     @Sse
+    @Mock
     @Post("/api/generate")
     @Describe("（流式）回答补全")
     void streamGenerate(@JsonBody GenerateRequest request, EventListener listener);
@@ -35,6 +40,12 @@ public interface OllamaApi {
     @Post("/api/generate")
     @Describe("（非流式）回答补全")
     GenerateResponse generate(@JsonBody GenerateRequest request);
+
+
+    static MockResponse streamGenerate$Mock() {
+        System.out.println("streamGenerate$Mock");
+        return MockResponse.create().ndjson(NdJsonMock.resource("classpath:ollama-generate-mock.ndjson"));
+    }
 
 
     //----------------------------------------------------------------------

@@ -20,7 +20,7 @@ class DeepSeekApi2Test {
 
     @Test
     void completions() {
-        api.completions("你好呀");
+        api.completions("你好呀，介绍一下你自己，回复大概500字左右");
     }
 
     @Test

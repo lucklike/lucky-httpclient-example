@@ -1,35 +1,38 @@
 package io.github.lucklike.luckyclient.api.ollama.listener;
 
-
-import com.luckyframework.common.Color;
-import com.luckyframework.common.Console;
-import com.luckyframework.httpclient.generalapi.DelayedOutput;
-import com.luckyframework.httpclient.proxy.sse.OnMessage;
-import com.luckyframework.httpclient.proxy.sse.ndjson.AnnotationNdJsonEventListener;
+import com.luckyframework.httpclient.core.meta.Response;
+import com.luckyframework.httpclient.proxy.mock.NdJsonMock;
+import com.luckyframework.httpclient.proxy.sse.Event;
+import com.luckyframework.httpclient.proxy.sse.ndjson.NdJsonEventListener;
 import io.github.lucklike.luckyclient.api.ollama.resp.GenerateResponse;
 
-public class OllamaGenerateEventListener extends AnnotationNdJsonEventListener<GenerateResponse> {
+public class OllamaGenerateEventListener extends NdJsonEventListener<GenerateResponse> {
 
-    private final ThreadLocal<GenerateResponse> lastResp = new ThreadLocal<>();
 
-    public Integer[] getContext() {
-        GenerateResponse response = lastResp.get();
-        return response == null ? null : response.getContext();
+    @Override
+    public void onOpen(Event<Response> event) throws Exception {
+        System.out.println("连接已建立！");
     }
 
-    public void removeContext() {
-        lastResp.remove();
+    @Override
+    public void onMessage(Event<GenerateResponse> event) throws Exception {
+        GenerateResponse message = event.getMessage();
+        if (message.getDone()) {
+            System.out.println("\nOllama API 响应结束");
+        } else {
+            System.out.print(message.getResponse());
+        }
     }
 
-    @OnMessage("#{$data$.done}")
-    public void clear(GenerateResponse response) {
-        lastResp.set(response);
-        Console.printlnMulberry("\n");
-        DelayedOutput.clearOutputLength();
+    @Override
+    public void onError(Event<Throwable> event) {
+        System.out.println("发生异常: " + event.getMessage().getMessage());
     }
 
-    @OnMessage
-    public void output(GenerateResponse response) {
-        DelayedOutput.output(response.getResponse(), Color.CYAN, 70, 10);
+
+    @Override
+    public void onClose(Event<Void> event) {
+        System.out.println("连接已关闭");
     }
+
 }

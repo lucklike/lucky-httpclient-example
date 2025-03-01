@@ -4,6 +4,7 @@ import com.luckyframework.common.Color;
 import com.luckyframework.common.Console;
 import com.luckyframework.httpclient.generalapi.DelayedOutput;
 import io.github.lucklike.luckyclient.api.ollama.listener.OllamaChatEventListener;
+import io.github.lucklike.luckyclient.api.ollama.listener.OllamaAnnotationGenerateEventListener;
 import io.github.lucklike.luckyclient.api.ollama.listener.OllamaGenerateEventListener;
 import io.github.lucklike.luckyclient.api.ollama.listener.OllamaModelPullEventListener;
 import io.github.lucklike.luckyclient.api.ollama.req.ChatRequest;
@@ -29,8 +30,25 @@ class OllamaApiTest {
     private OllamaApi api;
 
     @Test
-    void streamGenerate() {
+    void streamGenerate0() {
         OllamaGenerateEventListener listener = new OllamaGenerateEventListener();
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            Console.printlnGreen("ME: ");
+            String prompt = scanner.nextLine();
+
+
+            GenerateRequest request = new GenerateRequest();
+            request.setPrompt(prompt);
+
+            Console.printlnMulberry("\nAI:");
+            api.streamGenerate(request, listener);
+        }
+    }
+
+    @Test
+    void streamGenerate() {
+        OllamaAnnotationGenerateEventListener listener = new OllamaAnnotationGenerateEventListener();
         Scanner scanner = new Scanner(System.in);
         while (true) {
             Console.printlnGreen("ME: ");

@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-@PrintLogProhibition
+//@PrintLogProhibition
 @SpELImport(OllamaClient.OllamaFunctions.class)
 @AutoVerifyHttpStatus(errMsg = "#{$resp$.getStringResult()}")
 @HttpClient("#{@ollamaConfigProperties.url}")
