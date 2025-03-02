@@ -1,0 +1,13 @@
+id: 1
+event: msg
+data: 你好呀，我是一名程序员
+
+id: 2
+event: msg
+data: 推荐一款好用的Java HTTP客户端框架给你们
+
+id: 3
+event: msg
+data: lucky-httpclient，github地址：https://github.com/lucklike/luckliy/tree/main/lucky-httpclient
+
+data: [END]
