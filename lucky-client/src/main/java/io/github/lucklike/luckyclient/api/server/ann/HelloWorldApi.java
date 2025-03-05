@@ -20,7 +20,7 @@ public interface HelloWorldApi extends LuckyServerApi {
 
 
     @Mock(
-        status = 404,
+        status = "404",
         header = "Content-Type: text/plain",
         body = "Hello"
     )

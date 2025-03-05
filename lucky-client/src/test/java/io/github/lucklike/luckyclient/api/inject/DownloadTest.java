@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author fukang
@@ -51,8 +52,8 @@ public class DownloadTest {
     void testJarDownload() {
         StopWatch sw = new StopWatch();
         sw.start("jar");
-        File download = isoDownloadApi.jarDownload();
-        System.out.println(download.getAbsolutePath());
+        Optional<File> download = isoDownloadApi.jarDownload();
+        download.ifPresent(file -> System.out.println(file.getAbsolutePath()));
         sw.stopWatch();
         System.out.println(sw.prettyPrintFormat());
     }

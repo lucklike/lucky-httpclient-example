@@ -10,6 +10,7 @@ import io.github.lucklike.httpclient.annotation.HttpClient;
 import io.github.lucklike.httpclient.annotation.HttpReference;
 
 import java.io.File;
+import java.util.Optional;
 
 /**
  * @author fukang
@@ -26,11 +27,12 @@ public interface ISODownloadApi {
     File download();
 
     @RangeDownload
-    @Get("http://maven.cairenhui.com/nexus/content/repositories/crh_dev/com/cairh/cpe-common-backend/0.1.7/cpe-common-backend-0.1.7.jar")
-    File jarDownload();
+    @Get("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFIdIs43Soicnnf_Q6RDtjKBJFFW2e0iAoaA&s")
+//    @Get("http://maven.cairenhui.com/nexus/content/repositories/crh_dev/com/cairh/cpe-common-backend/0.1.7/cpe-common-backend-0.1.7.jar")
+    Optional<File> jarDownload();
 
-    @DownloadToLocal
-    @Get("http://maven.cairenhui.com/nexus/content/repositories/crh_dev/com/cairh/cpe-common-backend/0.1.7/cpe-common-backend-0.1.7.jar")
+    @RangeDownload
+    @Get("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFIdIs43Soicnnf_Q6RDtjKBJFFW2e0iAoaA&s")
     void jarDownloadHandler(ResultHandler<File> fileHandler);
 
 
