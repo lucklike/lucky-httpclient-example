@@ -58,6 +58,14 @@ public class DownloadTest {
     }
 
     @Test
+    void jarDownloadHandler() {
+       isoDownloadApi.jarDownloadHandler(rc -> {
+           File file = rc.getResult();
+           System.out.println(file.getAbsolutePath());
+       });
+    }
+
+    @Test
     void download() throws Exception {
         String url = "https://github.com/docmirror/dev-sidecar/releases/download/v1.8.9/DevSidecar-1.8.9-node16.exe";
         File file = downloadApi.downloadRetryIfFail(url, "D:/test/dev-sidecar");

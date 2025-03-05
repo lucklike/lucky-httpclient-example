@@ -2,8 +2,10 @@ package io.github.lucklike.luckyclient.api.inject;
 
 import com.luckyframework.httpclient.generalapi.download.RangeDownload;
 import com.luckyframework.httpclient.proxy.annotations.AsyncExecutor;
+import com.luckyframework.httpclient.proxy.annotations.DownloadToLocal;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
+import com.luckyframework.httpclient.proxy.handle.ResultHandler;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 import io.github.lucklike.httpclient.annotation.HttpReference;
 
@@ -26,6 +28,10 @@ public interface ISODownloadApi {
     @RangeDownload
     @Get("http://maven.cairenhui.com/nexus/content/repositories/crh_dev/com/cairh/cpe-common-backend/0.1.7/cpe-common-backend-0.1.7.jar")
     File jarDownload();
+
+    @DownloadToLocal
+    @Get("http://maven.cairenhui.com/nexus/content/repositories/crh_dev/com/cairh/cpe-common-backend/0.1.7/cpe-common-backend-0.1.7.jar")
+    void jarDownloadHandler(ResultHandler<File> fileHandler);
 
 
     @RangeDownload(saveDir =  "D:/test/bfile")

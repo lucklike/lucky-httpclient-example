@@ -1,7 +1,9 @@
 package io.github.lucklike.luckyclient.api.annconvert;
 
+import com.luckyframework.httpclient.proxy.annotations.Async;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
+import com.luckyframework.httpclient.proxy.handle.ResultHandler;
 import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
 import io.github.lucklike.entity.request.User;
@@ -10,6 +12,7 @@ import io.github.lucklike.httpclient.annotation.HttpClient;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Mock(mockFunc = "userList")
 @HttpClient("http://localhost:8864/user/")
@@ -23,6 +26,11 @@ public interface RespConvertApi {
     @Get("/user/list")
     List<User> getAdultUsers();
 
+    @Async
+    @RespConvert("#{$body$.data.?[#this.age >= 18]}")
+    @Get("/user/list")
+    void adultUsersHandler(ResultHandler<Optional<List<User>>> resultHandler);
+
     @RespConvert("#{$body$.data.![#this.id]}")
     @Get("/user/list")
     List<Integer> getAllUseId();
@@ -34,7 +42,6 @@ public interface RespConvertApi {
     @GsonDecoder("#{$gdata$.data.^[#this.id eq #root.uid]}")
     @Get("/user/list")
     User gsonDecoderFindById(Integer uid);
-
 
 
     //----------------------------------------------------------

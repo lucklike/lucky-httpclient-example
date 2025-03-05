@@ -4,6 +4,7 @@ import com.luckyframework.httpclient.core.meta.HttpHeaders;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
+import com.luckyframework.httpclient.proxy.handle.ResultHandler;
 import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
 import com.luckyframework.httpclient.proxy.mock.SseMock;
@@ -53,6 +54,10 @@ public interface MockApi {
     @Mock(body = "#{#resource('classpath:sheep.png')}")
     @Get("download/png")
     MultipartFile download();
+
+    @Mock(body = "#{#resource('classpath:sheep.png')}")
+    @Get("download/png")
+    void downloadHandler(ResultHandler<MultipartFile> fileHandler);
 
     @Mock(mockResp = "#{$this$.mockRespDemo($mc$)}")
     @Post("mockResp")

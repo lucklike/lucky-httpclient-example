@@ -50,6 +50,15 @@ class MockApiTest {
     }
 
     @Test
+    void downloadHandler() {
+        mockApi.downloadHandler(rc -> {
+            MultipartFile file = rc.getResult();
+            System.out.printf("Image: [%s]%s\n", file.getSize(), file.getOriginalFileName());
+        });
+
+    }
+
+    @Test
     void mockResp() {
         String resp = mockApi.mockResp("Param-1", 222);
         System.out.println(resp);

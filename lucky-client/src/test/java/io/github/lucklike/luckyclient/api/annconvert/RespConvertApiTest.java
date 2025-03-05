@@ -28,6 +28,15 @@ class RespConvertApiTest {
     }
 
     @Test
+    void adultUsersHandler() throws InterruptedException {
+       respConvertApi.adultUsersHandler(rc -> {
+          rc.getResult().ifPresent(System.out::println);
+       });
+
+       Thread.sleep(5000L);
+    }
+
+    @Test
     void getAllUseId() {
         List<Integer> ids = respConvertApi.getAllUseId();
         System.out.println(ids);
