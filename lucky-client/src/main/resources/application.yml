@@ -52,6 +52,7 @@ lucky:
 
     #使用JDK执行器
     http-executor: jdk
+    async-model: kotlin_coroutine
     #日志相关的配置
     logger:
       packages:
@@ -80,6 +81,7 @@ lucky:
     spring-el:
       classes:
         - clazz: io.github.lucklike.luckyclient.util.SM4Function
+
 lucky-server:
   http: http://localhost:8864
   https: https://localhost

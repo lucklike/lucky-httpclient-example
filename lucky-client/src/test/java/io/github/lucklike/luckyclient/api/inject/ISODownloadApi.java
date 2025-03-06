@@ -32,8 +32,8 @@ public interface ISODownloadApi {
 //    @Get("http://maven.cairenhui.com/nexus/content/repositories/crh_dev/com/cairh/cpe-common-backend/0.1.7/cpe-common-backend-0.1.7.jar")
     Optional<File> jarDownload();
 
-    @RangeDownload(saveDir = "D:/test/dev-sidecar")
-    @Get("https://github.com/docmirror/dev-sidecar/releases/download/v2.0.0/DevSidecar-2.0.0-windows-x64.exe")
+    @RangeDownload(saveDir = "/Users/fukang/Desktop/test/bfile")
+    @Get("https://github.com/docmirror/dev-sidecar/releases/download/v2.0.0/DevSidecar-2.0.0-macos-x64.dmg")
     void jarDownloadHandler(ResultHandler<File> fileHandler);
 
     @RangeDownload(rangeSize = 1000)
