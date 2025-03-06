@@ -5,6 +5,7 @@ import com.luckyframework.httpclient.proxy.annotations.AsyncExecutor;
 import com.luckyframework.httpclient.proxy.annotations.DownloadToLocal;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
+import com.luckyframework.httpclient.proxy.annotations.ResultHandlerMeta;
 import com.luckyframework.httpclient.proxy.handle.ResultHandler;
 import io.github.lucklike.httpclient.annotation.HttpClient;
 import io.github.lucklike.httpclient.annotation.HttpReference;
@@ -31,9 +32,14 @@ public interface ISODownloadApi {
 //    @Get("http://maven.cairenhui.com/nexus/content/repositories/crh_dev/com/cairh/cpe-common-backend/0.1.7/cpe-common-backend-0.1.7.jar")
     Optional<File> jarDownload();
 
-    @RangeDownload
-    @Get("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFIdIs43Soicnnf_Q6RDtjKBJFFW2e0iAoaA&s")
+    @RangeDownload(saveDir = "D:/test/dev-sidecar")
+    @Get("https://github.com/docmirror/dev-sidecar/releases/download/v2.0.0/DevSidecar-2.0.0-windows-x64.exe")
     void jarDownloadHandler(ResultHandler<File> fileHandler);
+
+    @RangeDownload(rangeSize = 1000)
+    @ResultHandlerMeta(handlerClass = FilePathPrintResultHandler.class)
+    @Get("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFIdIs43Soicnnf_Q6RDtjKBJFFW2e0iAoaA&s")
+    void jarDownloadHandler();
 
 
     @RangeDownload(saveDir =  "D:/test/bfile")

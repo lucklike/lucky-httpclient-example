@@ -1,12 +1,8 @@
 package io.github.lucklike.luckyclient.api.loosebind;
 
 
-import com.luckyframework.httpclient.proxy.annotations.InterceptorRegister;
-import com.luckyframework.httpclient.proxy.annotations.ObjectGenerate;
-import com.luckyframework.reflect.Combination;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 import org.springframework.core.annotation.AliasFor;
-import org.springframework.stereotype.Component;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
