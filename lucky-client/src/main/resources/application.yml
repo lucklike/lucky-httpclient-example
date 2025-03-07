@@ -38,9 +38,9 @@ lucky:
       alternative:
         pool1:
           lazy: false
-          core-pool-size: 5
+          core-pool-size: 15
           blocking-queue-size: 20
-          maximum-pool-size: 10
+          maximum-pool-size: 20
           name-format: pool1-
           keep-alive-time: 1000
         pool2:
@@ -52,7 +52,9 @@ lucky:
 
     #使用JDK执行器
     http-executor: jdk
-    async-model: kotlin_coroutine
+    # 异步模型配置，支持【Kotlin协程模型】和【Java线程模型（默认）】
+    http-async-model: kotlin_coroutine
+    hook-async-model: java_thread
     #日志相关的配置
     logger:
       packages:
@@ -81,6 +83,7 @@ lucky:
     spring-el:
       classes:
         - clazz: io.github.lucklike.luckyclient.util.SM4Function
+
 
 lucky-server:
   http: http://localhost:8864

@@ -1,18 +1,15 @@
 package io.github.lucklike.luckyclient.api.kotlin;
 
 import com.luckyframework.common.DateUtils;
-import com.luckyframework.common.NanoIdUtils;
 import com.luckyframework.common.StopWatch;
 import com.luckyframework.httpclient.proxy.async.AsyncTaskExecutor;
-import com.luckyframework.httpclient.proxy.async.JavaAsyncTaskExecutor;
+import com.luckyframework.httpclient.proxy.async.JavaThreadAsyncTaskExecutor;
 import com.luckyframework.httpclient.proxy.async.KotlinCoroutineAsyncTaskExecutor;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Main {
 
@@ -37,8 +34,8 @@ public class Main {
     private static void printTest() throws InterruptedException {
         StopWatch stopWatch = new StopWatch();
 
-        printLine(new JavaAsyncTaskExecutor(Executors.newFixedThreadPool(1)), stopWatch, "java");
-        printLine(new KotlinCoroutineAsyncTaskExecutor(Executors.newFixedThreadPool(1)), stopWatch, "kotlin");
+        printLine(new JavaThreadAsyncTaskExecutor(Executors.newFixedThreadPool(5)), stopWatch, "java");
+        printLine(new KotlinCoroutineAsyncTaskExecutor(Executors.newFixedThreadPool(5)), stopWatch, "kotlin");
 
 
         stopWatch.stopWatch();
@@ -64,5 +61,9 @@ public class Main {
         }
         countDownLatch.await();
         stopWatch.stopLast();
+        Executor executor = asyncExecutor.getExecutor();
+        if (executor instanceof ExecutorService) {
+            ((ExecutorService) executor).shutdown();
+        }
     }
 }

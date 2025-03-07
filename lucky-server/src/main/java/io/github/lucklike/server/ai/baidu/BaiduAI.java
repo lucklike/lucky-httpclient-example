@@ -64,8 +64,7 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> {
     abstract Token token();
 
 
-    @Sse
-    @Async("callback-pool")
+    @Sse(async = true, executor = "callback-pool")
     @Post("/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k")
     public abstract void questionsAndAnswers(@JsonParam("messages[0].content") String content, EventListener listener);
 

@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * @author fukang
@@ -110,12 +111,12 @@ public class DownloadTest {
     }
 
     public static void main(String[] args) throws Exception {
-        File file = new File("/private/var/folders/6v/blntps_n3ts8_4v2ls2dtgl80000gn/T/Lucky/@RangeDownload/20250119/http-client-ideaIU-2024.3.dmg");
+        File file = new File("D:\\test\\bfile\\java-ideaIU-2024.3.dmg");
         long length = file.length();
         System.out.println(length);
         System.out.println(UnitUtils.byteTo(length));
 
-        File file1 = new File("/private/var/folders/6v/blntps_n3ts8_4v2ls2dtgl80000gn/T/Lucky/@RangeDownload/20250119/http-client-Za_aixQdLYZUVEU5NkZJc-ideaIU-2024.3.dmg");
+        File file1 = new File("D:\\test\\bfile\\kotlin-ideaIU-2024.3.dmg");
         long length1 = file1.length();
         System.out.println(length1);
         System.out.println(UnitUtils.byteTo(length1));
@@ -136,8 +137,8 @@ public class DownloadTest {
 //        System.out.println(length4);
 //        System.out.println(UnitUtils.byteTo(length4));
 
-        String md5 = CommonFunctions.sha224Hex(file);
-        String md51 = CommonFunctions.sha224Hex(file1);
+        String md5 = CommonFunctions.md5Hex(file);
+        String md51 = CommonFunctions.md5Hex(file1);
 //        String md52 = CommonFunctions.md5(file2);
 //        String md53 = CommonFunctions.md5(file3);
 //        String md54 = CommonFunctions.md5(file4);
@@ -152,4 +153,21 @@ public class DownloadTest {
 //        System.out.println(Objects.equals(md5, md53));
 //        System.out.println(Objects.equals(md5, md54));
     }
+
+    @Test
+    void threadModel() {
+        StopWatch stopWatch = new StopWatch();
+        downloadTest(() -> isoDownloadApi.coModelDownload(), stopWatch, "Kotlin");
+        downloadTest(() -> isoDownloadApi.threadModelDownload(), stopWatch, "Java");
+        stopWatch.stopWatch();
+        System.out.println(stopWatch.prettyPrintFormat());
+    }
+
+    private void downloadTest(Supplier<File> fileSupplier, StopWatch stopWatch, String taskName) {
+        stopWatch.start(taskName);
+        File file = fileSupplier.get();
+        System.out.println(file.getAbsolutePath());
+        stopWatch.stopLast();
+    }
+
 }
