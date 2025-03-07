@@ -2,7 +2,6 @@ package io.github.lucklike.luckyclient.api.async;
 
 import com.luckyframework.httpclient.proxy.annotations.Async;
 import com.luckyframework.httpclient.proxy.annotations.Get;
-import com.luckyframework.httpclient.proxy.async.Model;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.handle.ResultHandler;
 import com.luckyframework.httpclient.proxy.mock.Mock;
@@ -28,7 +27,13 @@ public interface AsyncApi {
 
     @AsyncHook
     @Callback(lifecycle = Lifecycle.RESPONSE)
+    static void reqCallback(MethodContext mc) {
+        System.out.println("[REQUEST] " + Thread.currentThread().getName() + " --> " + mc.getAsyncTaskExecutor());
+    }
+
+    @AsyncHook
+    @Callback(lifecycle = Lifecycle.RESPONSE)
     static void respCallback(MethodContext mc) {
-        System.out.println(Thread.currentThread().getName()+ " --> " +mc.getAsyncTaskExecutor());
+        System.out.println("[RESPONSE] " + Thread.currentThread().getName() + " --> " + mc.getAsyncTaskExecutor());
     }
 }

@@ -31,10 +31,11 @@ lucky:
     # 写入超时时间
     write-timeout: 200000
     async-thread-pool:
-      core-pool-size: 10
+      core-pool-size: 2
       blocking-queue-size: 100
       maximum-pool-size: 20
       keep-alive-time: 1000
+      name-format: http-
       alternative:
         pool1:
           lazy: false
@@ -50,11 +51,12 @@ lucky:
           name-format:  pool2-
           keep-alive-time: 1000
 
+
     #使用JDK执行器
     http-executor: jdk
     # 异步模型配置，支持【Kotlin协程模型】和【Java线程模型（默认）】
     http-async-model: kotlin_coroutine
-    hook-async-model: java_thread
+    hook-async-model: kotlin_coroutine
     #日志相关的配置
     logger:
       packages:

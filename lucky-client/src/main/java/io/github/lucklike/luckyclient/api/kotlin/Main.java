@@ -33,37 +33,29 @@ public class Main {
 
     private static void printTest() throws InterruptedException {
         StopWatch stopWatch = new StopWatch();
-
-        printLine(new JavaThreadAsyncTaskExecutor(Executors.newFixedThreadPool(5)), stopWatch, "java");
-        printLine(new KotlinCoroutineAsyncTaskExecutor(Executors.newFixedThreadPool(5)), stopWatch, "kotlin");
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
+        printLine(new JavaThreadAsyncTaskExecutor(executorService), stopWatch, "java");
+        printLine(new KotlinCoroutineAsyncTaskExecutor(executorService), stopWatch, "kotlin");
 
 
         stopWatch.stopWatch();
+        executorService.shutdown();
         System.out.println(stopWatch.prettyPrintFormat());
     }
 
 
     private static void printLine(AsyncTaskExecutor asyncExecutor, StopWatch stopWatch, String taskName) throws InterruptedException {
-        int count = 15;
+        int count = 10000 ;
         stopWatch.start(taskName);
         CountDownLatch countDownLatch = new CountDownLatch(count);
         for (int i = 0; i < count; i++) {
             int j = i;
             asyncExecutor.execute(() -> {
                 System.out.println(DateUtils.time() + " --> " +Thread.currentThread().getName() + "--" + j);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
                 countDownLatch.countDown();
             });
         }
         countDownLatch.await();
         stopWatch.stopLast();
-        Executor executor = asyncExecutor.getExecutor();
-        if (executor instanceof ExecutorService) {
-            ((ExecutorService) executor).shutdown();
-        }
     }
 }
