@@ -33,13 +33,10 @@ public class Main {
 
     private static void printTest() throws InterruptedException {
         StopWatch stopWatch = new StopWatch();
-        ExecutorService executorService = Executors.newFixedThreadPool(5);
-        printLine(new JavaThreadAsyncTaskExecutor(executorService), stopWatch, "java");
-        printLine(new KotlinCoroutineAsyncTaskExecutor(executorService), stopWatch, "kotlin");
-
+        printLine(JavaThreadAsyncTaskExecutor.createByConcurrency(5), stopWatch, "java");
+        printLine(KotlinCoroutineAsyncTaskExecutor.createByConcurrency(5), stopWatch, "kotlin");
 
         stopWatch.stopWatch();
-        executorService.shutdown();
         System.out.println(stopWatch.prettyPrintFormat());
     }
 
@@ -56,6 +53,10 @@ public class Main {
             });
         }
         countDownLatch.await();
+        Executor executor = asyncExecutor.getExecutor();
+        if (executor instanceof ExecutorService) {
+            ((ExecutorService) executor).shutdown();
+        }
         stopWatch.stopLast();
     }
 }

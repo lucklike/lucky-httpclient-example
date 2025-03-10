@@ -157,8 +157,8 @@ public class DownloadTest {
     @Test
     void threadModel() {
         StopWatch stopWatch = new StopWatch();
-        downloadTest(() -> isoDownloadApi.coModelDownload(), stopWatch, "Kotlin");
         downloadTest(() -> isoDownloadApi.threadModelDownload(), stopWatch, "Java");
+        downloadTest(() -> isoDownloadApi.coModelDownload(), stopWatch, "Kotlin");
         stopWatch.stopWatch();
         System.out.println(stopWatch.prettyPrintFormat());
     }

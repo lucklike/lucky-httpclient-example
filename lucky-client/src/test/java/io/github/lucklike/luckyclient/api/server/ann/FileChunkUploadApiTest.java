@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.Resource;
 import java.io.File;
 
+import static com.luckyframework.httpclient.generalapi.download.RangeDownloadApi.DEFAULT_RANGE_SIZE;
+
 @Slf4j
 @SpringBootTest
 class FileChunkUploadApiTest {
@@ -17,14 +19,14 @@ class FileChunkUploadApiTest {
 
     @Test
     void chunkUploadTest() throws Exception {
-        File file = new File("D:\\Lucky\\lucky-httpclient-example\\lucky-server\\src\\main\\resources\\application.yml");
-        api.uploadFile(file, 100L, 10);
+        File file = new File("D:\\test\\bfile\\java-ideaIU-2024.3.dmg");
+        api.uploadFile(file, DEFAULT_RANGE_SIZE, 10);
     }
 
     @Test
     void hash() throws Exception {
-        File file1 = new File("/Users/fukang/Desktop/test/bfile/ideaIU-2024.3.dmg");
-        File file2 = new File("/Users/fukang/Desktop/test/shard/uploads/ideaIU-2024.3.dmg");
+        File file1 = new File("D:\\test\\bfile\\java-ideaIU-2024.3.dmg");
+        File file2 = new File("D:\\test\\shard\\uploads\\java-ideaIU-2024.3.dmg");
 
         String hash1 = CommonFunctions.md5Hex(file1);
         String hash2 = CommonFunctions.md5Hex(file2);

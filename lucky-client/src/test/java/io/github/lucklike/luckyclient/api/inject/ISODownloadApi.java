@@ -50,12 +50,12 @@ public interface ISODownloadApi {
     @Get("https://chatboxai.app/zh/install?download=win64")
     File chatboxaiDownload();
 
-    @AsyncExecutor("pool1")
+    @AsyncExecutor
     @RangeDownload(saveDir = "D:/test/bfile/", filename = "java-{_name_}{.ext}")
     @Get("idea/ideaIU-2024.3.dmg")
     File threadModelDownload();
 
-    @AsyncExecutor(executor = "pool1", model = Model.KOTLIN_COROUTINE)
+    @AsyncExecutor(model = Model.KOTLIN_COROUTINE)
     @RangeDownload(saveDir = "D:/test/bfile/", filename = "kotlin-{_name_}{.ext}")
     @Get("idea/ideaIU-2024.3.dmg")
     File coModelDownload();
