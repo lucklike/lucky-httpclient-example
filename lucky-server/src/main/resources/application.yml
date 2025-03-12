@@ -4,13 +4,6 @@ server:
 spring:
   application:
     name: lucky-server
-  cloud:
-    nacos:
-      discovery:
-        group: lucky-group
-        namespace: lucky
-      server-addr: 127.0.0.1:8848
-
   servlet:
     multipart:
       max-file-size: 10MB   # 设置单个分片最大大小

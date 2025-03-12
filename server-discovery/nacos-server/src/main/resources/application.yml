@@ -1,0 +1,13 @@
+
+server:
+  port: 9910
+
+spring:
+  application:
+    name: lucky-nacos-server
+  cloud:
+    nacos:
+      discovery:
+        group: lucky-group
+        namespace: lucky
+      server-addr: 127.0.0.1:8848

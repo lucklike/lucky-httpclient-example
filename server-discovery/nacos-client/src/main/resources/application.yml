@@ -1,0 +1,8 @@
+server:
+  port: 9992
+
+
+nacos:
+  discovery:
+    namespace: lucky
+    server-addr: 127.0.0.1:8848

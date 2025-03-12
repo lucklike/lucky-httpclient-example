@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.aotoconvert;
 
-import com.alibaba.nacos.shaded.com.google.gson.Gson;
+import com.google.gson.Gson;
 import com.luckyframework.httpclient.core.meta.ContentType;
 import com.luckyframework.httpclient.core.meta.Response;
 import org.springframework.stereotype.Component;

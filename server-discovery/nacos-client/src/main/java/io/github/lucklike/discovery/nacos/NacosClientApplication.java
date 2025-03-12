@@ -1,18 +1,17 @@
-package io.github.lucklike.luckyclient;
+package io.github.lucklike.discovery.nacos;
 
+import com.alibaba.nacos.spring.context.annotation.discovery.EnableNacosDiscovery;
 import io.github.lucklike.httpclient.annotation.EnableLuckyHttpClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 
-@EnableAspectJAutoProxy
+@EnableNacosDiscovery
 @EnableLuckyHttpClient
 @SpringBootApplication
-public class LuckyClientApplication {
+public class NacosClientApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LuckyClientApplication.class, args);
+        SpringApplication.run(NacosClientApplication.class, args);
     }
-
 }

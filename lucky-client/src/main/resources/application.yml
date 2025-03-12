@@ -142,8 +142,3 @@ crh:
       front:
         group: fukang
         service-name: cpe-products-component-front
-
-nacos:
-  discovery:
-    namespace: lucky
-    server-addr: 127.0.0.1:8848

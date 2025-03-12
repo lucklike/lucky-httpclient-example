@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.annconvert;
 
-import com.alibaba.nacos.shaded.com.google.gson.Gson;
+import com.google.gson.Gson;
 import com.luckyframework.common.StringUtils;
 import com.luckyframework.httpclient.core.meta.Response;
 import com.luckyframework.httpclient.proxy.convert.ConvertContext;

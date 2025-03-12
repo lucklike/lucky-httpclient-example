@@ -3,6 +3,7 @@ package io.github.lucklike.luckyclient.api.server.nacos;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
+import io.github.lucklike.httpclient.discovery.nacos.NacosHttpClient;
 
 /**
  * @author fukang

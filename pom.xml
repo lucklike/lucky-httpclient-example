@@ -13,6 +13,9 @@
         <module>lucky-server</module>
         <module>lucky-client</module>
         <module>lucky-https-server</module>
+        <module>server-discovery</module>
+        <module>server-discovery/nacos-client</module>
+        <module>server-discovery/nacos-server</module>
     </modules>
 
     <properties>
@@ -20,6 +23,89 @@
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>2.7.14</spring-boot.version>
+        <lucky-http-spring-boot>3.0.1</lucky-http-spring-boot>
+        <nacos-spring-boot.version>0.2.12</nacos-spring-boot.version>
+        <nacos-spring-cloud.version>2021.0.6.0</nacos-spring-cloud.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring-boot.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.28</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                        <encoding>UTF-8</encoding>
+                        <parameters>true</parameters>
+                    </configuration>
+                    <version>3.8.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>io.github.lucklike</groupId>
+                <artifactId>lucky-httpclient-spring-boot-starter</artifactId>
+                <version>${lucky-http-spring-boot}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>nacos-discovery-spring-boot-starter</artifactId>
+                <version>${nacos-spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+                <version>${nacos-spring-cloud.version}</version>
+            </dependency>
+
+            <!-- HttpClient网络资源访问 -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpmime</artifactId>
+                <version>4.5.13</version>
+            </dependency>
+
+            <!-- OkHttp网络资源访问 -->
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>4.10.0</version>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
 
 </project>
