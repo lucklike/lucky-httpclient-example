@@ -10,6 +10,12 @@
     </parent>
 
     <artifactId>server-discovery</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>eureka-register</module>
+        <module>eureka-server</module>
+        <module>eureka-client</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

@@ -4,11 +4,10 @@ import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
-import io.github.lucklike.discovery.nacos.cairh.annotation.NacosClient;
 
 import java.util.Map;
 
-@NacosClient(server = "comp-backend", contextPath = "elecagreemodel")
+//@NacosClient(server = "comp-backend", contextPath = "elecagreemodel")
 public interface ElectAgreeModelApi {
 
     @Post("queryByPage")

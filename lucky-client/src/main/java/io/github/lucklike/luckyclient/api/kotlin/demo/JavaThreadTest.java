@@ -13,7 +13,7 @@ public class JavaThreadTest {
         ExecutorService executor = ThreadPoolProvider.getExecutor();
         long startTime = System.currentTimeMillis();
 
-        int count = 10000;
+        int count = 1000000;
         CountDownLatch countDownLatch = new CountDownLatch(count);
         for (int i = 0; i < count; i++) {
             executor.submit(() -> {

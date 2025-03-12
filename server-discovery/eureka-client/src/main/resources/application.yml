@@ -1,0 +1,22 @@
+server:
+  port: 8882  # 微服务端口
+
+spring:
+  application:
+    name: lucky-eureka-client  # 微服务名称
+
+eureka:
+  client:
+    service-url:
+      # Eureka Server 地址
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true  # 让其他服务可以直接通过 IP 访问
+    lease-renewal-interval-in-seconds: 10  # 发送心跳间隔（默认 30s）
+    lease-expiration-duration-in-seconds: 30  # 失效时间（默认 90s）
+
+
+lucky:
+  http-client:
+    logger:
+      packages: io.github.lucklike.discovery.eureka.api

@@ -2,9 +2,8 @@ package io.github.lucklike.discovery.nacos.cairh.api;
 
 import com.luckyframework.httpclient.proxy.annotations.JsonParam;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import io.github.lucklike.discovery.nacos.cairh.annotation.NacosClient;
 
-@NacosClient(server = "archive-backend", contextPath = "arch/archive-agreement/")
+//@NacosClient(server = "archive-backend", contextPath = "arch/archive-agreement/")
 public interface ArchiveAgreementApi {
 
     @Post("queryOne")

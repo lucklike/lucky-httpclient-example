@@ -1,0 +1,9 @@
+server:
+  port: 8761  # Eureka Server 端口
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false  # 不作为客户端注册
+    fetch-registry: false        # 不从 Eureka 获取注册表

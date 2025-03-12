@@ -6,3 +6,8 @@ nacos:
   discovery:
     namespace: lucky
     server-addr: 127.0.0.1:8848
+
+lucky:
+  http-client:
+    logger:
+      packages: io.github.lucklike.discovery.nacos.server.api
