@@ -14,8 +14,6 @@
         <module>lucky-client</module>
         <module>lucky-https-server</module>
         <module>server-discovery</module>
-        <module>server-discovery/nacos-client</module>
-        <module>server-discovery/nacos-server</module>
     </modules>
 
     <properties>
@@ -24,15 +22,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>2.7.14</spring-boot.version>
         <lucky-http-spring-boot>3.0.1</lucky-http-spring-boot>
-        <nacos-spring-boot.version>0.2.12</nacos-spring-boot.version>
-        <nacos-spring-cloud.version>2021.0.6.0</nacos-spring-cloud.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>${spring-boot.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -43,6 +38,61 @@
         </dependency>
 
     </dependencies>
+
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>io.github.lucklike</groupId>
+                <artifactId>lucky-httpclient-spring-boot-starter</artifactId>
+                <version>${lucky-http-spring-boot}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <!-- HttpClient网络资源访问 -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpmime</artifactId>
+                <version>4.5.13</version>
+            </dependency>
+
+            <!-- OkHttp网络资源访问 -->
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>4.10.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>1.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.lucklike</groupId>
+                <artifactId>lucky-entity</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+
+            <!-- Spring Boot 依赖 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
 
     <build>
         <pluginManagement>
@@ -61,50 +111,5 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <dependencyManagement>
-        <dependencies>
-
-            <dependency>
-                <groupId>io.github.lucklike</groupId>
-                <artifactId>lucky-httpclient-spring-boot-starter</artifactId>
-                <version>${lucky-http-spring-boot}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba.boot</groupId>
-                <artifactId>nacos-discovery-spring-boot-starter</artifactId>
-                <version>${nacos-spring-boot.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-                <version>${nacos-spring-cloud.version}</version>
-            </dependency>
-
-            <!-- HttpClient网络资源访问 -->
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpmime</artifactId>
-                <version>4.5.13</version>
-            </dependency>
-
-            <!-- OkHttp网络资源访问 -->
-            <dependency>
-                <groupId>com.squareup.okhttp3</groupId>
-                <artifactId>okhttp</artifactId>
-                <version>4.10.0</version>
-            </dependency>
-
-        </dependencies>
-
-    </dependencyManagement>
 
 </project>
