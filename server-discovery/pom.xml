@@ -19,6 +19,8 @@
         <module>nacos-server</module>
         <module>zookeeper-server</module>
         <module>zookeeper-client</module>
+        <module>consul-server</module>
+        <module>consul-client</module>
     </modules>
 
     <properties>
