@@ -17,6 +17,12 @@ eureka:
 
 
 lucky:
+  http-server:
+    common:
+#      url: http://localhost:8881
+      service-name: lucky-eureka-server
   http-client:
     logger:
-      packages: io.github.lucklike.discovery.eureka.api
+      packages:
+        - io.github.lucklike.discovery.eureka.api
+        - io.github.lucklike.common.api

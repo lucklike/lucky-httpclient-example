@@ -12,6 +12,12 @@ spring:
       server-addr: 127.0.0.1:8848
 
 lucky:
+  http-server:
+    common:
+      #      url: http://localhost:8001
+      service-name: lucky-nacos-server
   http-client:
     logger:
-      packages: io.github.lucklike.discovery.nacos.server.api
+      packages:
+        - io.github.lucklike.discovery.nacos.server.api
+        - io.github.lucklike.common.api

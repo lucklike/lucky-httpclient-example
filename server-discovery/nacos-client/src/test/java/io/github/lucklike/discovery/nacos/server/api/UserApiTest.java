@@ -1,13 +1,12 @@
 package io.github.lucklike.discovery.nacos.server.api;
 
+import com.luckyframework.common.RunnableActuator;
+import io.github.lucklike.common.api.UserApi;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
+import io.github.lucklike.httpclient.annotation.HttpReference;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.annotation.Resource;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author fukang
@@ -17,12 +16,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class UserApiTest {
 
-    @Resource
+    @HttpReference
     private UserApi userApi;
 
     @Test
     void getUser() {
-        Result<User> user = userApi.getUser();
-        System.out.println(user);
+        RunnableActuator.repeat(10, i -> {
+            System.out.println(userApi.getUser(i + ""));
+        });
     }
 }

@@ -14,6 +14,8 @@
         <module>lucky-client</module>
         <module>lucky-https-server</module>
         <module>server-discovery</module>
+        <module>common-http</module>
+        <module>common-api</module>
     </modules>
 
     <properties>

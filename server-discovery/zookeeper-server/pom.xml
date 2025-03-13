@@ -30,6 +30,11 @@
             <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.github.lucklike.common</groupId>
+            <artifactId>common-http</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -12,6 +12,13 @@ spring:
         register: true
 
 lucky:
+  http-server:
+    common:
+#      url: http://localhost:8001
+      service-name: lucky-zookeeper-server
+
   http-client:
     logger:
-      packages: io.github.lucklike.discivery.zookeeper.api
+      packages:
+      - io.github.lucklike.discivery.zookeeper.api
+      - io.github.lucklike.common.api

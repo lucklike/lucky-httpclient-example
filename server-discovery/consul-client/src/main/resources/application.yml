@@ -13,7 +13,13 @@ spring:
         health-check-path: /actuator/health       # 健康检查路径
         health-check-interval: 10s               # 健康检查间隔
 lucky:
+  http-server:
+    common:
+#      url: http://localhost:7005
+      service-name: lucky-consul-server
   http-client:
     logger:
-      packages: io.github.lucklike.discovery.consul.api
+      packages:
+        - io.github.lucklike.discovery.consul.api
+        - io.github.lucklike.common.api
 
