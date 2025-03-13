@@ -11,7 +11,7 @@ import com.luckyframework.httpclient.proxy.context.ClassContext;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
 import com.luckyframework.reflect.Param;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.File;

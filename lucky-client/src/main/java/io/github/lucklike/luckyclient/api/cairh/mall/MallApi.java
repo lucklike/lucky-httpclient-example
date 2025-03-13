@@ -6,7 +6,7 @@ import com.luckyframework.httpclient.proxy.annotations.QueryParam;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.Retryable;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 
 import java.util.List;
 import java.util.Set;

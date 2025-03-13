@@ -3,7 +3,7 @@ package io.github.lucklike.luckyclient.api.openai;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 
 /**
  * @author fukang

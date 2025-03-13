@@ -12,7 +12,7 @@ import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import io.github.lucklike.entity.response.Result;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 import lombok.SneakyThrows;
 import org.springframework.lang.NonNull;
 

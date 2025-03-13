@@ -9,7 +9,7 @@ import com.luckyframework.httpclient.proxy.sse.OnMessage;
 import com.luckyframework.httpclient.proxy.sse.Sse;
 import com.luckyframework.httpclient.proxy.sse.standard.AnnotationStandardEventListener;
 import com.luckyframework.reflect.Param;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 import io.github.lucklike.luckyclient.api.util.DelayedOutput;
 
 /**

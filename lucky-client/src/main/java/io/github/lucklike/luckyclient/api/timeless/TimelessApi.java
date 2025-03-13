@@ -13,7 +13,7 @@ import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
 import com.luckyframework.io.FileUtils;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.File;

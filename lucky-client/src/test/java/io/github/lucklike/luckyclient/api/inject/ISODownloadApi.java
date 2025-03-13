@@ -9,8 +9,8 @@ import com.luckyframework.httpclient.proxy.annotations.ResultHandlerMeta;
 import com.luckyframework.httpclient.proxy.annotations.UseProxy;
 import com.luckyframework.httpclient.proxy.async.Model;
 import com.luckyframework.httpclient.proxy.handle.ResultHandler;
-import io.github.lucklike.httpclient.annotation.HttpClient;
 import io.github.lucklike.httpclient.annotation.HttpReference;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 
 import java.io.File;
 import java.net.Proxy;

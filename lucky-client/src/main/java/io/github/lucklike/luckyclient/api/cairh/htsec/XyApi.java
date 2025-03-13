@@ -6,7 +6,7 @@ import com.luckyframework.httpclient.proxy.annotations.PrintRequestLog;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.Wrapper;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 

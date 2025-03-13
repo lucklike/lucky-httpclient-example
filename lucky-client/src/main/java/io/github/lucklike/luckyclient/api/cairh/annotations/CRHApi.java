@@ -17,7 +17,7 @@ import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Pack;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 import io.github.lucklike.luckyclient.api.cairh.BizException;
 import io.github.lucklike.luckyclient.api.cairh.openapi.CrhOpenApi;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,7 @@ import java.util.Objects;
 @SpELImport({CairhCommonFunction.class})
 public @interface CRHApi {
 
-    @AliasFor(annotation = HttpClient.class, attribute = "name")
+    @AliasFor(annotation = HttpClient.class, attribute = "beanId")
     String name() default "";
 
     String project() default "";

@@ -1,0 +1,17 @@
+server:
+  port: 8002
+
+spring:
+  application:
+    name: lucky-zookeeper-client
+  cloud:
+    zookeeper:
+      connect-string: 127.0.0.1:2181
+      discovery:
+        enabled: true
+        register: true
+
+lucky:
+  http-client:
+    logger:
+      packages: io.github.lucklike.discivery.zookeeper.api

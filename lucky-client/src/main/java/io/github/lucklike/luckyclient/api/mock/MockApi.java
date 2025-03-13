@@ -12,7 +12,7 @@ import com.luckyframework.httpclient.proxy.sse.EventListener;
 import com.luckyframework.httpclient.proxy.sse.Sse;
 import com.luckyframework.io.MultipartFile;
 import com.luckyframework.reflect.Param;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;

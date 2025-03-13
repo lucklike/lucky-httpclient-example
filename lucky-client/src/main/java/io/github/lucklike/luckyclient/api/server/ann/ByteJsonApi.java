@@ -3,7 +3,7 @@ package io.github.lucklike.luckyclient.api.server.ann;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import io.github.lucklike.entity.request.bytes.ByteJson;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 
 /**
  * @author fukang

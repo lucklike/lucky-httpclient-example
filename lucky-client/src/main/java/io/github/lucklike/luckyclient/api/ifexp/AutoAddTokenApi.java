@@ -6,7 +6,7 @@ import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.mock.Mock;
 import io.github.lucklike.entity.request.User;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 
 /**
  * @if表达式测试--自动登录测试

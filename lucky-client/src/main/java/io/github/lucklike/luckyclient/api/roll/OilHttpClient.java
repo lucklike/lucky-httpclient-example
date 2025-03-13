@@ -3,7 +3,7 @@ package io.github.lucklike.luckyclient.api.roll;
 import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.StaticQuery;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;

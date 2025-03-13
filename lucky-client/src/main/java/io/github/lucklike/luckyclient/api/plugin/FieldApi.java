@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.plugin;
 
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 import lombok.Data;
 
 /**

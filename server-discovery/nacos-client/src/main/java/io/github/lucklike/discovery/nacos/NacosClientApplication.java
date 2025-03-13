@@ -1,12 +1,12 @@
 package io.github.lucklike.discovery.nacos;
 
-import com.alibaba.nacos.spring.context.annotation.discovery.EnableNacosDiscovery;
 import io.github.lucklike.httpclient.annotation.EnableLuckyHttpClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 
-@EnableNacosDiscovery
+@EnableDiscoveryClient
 @EnableLuckyHttpClient
 @SpringBootApplication
 public class NacosClientApplication {

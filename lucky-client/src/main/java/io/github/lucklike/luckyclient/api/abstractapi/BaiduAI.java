@@ -14,7 +14,7 @@ import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
 import com.luckyframework.httpclient.proxy.sse.Sse;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 import io.github.lucklike.luckyclient.api.baiduai.BaiduAISseEventListener;
 import io.github.lucklike.luckyclient.api.baiduai.Token;
 
@@ -28,7 +28,7 @@ import java.util.Scanner;
  */
 @Retryable
 @PrintLogProhibition
-@HttpClient(name = "annBaiduAI", value = "https://aip.baidubce.com")
+@HttpClient(beanId = "annBaiduAI", value = "https://aip.baidubce.com")
 public abstract class BaiduAI extends JsonFileTokenManager<Token> {
 
     //---------------------------------------------------------------------

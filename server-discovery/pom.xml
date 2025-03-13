@@ -17,6 +17,8 @@
         <module>eureka-client</module>
         <module>nacos-client</module>
         <module>nacos-server</module>
+        <module>zookeeper-server</module>
+        <module>zookeeper-client</module>
     </modules>
 
     <properties>
@@ -27,9 +29,6 @@
         <spring-boot-alibaba-version>0.2.12</spring-boot-alibaba-version>
         <spring-cloud-alibaba-version>2.2.9.RELEASE</spring-cloud-alibaba-version>
 
-<!--        <nacos-spring-boot.version>0.2.12</nacos-spring-boot.version>-->
-<!--        <nacos-spring-cloud.version>2021.0.6.0</nacos-spring-cloud.version>-->
-<!--        <eureka-spring-cloud.version>3.0.6</eureka-spring-cloud.version>-->
     </properties>
 
     <dependencies>
@@ -41,12 +40,6 @@
 
     <dependencyManagement>
         <dependencies>
-
-            <dependency>
-                <groupId>com.alibaba.boot</groupId>
-                <artifactId>nacos-discovery-spring-boot-starter</artifactId>
-                <version>${spring-boot-alibaba-version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>

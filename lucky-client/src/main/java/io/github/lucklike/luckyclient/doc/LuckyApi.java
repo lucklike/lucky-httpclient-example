@@ -37,7 +37,7 @@ import com.luckyframework.httpclient.proxy.mock.MockResponse;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
 import io.github.lucklike.entity.request.proto.PersonOuterClass;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 import io.github.lucklike.luckyclient.api.mock.User;
 
 import java.io.File;
@@ -49,7 +49,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @PrintLog
-@HttpClient(value = "http://localhost:8080/", name = "LUCKY-API")
+@HttpClient(value = "http://localhost:8080/", beanId = "LUCKY-API")
 public interface LuckyApi {
 
     @StaticHeader("Accept: text/plain")

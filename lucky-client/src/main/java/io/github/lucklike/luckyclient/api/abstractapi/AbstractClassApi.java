@@ -1,7 +1,7 @@
 package io.github.lucklike.luckyclient.api.abstractapi;
 
 import com.luckyframework.httpclient.proxy.annotations.Get;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 import io.github.lucklike.luckyclient.api.roll.OilPriceApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

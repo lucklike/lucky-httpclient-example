@@ -1,0 +1,12 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: lucky-zookeeper-server  # 当前服务名称
+  cloud:
+    zookeeper:
+      connect-string: 127.0.0.1:2181  # Zookeeper 服务器地址
+      discovery:
+        enabled: true   # 启用 Zookeeper 作为注册中心
+        register: true  # 允许注册当前服务

@@ -8,7 +8,7 @@ import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
-import io.github.lucklike.httpclient.annotation.HttpClient;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 
 import java.util.Arrays;
 import java.util.List;
