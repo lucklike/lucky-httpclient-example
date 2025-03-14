@@ -15,7 +15,7 @@ import static io.github.lucklike.common.Config.URL_CONFIG;
  * @version 1.0.0
  * @date 2025/3/13 22:08
  */
-@Plugin(pluginClass = TimeStatisticsPlugin.class)
+//@Plugin(pluginClass = TimeStatisticsPlugin.class)
 @HttpClient(url = URL_CONFIG, service = SERVICE_NAME_CONFIG, path = "user")
 public interface UserApi {
 

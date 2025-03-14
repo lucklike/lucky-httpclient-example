@@ -1,6 +1,7 @@
 package io.github.lucklike.discovery.eureka.api;
 
 import com.luckyframework.common.RunnableActuator;
+import com.luckyframework.common.StopWatch;
 import io.github.lucklike.common.api.UserApi;
 import io.github.lucklike.entity.request.User;
 import io.github.lucklike.entity.response.Result;
@@ -25,11 +26,16 @@ class UserApiTest {
 
     @Test
     void getUser() {
-
+        StopWatch stopWatch = new StopWatch();
         RunnableActuator.repeat(10, i -> {
+            stopWatch.start( "task-" + i);
             Result<User> user = userApi.getUser(i + "");
             System.out.println(user);
+            stopWatch.stopLast();
         });
+
+        stopWatch.stopWatch();
+        System.out.println(stopWatch.prettyPrintFormat());
 
     }
 }
