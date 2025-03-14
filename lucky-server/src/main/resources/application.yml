@@ -18,6 +18,7 @@ spring:
 
 
 
+
 baidu:
   API:
     AppID: "#{#sm4('241df7de7503ee767a8c76da60c52a5a')}"
@@ -39,3 +40,8 @@ lucky:
     spring-el:
       classes:
         - clazz: io.github.lucklike.server.ai.util.SM4Function
+    parameter-converts:
+      - type: cover
+        clazz: com.luckyframework.httpclient.proxy.unpack.SpringMultipartFileParameterConvert
+        index-class: com.luckyframework.httpclient.proxy.unpack.SpringMultipartFileParameterConvert
+
