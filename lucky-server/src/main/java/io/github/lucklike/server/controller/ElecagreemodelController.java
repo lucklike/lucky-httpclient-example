@@ -1,6 +1,7 @@
 package io.github.lucklike.server.controller;
 
 import io.github.lucklike.server.ai.crh.ElecagreemodelApi;
+import io.github.lucklike.server.ai.crh.req.FundSumaryPublishRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,5 +23,15 @@ public class ElecagreemodelController {
     @RequestMapping("fundSumaryPublish")
     public Map<String, Object> fundSumaryPublish(@RequestHeader("authorization") String token, @RequestParam String agreement_type, MultipartFile[] files) {
         return api.fundSumaryPublish(token, agreement_type, files);
+    }
+
+
+    @RequestMapping("fundSumaryPublish1")
+    public String fundSumaryPublish1(@RequestHeader("authorization") String token, @RequestParam String agreement_type, MultipartFile[] files) {
+        FundSumaryPublishRequest request = new FundSumaryPublishRequest();
+        request.setAuthorization(token);
+        request.setAgreement_type(agreement_type);
+        request.setFiles(files);
+        return api.fundSumaryPublish(request);
     }
 }

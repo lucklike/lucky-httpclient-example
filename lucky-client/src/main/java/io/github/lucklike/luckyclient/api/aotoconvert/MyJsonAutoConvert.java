@@ -2,8 +2,9 @@ package io.github.lucklike.luckyclient.api.aotoconvert;
 
 import com.luckyframework.httpclient.core.convert.JsonAutoConvert;
 import com.luckyframework.httpclient.core.meta.Response;
-import io.github.lucklike.httpclient.config.IAutoConvert;
+import io.github.lucklike.httpclient.config.LocatorAutoConvert;
 import io.github.lucklike.httpclient.config.RType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -15,7 +16,7 @@ import java.lang.reflect.Type;
  * @date 2025/3/3 22:47
  */
 @Component
-public class MyJsonAutoConvert implements IAutoConvert {
+public class MyJsonAutoConvert extends LocatorAutoConvert {
 
     @Resource
     private JsonAutoConvert jsonAutoConvert;
@@ -32,7 +33,7 @@ public class MyJsonAutoConvert implements IAutoConvert {
 
     @Override
     public Integer index() {
-        return IAutoConvert.super.index();
+        return super.index();
     }
 
     @Override

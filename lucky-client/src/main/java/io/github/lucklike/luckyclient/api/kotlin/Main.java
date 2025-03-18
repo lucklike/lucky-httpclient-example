@@ -33,8 +33,8 @@ public class Main {
 
     private static void printTest() throws InterruptedException {
         StopWatch stopWatch = new StopWatch();
-        printLine(JavaThreadAsyncTaskExecutor.createByConcurrency(5), stopWatch, "java");
-        printLine(KotlinCoroutineAsyncTaskExecutor.createByConcurrency(5), stopWatch, "kotlin");
+        printLine(JavaThreadAsyncTaskExecutor.createByExecutor(Executors.newFixedThreadPool(5)), stopWatch, "java");
+        printLine(KotlinCoroutineAsyncTaskExecutor.createDefault(5), stopWatch, "kotlin");
 
         stopWatch.stopWatch();
         System.out.println(stopWatch.prettyPrintFormat());
