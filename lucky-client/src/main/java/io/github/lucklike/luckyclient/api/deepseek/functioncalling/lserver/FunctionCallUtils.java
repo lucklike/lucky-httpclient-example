@@ -67,13 +67,19 @@ public class FunctionCallUtils {
                 toolCall = args -> {
                     try {
                         Object paramObj = CommonFunctions._json(args, ResolvableType.forMethodParameter(method, 0));
-                        return MethodUtils.invoke(bookApi, method, paramObj).toString();
+                        return CommonFunctions.json(MethodUtils.invoke(bookApi, method, paramObj));
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 };
             } else if (parameterCount == 0) {
-                toolCall = args -> MethodUtils.invoke(bookApi, method).toString();
+                toolCall = args -> {
+                    try {
+                        return CommonFunctions.json(MethodUtils.invoke(bookApi, method));
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                };
             }
 
 

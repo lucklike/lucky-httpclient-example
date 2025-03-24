@@ -1,6 +1,6 @@
 package io.github.lucklike.common.api;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.proxy.annotations.Delete;
 import com.luckyframework.httpclient.proxy.annotations.Get;
@@ -30,7 +30,7 @@ public interface BookApi {
 
     @Post("/page")
     @Describe(name = "book_page_list", desc = "分页获取所有的书本信息，支持使用书名和作者进行模糊查询")
-    IPage<Book> page(@JsonBody PageBookRequest pageQuery);
+    Page<Book> page(@JsonBody PageBookRequest pageQuery);
 
     // 新增书籍
     @Post("/save")

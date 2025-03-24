@@ -94,9 +94,10 @@ public interface LDeepSeekApi {
             List<ConfigurationMap> messages = new ArrayList<>();
             messages.add(message);
 
-            ConfigurationMap toolResultMessage = new ConfigurationMap();
+
             List<ConfigurationMap> toolCalls = message.getMapList("tool_calls");
             for (ConfigurationMap toolCall : toolCalls) {
+                ConfigurationMap toolResultMessage = new ConfigurationMap();
                 toolResultMessage.addProperty("role", "tool");
                 toolResultMessage.addProperty("tool_call_id", toolCall.getString("id"));
                 toolResultMessage.addProperty("content", functionCallUtils.callTool(toolCall.getString("function.name"), toolCall.getString("function.arguments")));

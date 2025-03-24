@@ -19,7 +19,7 @@ public interface BookMapper extends BaseMapper<Book> {
             "<if test='book.author != null and book.author != \"\"'> " +
             "  AND AUTHOR LIKE '%' || #{book.author} || '%' " +
             "</if> " +
-            "ORDER BY PUBLISH_DATE DESC" +
+            "ORDER BY PUBLISHDATE DESC" +
             "</script>")
     IPage<Book> selectByPage(Page<Book> page, @Param("book")  Book book);
 }

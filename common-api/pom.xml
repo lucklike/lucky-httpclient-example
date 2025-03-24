@@ -47,6 +47,13 @@
             <artifactId>ojdbc8</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+
+
         <!-- Druid 连接池 (可选) -->
         <dependency>
             <groupId>com.alibaba</groupId>
