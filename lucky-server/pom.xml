@@ -35,8 +35,9 @@
         </dependency>
 
         <dependency>
-            <groupId>io.github.lucklike</groupId>
-            <artifactId>lucky-entity</artifactId>
+            <groupId>io.github.lucklike.common</groupId>
+            <artifactId>common-http</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>

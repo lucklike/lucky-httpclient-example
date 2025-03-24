@@ -15,6 +15,7 @@ import io.github.lucklike.httpclient.discovery.HttpClient;
 import java.io.File;
 import java.net.Proxy;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author fukang
@@ -59,4 +60,15 @@ public interface ISODownloadApi {
     @RangeDownload(saveDir = "D:/test/bfile/", filename = "kotlin-{_name_}{.ext}")
     @Get("idea/ideaIU-2024.3.dmg")
     File coModelDownload();
+
+
+    @AsyncExecutor
+    @RangeDownload(saveDir = "D:/test/bfile/", filename = "java-{_name_}{.ext}")
+    @Get("idea/ideaIU-2024.3.dmg")
+    CompletableFuture<File> asyncThreadModelDownload();
+
+    @AsyncExecutor(model = Model.KOTLIN_COROUTINE)
+    @RangeDownload(saveDir = "D:/test/bfile/", filename = "kotlin-{_name_}{.ext}")
+    @Get("idea/ideaIU-2024.3.dmg")
+    CompletableFuture<File> asyncCoModelDownload();
 }

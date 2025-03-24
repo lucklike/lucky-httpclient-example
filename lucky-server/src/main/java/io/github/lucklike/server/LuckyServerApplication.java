@@ -2,6 +2,7 @@ package io.github.lucklike.server;
 
 import io.github.lucklike.httpclient.annotation.EnableLuckyHttpClient;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -15,7 +16,8 @@ import java.security.Security;
  * @date 2024/7/7 02:58
  */
 @EnableLuckyHttpClient
-@SpringBootApplication
+@MapperScan("io.github.lucklike.**.mapper")
+@SpringBootApplication(scanBasePackages = "io.github.lucklike")
 public class LuckyServerApplication {
 
     static {

@@ -1,0 +1,32 @@
+{
+  "stream" : false,
+  "model" : "deepseek-chat",
+  "messages" : [ {
+    "role" : "system",
+    "content" : "You are a helpful assistant."
+  }, {
+    "role" : "user",
+    "content" : "#{p0}"
+  } ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "query_oil_price",
+        "description": "石油价格查询接口，用户应提供一个城市",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "location": {
+              "type": "string",
+              "description": "城市，例如：湖北"
+            }
+          },
+          "required": [
+            "location"
+          ]
+        }
+      }
+    }
+  ]
+}

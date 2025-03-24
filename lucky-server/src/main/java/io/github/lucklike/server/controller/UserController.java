@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @version 1.0.0
  * @date 2024/7/9 01:43
  */
-@RestController
+@RestController("myUserController")
 @RequestMapping("user")
 public class UserController {
 

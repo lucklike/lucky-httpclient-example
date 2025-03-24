@@ -2,6 +2,16 @@ server:
   port: 8864
 
 spring:
+  datasource:
+    druid:
+      driver-class-name: oracle.jdbc.OracleDriver
+      url: jdbc:oracle:thin:@150.158.214.46:1521:cpe02
+      username: crh_comp
+      password: cairenhui
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
   application:
     name: lucky-server
   servlet:
@@ -15,6 +25,14 @@ spring:
     cache: false  #是否使用缓存
     mode: HTML  #严格的HTML语法模式
     suffix: .html  #后缀名
+
+mybatis-plus:
+  mapper-locations: classpath:/io/github/lucklike/**/mapper/*.xml
+  type-aliases-package: io.github.lucklike.common.entity
+  global-config:
+    db-config:
+      id-type: auto  # Oracle 需要使用 SEQUENCE 作为主键策略
+      table-underline: true
 
 
 

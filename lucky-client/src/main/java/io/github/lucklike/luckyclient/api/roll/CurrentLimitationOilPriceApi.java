@@ -2,6 +2,7 @@ package io.github.lucklike.luckyclient.api.roll;
 
 
 import com.luckyframework.httpclient.proxy.annotations.Get;
+import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.QueryParam;
 
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
 /**
  * 支持限流功能的流量查询接口
  */
+@PrintLogProhibition
 @OilHttpClient
 public interface CurrentLimitationOilPriceApi {
 

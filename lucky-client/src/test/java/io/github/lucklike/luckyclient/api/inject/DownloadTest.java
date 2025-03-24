@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 /**
@@ -168,6 +169,16 @@ public class DownloadTest {
         File file = fileSupplier.get();
         System.out.println(file.getAbsolutePath());
         stopWatch.stopLast();
+    }
+
+    @Test
+    void syncThreadModel() {
+        StopWatch stopWatch = new StopWatch();
+        CompletableFuture<File> threadModelDownload = isoDownloadApi.asyncThreadModelDownload();
+        CompletableFuture<File> coModelDownload = isoDownloadApi.asyncCoModelDownload();
+        CompletableFuture.allOf(threadModelDownload, coModelDownload).join();
+        stopWatch.stopWatch();
+        System.out.println(stopWatch.prettyPrintFormat());
     }
 
 }
