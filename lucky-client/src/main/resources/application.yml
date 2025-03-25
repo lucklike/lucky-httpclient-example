@@ -4,13 +4,6 @@ spring:
   config:
     import:
       - optional:classpath:api-info.yml
-mybatis-plus:
-  mapper-locations: classpath:/io/github/lucklike/**/mapper/*.xml
-  type-aliases-package: io.github.lucklike.common.entity
-  global-config:
-    db-config:
-      id-type: auto  # Oracle 需要使用 SEQUENCE 作为主键策略
-      table-underline: true
 
 server:
   port: 8888

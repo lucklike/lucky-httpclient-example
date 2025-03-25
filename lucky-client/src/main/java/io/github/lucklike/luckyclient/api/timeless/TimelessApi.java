@@ -9,6 +9,7 @@ import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.proxy.CommonFunctions;
 import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.Get;
+import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
@@ -25,6 +26,7 @@ import java.util.Scanner;
 /**
  * Timeless 歌词查询API
  */
+@PrintLogProhibition
 @AutoVerifyHttpStatus
 @HttpClient("https://api.timelessq.com")
 @Condition(assertion = "#{$body$.errno != 0}", exception = "[Timeless Api]<#{$api.name}>接口调用异常，错误的响应码：'#{$body$.errno}' : #{$body$.errmsg} 接口地址：[#{$reqMethod$}] #{$url$}")

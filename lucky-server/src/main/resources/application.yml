@@ -21,7 +21,7 @@ spring:
 
 mybatis-plus:
   configuration:
-    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:/io/github/lucklike/**/mapper/*.xml
   type-aliases-package: io.github.lucklike.common.entity
   global-config:

@@ -15,8 +15,8 @@ import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
 import com.luckyframework.reflect.Param;
+import io.github.lucklike.common.api.util.FunctionCallMange;
 import io.github.lucklike.httpclient.discovery.HttpClient;
-import io.github.lucklike.luckyclient.api.deepseek.functioncalling.DeepSeekApiFunctionCallingApi;
 import io.github.lucklike.luckyclient.api.deepseek.functioncalling.reequest.CompletionRequest;
 import io.github.lucklike.luckyclient.api.deepseek.functioncalling.reequest.MessageUtils;
 
@@ -57,7 +57,7 @@ public interface LDeepSeekApi {
     @Callback(lifecycle = Lifecycle.REQUEST)
     static void reqCallback(@Param("#{p0}") String content,
                             Request request,
-                            FunctionCallUtils functionCallUtils) {
+                            FunctionCallMange functionCallMange) {
 
 
         CompletionRequest reqBody = new CompletionRequest();
@@ -67,8 +67,8 @@ public interface LDeepSeekApi {
         }
 
         if (MESSAGES.get() == null) {
-            if (ContainerUtils.isNotEmptyCollection(functionCallUtils.getToolCallConfigs())) {
-                reqBody.setTools(functionCallUtils.getToolCallConfigs());
+            if (ContainerUtils.isNotEmptyCollection(functionCallMange.getToolCallConfigs())) {
+                reqBody.setTools(functionCallMange.getToolCallConfigs());
             }
         } else {
             reqBody.setMessages(MESSAGES.get());
@@ -84,7 +84,7 @@ public interface LDeepSeekApi {
     static void respCallback(Response response,
                              MethodContext mc,
                              @Param("#{p0}") String content,
-                             FunctionCallUtils functionCallUtils,
+                             FunctionCallMange functionCallMange,
                              LDeepSeekApi callingApi) throws Exception {
         ConfigurationMap result = response.getConfigMapResult();
         ConfigurationMap message = result.getMap("choices[0].message");
@@ -100,13 +100,15 @@ public interface LDeepSeekApi {
                 ConfigurationMap toolResultMessage = new ConfigurationMap();
                 toolResultMessage.addProperty("role", "tool");
                 toolResultMessage.addProperty("tool_call_id", toolCall.getString("id"));
-                toolResultMessage.addProperty("content", functionCallUtils.callTool(toolCall.getString("function.name"), toolCall.getString("function.arguments")));
+                toolResultMessage.addProperty("content", functionCallMange.callTool(toolCall.getString("function.name"), toolCall.getString("function.arguments")));
                 messages.add(toolResultMessage);
             }
             MESSAGES.set(messages);
 
             final String finalResult = callingApi.completions(content);
-            mc.getContextVar().addRootVariable("$finalResult", finalResult);
+            if (finalResult != null) {
+                mc.getContextVar().addRootVariable("$finalResult", finalResult);
+            }
         }
 
     }
