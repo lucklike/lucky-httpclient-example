@@ -1,7 +1,10 @@
 package io.github.lucklike.luckyclient.api.ollama.req;
 
+import com.luckyframework.common.ConfigurationMap;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.List;
 
 /**
  * 对话补全接口请求
@@ -18,7 +21,7 @@ public class ChatRequest extends OllamaStreamRequest {
     /**
      * 模型支持使用的工具。需要将 stream 设置为 false
      */
-    private Boolean tools;
+    private List<ConfigurationMap> tools;
 
     /**
      * 返回响应的格式。目前唯一接受的值是 json

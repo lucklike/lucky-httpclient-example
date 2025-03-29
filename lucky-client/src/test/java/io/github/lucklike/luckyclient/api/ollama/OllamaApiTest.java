@@ -3,6 +3,7 @@ package io.github.lucklike.luckyclient.api.ollama;
 import com.luckyframework.common.Color;
 import com.luckyframework.common.Console;
 import com.luckyframework.httpclient.generalapi.DelayedOutput;
+import io.github.lucklike.common.api.util.FunctionCallMange;
 import io.github.lucklike.luckyclient.api.ollama.listener.OllamaChatEventListener;
 import io.github.lucklike.luckyclient.api.ollama.listener.OllamaAnnotationGenerateEventListener;
 import io.github.lucklike.luckyclient.api.ollama.listener.OllamaGenerateEventListener;
@@ -57,7 +58,7 @@ class OllamaApiTest {
 
             GenerateRequest request = new GenerateRequest();
             request.setPrompt(prompt);
-            request.setContext(listener.getContext());
+//            request.setContext(listener.getContext());
 
             Console.printlnMulberry("\nAI:");
             api.streamGenerate(request, listener);
@@ -107,6 +108,9 @@ class OllamaApiTest {
         }
     }
 
+    @Resource
+    private FunctionCallMange functionCallMange;
+
     @Test
     void chat() {
         Scanner scanner = new Scanner(System.in);
@@ -119,6 +123,7 @@ class OllamaApiTest {
             msg.setContent(content);
             msg.setRole("user");
 
+            request.setTools(functionCallMange.getToolCallConfigs());
             request.setMessages(new Message[] { msg });
 
             Console.printlnMulberry("\nAI:");
@@ -150,7 +155,7 @@ class OllamaApiTest {
     @Test
     void showModel() {
         ModelRequest request = new ModelRequest();
-        request.setName("deepseek-r1:7b-copy");
+        request.setName("deepseek-r1:1.5b");
         request.setVerbose(true);
         ModelDetails modelDetails = api.showModel(request);
         System.out.println(modelDetails);

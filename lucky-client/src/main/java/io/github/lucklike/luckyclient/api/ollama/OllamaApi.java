@@ -32,7 +32,6 @@ public interface OllamaApi {
     //----------------------------------------------------------------------
 
     @Sse
-    @Mock
     @Post("/api/generate")
     @Describe("（流式）回答补全")
     void streamGenerate(@JsonBody GenerateRequest request, EventListener listener);
