@@ -5,18 +5,14 @@ import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.core.meta.Response;
 import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
 import com.luckyframework.httpclient.proxy.CommonFunctions;
-import com.luckyframework.httpclient.proxy.annotations.AsyncExecutor;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.SSL;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.spel.FunctionAlias;
 import com.luckyframework.httpclient.proxy.spel.Namespace;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
-import com.luckyframework.httpclient.proxy.spel.hook.AsyncHook;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
-import com.luckyframework.httpclient.proxy.spel.hook.callback.Pack;
-import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
 import io.github.lucklike.httpclient.discovery.HttpClient;
 import io.github.lucklike.luckyclient.api.cairh.BizException;
 import io.github.lucklike.luckyclient.api.cairh.openapi.CrhOpenApi;
@@ -29,7 +25,6 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.reflect.Method;
 import java.util.Objects;
 
 /**
@@ -40,7 +35,7 @@ import java.util.Objects;
 @Documented
 @Inherited
 @SSL
-@HttpClient("#{crh.$crh_base_url}")
+@HttpClient("${cairh.openapi.url}")
 @RespConvert(resultFunc = "crh_convert")
 @SpELImport({CairhCommonFunction.class})
 public @interface CRHApi {
@@ -48,6 +43,7 @@ public @interface CRHApi {
     @AliasFor(annotation = HttpClient.class, attribute = "beanId")
     String name() default "";
 
+    @AliasFor(annotation = HttpClient.class, attribute = "path")
     String project() default "";
 }
 
@@ -57,13 +53,6 @@ public @interface CRHApi {
 @Slf4j
 @Namespace("crh")
 class CairhCommonFunction {
-
-    /**
-     * 构建代理对象时生成URL
-     */
-    @Var(lifecycle = Lifecycle.CLASS)
-    public static final String $crh_base_url = "${cairh.openapi.url}/#{#ann($cc$, T(CRHApi)).project}";
-
 
     /**
      * 确定转换表达式，当方法被{@link LooseBind @LooseBind}标注时使用松散绑定
@@ -117,23 +106,16 @@ class CairhCommonFunction {
 
         // 状态码异常
         if (status != 200) {
-            return new BizException("【财人汇】开放接口访问失败！HTTP状态码：{}， 接口地址： [{}]{}", status, req.getRequestMethod(), req.getUrl());
+            throw new BizException("【财人汇】开放接口访问失败！HTTP状态码：{}， 接口地址： [{}]{}", status, req.getRequestMethod(), req.getUrl());
         }
 
         //响应码异常
         ConfigurationMap body = resp.getConfigMapResult();
         String errorNo = body.getString("error.error_no");
         if (!Objects.equals("0", errorNo)) {
-            return new BizException("【财人汇】开放接口访问失败！接口响应码：{}, 错误信息：{}，接口地址： [{}]{}", errorNo, body.getString("error.error_info"), req.getRequestMethod(), req.getUrl());
+            throw new BizException("【财人汇】开放接口访问失败！接口响应码：{}, 错误信息：{}，接口地址： [{}]{}", errorNo, body.getString("error.error_info"), req.getRequestMethod(), req.getUrl());
         }
 
         return null;
-    }
-
-    @AsyncHook
-    @Callback(lifecycle = Lifecycle.METHOD)
-    public static void asyncCallback(Method method) throws InterruptedException {
-        Thread.sleep(1000L);
-        log.info("-----------------------[{}]asyncCallback-----------------------", method.getName());
     }
 }

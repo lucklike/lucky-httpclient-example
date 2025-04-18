@@ -13,4 +13,6 @@ public interface CompApi {
     @Describe("问卷查询")
     @Get("/exampaper/queryExamDetail")
     Map<String, Object> queryExamDetail(@QueryParam("exampaper_id") String id);
+
+
 }

@@ -16,11 +16,11 @@ import java.util.Arrays;
  * @version 1.0.0
  * @date 2025/2/16 12:55
  */
-@HttpPlugin
+//@HttpPlugin
 @Component
 public class FieldPlugin {
 
-    @Around("#{$class$ == T(FieldApi).getClass()}")
+    @Around("#{$class$ == T(FieldApi)}")
     public Object around(ProxyDecorator decorator) throws Throwable {
         ExecuteMeta meta = decorator.getMeta();
         long startTime = System.currentTimeMillis();

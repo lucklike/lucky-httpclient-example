@@ -3,8 +3,10 @@ package io.github.lucklike.luckyclient.api.cairh.comp;
 
 import com.luckyframework.httpclient.core.meta.Response;
 import com.luckyframework.httpclient.generalapi.describe.Describe;
+import com.luckyframework.httpclient.generalapi.plugin.TimeStatistics;
 import com.luckyframework.httpclient.proxy.annotations.JsonParam;
 import com.luckyframework.httpclient.proxy.annotations.Post;
+import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.Wrapper;
 import io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi;
 import io.github.lucklike.luckyclient.api.cairh.annotations.LooseBind;
@@ -12,6 +14,8 @@ import io.github.lucklike.luckyclient.api.cairh.comp.resp.QueryOperatorInfoRespo
 
 import java.util.concurrent.Future;
 
+@TimeStatistics
+@PrintLogProhibition
 @CRHApi(project = "compfront")
 public interface CompFrontApi {
 

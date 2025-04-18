@@ -41,6 +41,12 @@ public class DownloadTest {
     ISODownloadApi isoDownloadApi;
 
     @Test
+    void idea() {
+        File file = isoDownloadApi.download();
+        System.out.println(file.getAbsolutePath());
+    }
+
+    @Test
     void rangeTest1() {
         StopWatch sw = new StopWatch();
         sw.start("chatboxai");

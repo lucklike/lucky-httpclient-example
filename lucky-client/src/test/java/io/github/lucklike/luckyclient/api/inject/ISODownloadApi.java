@@ -25,7 +25,7 @@ import java.util.concurrent.CompletableFuture;
 @HttpClient("https://download.jetbrains.com")
 public interface ISODownloadApi {
 
-    @Get("idea/ideaIU-2024.3.dmg")
+    @Get("https://download.jetbrains.com/idea/ideaIU-2025.1.exe?_gl=1*huep6z*_gcl_au*MTUyMzEwMjYwNS4xNzQxNzQ5MDYz*FPAU*MTUyMzEwMjYwNS4xNzQxNzQ5MDYz*_ga*MTY5MTk5NjU4Ny4xNzMzNzA5NDQ4*_ga_9J976DJZ68*MTc0NDkzOTc1MC4xMS4xLjE3NDQ5Mzk4OTguNjAuMC4w")
     @RangeDownload(saveDir = "D:/test/bfile")
     File download();
 
