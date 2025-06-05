@@ -43,13 +43,13 @@ public interface HeheBaseApi {
 
 
     @Callback(lifecycle = Lifecycle.RESPONSE)
-    static Object exceptionCallback(Response response, MethodContext context) {
+    static void exceptionCallback(Response response, MethodContext context) {
         ApiDescribe apiDesc = DescribeFunction.describe(context);
         Request request = response.getRequest();
 
         // HTTP状态码异常
         if (response.getStatus() != 200) {
-            return new BizException("[{}]<{}>({})接口HTTP状态码异常：'{}' {}, {}",
+            throw new BizException("[{}]<{}>({})接口HTTP状态码异常：'{}' {}, {}",
                     request.getRequestMethod(),
                     apiDesc.getName(),
                     request.getURL().getPath(),
@@ -62,7 +62,7 @@ public interface HeheBaseApi {
         ConfigurationMap body = response.getConfigMapResult();
         String errorCode = body.getString("error_code");
         if (errCodeList.contains(errorCode)) {
-            return new BizException("[{}]<{}>({})接口响应码异常：'{}' {}, {}",
+            throw new BizException("[{}]<{}>({})接口响应码异常：'{}' {}, {}",
                     request.getRequestMethod(),
                     apiDesc.getName(),
                     request.getURL().getPath(),
@@ -71,8 +71,6 @@ public interface HeheBaseApi {
                     ! StringUtils.hasText(apiDesc.getAuthor()) ? "" : (",请联系维护人员：" + (StringUtils.hasText(apiDesc.getContactWay()) ? apiDesc.getAuthor() + "/" + apiDesc.getContactWay() : apiDesc.getAuthor()))
             );
         }
-
-        return null;
     }
 
 }

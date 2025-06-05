@@ -14,7 +14,7 @@ import java.util.Set;
 public interface XiBuMockApi {
 
     @RespConvert("#{$body$.data.rows}")
-    @Mock(body = "#{#read(#resource('file:D:/QYWX/Files/WXWork/1688857280578806/Cache/File/2025-04/西部接口返回的经纪人.json'))}")
+    @Mock(body = "#{#file('D:/QYWX/Files/WXWork/1688857280578806/Cache/File/2025-04/西部接口返回的经纪人.json')}")
     @Post("http://www.xb.com/broker/list")
     List<Map<String, Object>> black();
 
