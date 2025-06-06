@@ -69,7 +69,7 @@ lucky:
       body-max-length: -1
 
     cookie-manage:
-      enable: true
+      enable: false
 
     ssl:
       key-stores:
