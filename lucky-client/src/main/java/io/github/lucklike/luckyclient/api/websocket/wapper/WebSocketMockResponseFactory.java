@@ -17,7 +17,7 @@ public class WebSocketMockResponseFactory implements MockResponseFactory {
         try {
             AsrWsClient asrWsClient = new AsrWsClient(URI.create(request.getUrl()));
             byte[] bytes = (byte[]) context.getContext().getArguments()[0];
-            return MockResponse.create().request(request).body(asrWsClient.parseAudioFile(bytes));
+            return MockResponse.create().request(request).txt(asrWsClient.parseAudioFile(bytes));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
