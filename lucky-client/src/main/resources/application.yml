@@ -146,3 +146,8 @@ crh:
       front:
         group: fukang
         service-name: cpe-products-component-front
+
+mock:
+  config:
+    mockPluginApi:
+      enable: false
