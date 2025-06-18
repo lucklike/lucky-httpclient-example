@@ -150,4 +150,7 @@ crh:
 mock:
   config:
     mockPluginApi:
-      enable: false
+      enable: true
+logging:
+  level:
+    root: info

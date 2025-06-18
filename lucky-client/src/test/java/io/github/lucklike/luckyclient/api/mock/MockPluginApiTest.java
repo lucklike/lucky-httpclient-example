@@ -15,12 +15,15 @@ class MockPluginApiTest {
 
     @Test
     void test1() {
+        System.out.println(mockPluginApi);
         String s = mockPluginApi.test1();
+
         System.out.println(s);
     }
 
     @Test
     void agsTest() {
+        System.out.println(mockPluginApi.toString());
         String s = mockPluginApi.agsTest("12v你哈", 12);
         System.out.println(s);
     }
