@@ -1,12 +1,13 @@
 package io.github.lucklike.luckyclient.api.mock.impl.mock;
 
 import com.luckyframework.common.StringUtils;
+import io.github.lucklike.luckyclient.api.cairh.BizException;
 import io.github.lucklike.luckyclient.api.mock.MockPluginApi;
 
 public class MockPluginApiImpl implements MockPluginApi {
     @Override
     public String test1() {
-        return "你好";
+        throw new BizException("模拟异常");
     }
 
     @Override
