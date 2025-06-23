@@ -20,12 +20,12 @@ public interface CommonT2ServiceApi {
     String queryTest(@QueryParam BaseParam baseParam, @HeaderParam BaseParam baseParam2);
 
 
-    static Response testMock() {
+    static Response test$Mock() {
         return MockResponse.create()
                 .txt("OK, bang bang bang");
     }
 
-    static Response queryTestMock() {
+    static Response queryTest$Mock() {
         return MockResponse.create()
                 .xml("<h1>Query Query Query !!!</h1>");
     }

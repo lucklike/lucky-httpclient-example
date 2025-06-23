@@ -8,13 +8,13 @@ import io.github.lucklike.httpclient.discovery.HttpClient;
 
 import static com.luckyframework.httpclient.proxy.spel.hook.Lifecycle.CLASS;
 
-@StaticQuery("app_key=#{appKey}")
-@HttpClient("#{url}")
+@HttpClient("#{$.url}")
+@StaticQuery("app_key=#{$.appKey}")
 public interface EbsOcrApi {
 
-    @Var(lifecycle = CLASS, unfold  = true)
-    String ebsConfig = "#{#env('cairh.ebs.ocr')}";
+    @Var(lifecycle = CLASS)
+    String $ = "#{#env('cairh.ebs.ocr')}";
 
-    @Post("ebscn/ai.portal/v/image/ocr/recognize_id_card")
+    @Post("/ebscn/ai.portal/v/image/ocr/recognize_id_card")
     String idCardParse(@MultiFile String cardPath);
 }

@@ -4,8 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.Map;
+import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.luckyframework.httpclient.proxy.CommonFunctions.typeOf;
+import static io.github.lucklike.httpclient.BeanFunction.env;
 
 @SpringBootTest
 class EbsOcrApiTest {
@@ -17,5 +20,11 @@ class EbsOcrApiTest {
     void idCardParse() {
         String result = ebsOcrApi.idCardParse("file:D:/id/card/20240712093345.jpg");
         System.out.println(result);
+    }
+
+    @Test
+    void bindTest() {
+        Set<Map<String, Object>> env = env("lucky.http-client.ssl.key-stores", typeOf(Set.class, typeOf(Map.class, "java.lang.String", Object.class)));
+        System.out.println(env);
     }
 }
