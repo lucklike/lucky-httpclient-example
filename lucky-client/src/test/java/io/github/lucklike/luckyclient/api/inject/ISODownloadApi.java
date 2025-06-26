@@ -2,18 +2,13 @@ package io.github.lucklike.luckyclient.api.inject;
 
 import com.luckyframework.httpclient.generalapi.download.RangeDownload;
 import com.luckyframework.httpclient.proxy.annotations.AsyncExecutor;
-import com.luckyframework.httpclient.proxy.annotations.DownloadToLocal;
 import com.luckyframework.httpclient.proxy.annotations.Get;
-import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.ResultHandlerMeta;
-import com.luckyframework.httpclient.proxy.annotations.UseProxy;
 import com.luckyframework.httpclient.proxy.async.Model;
 import com.luckyframework.httpclient.proxy.handle.ResultHandler;
-import io.github.lucklike.httpclient.annotation.HttpReference;
 import io.github.lucklike.httpclient.discovery.HttpClient;
 
 import java.io.File;
-import java.net.Proxy;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 

@@ -3,7 +3,7 @@ package io.github.lucklike.luckyclient.api.deepseek.functioncalling.lserver;
 import io.github.lucklike.common.api.BookApi;
 import io.github.lucklike.common.api.annotation.FunctionCalling;
 import io.github.lucklike.common.api.util.FunctionCallMange;
-import io.github.lucklike.httpclient.annotation.HttpReference;
+import io.github.lucklike.httpclient.injection.HttpReference;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

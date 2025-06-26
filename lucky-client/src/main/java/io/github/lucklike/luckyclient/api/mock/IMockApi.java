@@ -10,7 +10,7 @@ import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
 import io.github.lucklike.httpclient.config.HttpClientProxyObjectFactoryConfiguration;
 import io.github.lucklike.httpclient.discovery.HttpClient;
-import io.github.lucklike.httpclient.parameter.Bind;
+import io.github.lucklike.httpclient.injection.Bind;
 
 import java.util.List;
 import java.util.Map;

@@ -8,13 +8,12 @@ import com.luckyframework.httpclient.generalapi.download.RangeDownloadApi;
 import com.luckyframework.httpclient.proxy.CommonFunctions;
 import com.luckyframework.threadpool.ThreadPoolFactory;
 import com.luckyframework.threadpool.ThreadPoolParam;
-import io.github.lucklike.httpclient.annotation.HttpReference;
+import io.github.lucklike.httpclient.injection.HttpReference;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.io.File;
-import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;

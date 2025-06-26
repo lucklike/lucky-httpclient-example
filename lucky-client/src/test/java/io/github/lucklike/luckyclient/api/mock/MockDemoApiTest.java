@@ -1,19 +1,10 @@
 package io.github.lucklike.luckyclient.api.mock;
 
-import com.luckyframework.httpclient.proxy.spel.ParameterInfo;
-import com.luckyframework.reflect.AnnotationUtils;
-import io.github.lucklike.httpclient.parameter.ParameterInstanceFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.Environment;
-import org.springframework.lang.NonNull;
 
 import javax.annotation.Resource;
-
 import java.util.concurrent.ExecutionException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MockDemoApiTest {

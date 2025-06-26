@@ -12,7 +12,7 @@ import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import com.luckyframework.reflect.AnnotationUtils;
 import io.github.lucklike.httpclient.annotation.AllowNull;
 import io.github.lucklike.httpclient.discovery.HttpClient;
-import io.github.lucklike.httpclient.parameter.ParameterInstanceFactory;
+import io.github.lucklike.httpclient.injection.parameter.ParameterInstanceFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.lang.NonNull;

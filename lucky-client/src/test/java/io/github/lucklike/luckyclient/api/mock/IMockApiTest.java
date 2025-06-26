@@ -1,17 +1,21 @@
 package io.github.lucklike.luckyclient.api.mock;
 
+import com.luckyframework.common.ConfigurationMap;
+import io.github.lucklike.httpclient.injection.Bind;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 @SpringBootTest
 class IMockApiTest {
 
     @Resource
     private IMockApi api;
+
+    @Bind("lucky.http-client.ssl.key-stores")
+    private List<ConfigurationMap> list;
 
     @Test
     void m200() {

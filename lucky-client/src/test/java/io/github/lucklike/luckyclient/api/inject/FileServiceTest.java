@@ -1,13 +1,11 @@
 package io.github.lucklike.luckyclient.api.inject;
 
 import com.luckyframework.httpclient.generalapi.download.RangeDownloadApi;
-import io.github.lucklike.httpclient.annotation.HttpReference;
+import io.github.lucklike.httpclient.injection.HttpReference;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class FileServiceTest {
