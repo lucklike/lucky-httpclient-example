@@ -1,6 +1,7 @@
 package io.github.lucklike.luckyclient.api.mock;
 
 import com.luckyframework.common.ConfigurationMap;
+import com.luckyframework.spel.LazyValue;
 import io.github.lucklike.httpclient.injection.Bind;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +16,7 @@ class IMockApiTest {
     private IMockApi api;
 
     @Bind("lucky.http-client.ssl.key-stores")
-    private List<ConfigurationMap> list;
+    private LazyValue<List<ConfigurationMap>> list;
 
     @Test
     void m200() {

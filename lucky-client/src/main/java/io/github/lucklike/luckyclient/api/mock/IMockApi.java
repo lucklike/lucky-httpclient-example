@@ -2,7 +2,6 @@ package io.github.lucklike.luckyclient.api.mock;
 
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.httpclient.core.meta.Response;
-import com.luckyframework.httpclient.proxy.annotations.AutoRedirect;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
@@ -13,23 +12,21 @@ import io.github.lucklike.httpclient.discovery.HttpClient;
 import io.github.lucklike.httpclient.injection.Bind;
 
 import java.util.List;
-import java.util.Map;
 
-@AutoRedirect
 @HttpClient("http://localhost:8080/mock/")
 public interface IMockApi {
 
     @Mock(
-        status = "200",
-        header = "Content-Type: text/html",
-        body = "><h1>Hello World</h1>"
+            status = "200",
+            header = "Content-Type: text/html",
+            body = "><h1>Hello World</h1>"
     )
     @Get("/200")
     String m200(String keyword);
 
     @Mock(
-        status = "404",
-        body = "['#{$req$.getURI().getPath()}'] Not Fount!"
+            status = "404",
+            body = "['#{$req$.getURI().getPath()}'] Not Fount!"
     )
     @Post("/404")
     String m404(String api);
