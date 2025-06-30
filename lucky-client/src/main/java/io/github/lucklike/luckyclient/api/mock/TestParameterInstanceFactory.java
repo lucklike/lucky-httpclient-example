@@ -1,20 +1,15 @@
 package io.github.lucklike.luckyclient.api.mock;
 
 import com.luckyframework.httpclient.proxy.spel.ParameterInfo;
-import com.luckyframework.reflect.AnnotationUtils;
-import io.github.lucklike.httpclient.injection.parameter.ParameterInstanceFactory;
-import org.springframework.lang.NonNull;
+import io.github.lucklike.httpclient.injection.parameter.AnnotationParameterInstanceFactory;
+import org.springframework.core.ResolvableType;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 //@Component
-public class TestParameterInstanceFactory implements ParameterInstanceFactory {
+public class TestParameterInstanceFactory extends AnnotationParameterInstanceFactory<Nullable> {
     @Override
-    public boolean canCreateInstance(ParameterInfo parameterInfo) {
-        return AnnotationUtils.isAnnotated(parameterInfo.getParameter(), NonNull.class);
-    }
-
-    @Override
-    public Object createInstance(ParameterInfo parameterInfo) {
+    protected Object doCreateInstance(ParameterInfo parameterInfo, ResolvableType realType, Nullable annotation) {
         return null;
     }
 }
