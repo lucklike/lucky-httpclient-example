@@ -45,7 +45,7 @@ public class Configuration {
 
     private void check(String name, String value) {
         if (!StringUtils.hasText(value)) {
-            throw new BizException("缺少必要的配置：cpe.comp.voice-asr.kdxf.{}", name).printException(log);
+            throw new BizException("缺少必要的配置：cpe.comp.voice-asr.kdxf.{}", name).error(log);
         }
     }
 }

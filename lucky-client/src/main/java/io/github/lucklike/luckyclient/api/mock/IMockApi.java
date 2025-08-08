@@ -2,20 +2,25 @@ package io.github.lucklike.luckyclient.api.mock;
 
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.httpclient.core.meta.Response;
+import com.luckyframework.httpclient.generalapi.AutoVerifyHttpStatus;
+import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.Post;
+import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
+import com.luckyframework.reflect.Param;
 import io.github.lucklike.httpclient.config.HttpClientProxyObjectFactoryConfiguration;
 import io.github.lucklike.httpclient.discovery.HttpClient;
 import io.github.lucklike.httpclient.injection.Bind;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.lang.Nullable;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
+@AutoVerifyHttpStatus
 @HttpClient("http://localhost:8080/mock/")
 public interface IMockApi {
 
@@ -42,10 +47,11 @@ public interface IMockApi {
                               @Bind("lucky.http-client") HttpClientProxyObjectFactoryConfiguration config,
                               @Bind("spring.application.name") Optional<String> appName,
                               @Bind("lucky.http-client.ssl.key-stores") List<ConfigurationMap> list,
-                              ObjectProvider<XiBuMockApi> xiBuMockApi) {
+                              ObjectProvider<XiBuMockApi> xiBuMockApi,
+                              @Param("#{new java.io.File('D:/test').getAbsolutePath()}") String str) {
         return MockResponse
                 .create()
-                .status(307)
+                .status(502)
                 .header("Location", "http://www.baidu.com")
                 .txt("Temporary Redirect");
     }

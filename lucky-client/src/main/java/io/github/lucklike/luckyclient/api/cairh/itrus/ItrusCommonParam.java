@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-//@ConfigurationProperties(prefix = "cairh.itrus")
+@ConfigurationProperties(prefix = "cairh.itrus")
 public class ItrusCommonParam {
 
     /**

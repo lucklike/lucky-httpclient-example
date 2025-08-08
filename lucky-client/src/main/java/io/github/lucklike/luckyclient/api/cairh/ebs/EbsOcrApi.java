@@ -13,7 +13,7 @@ import static com.luckyframework.httpclient.proxy.spel.hook.Lifecycle.CLASS;
 public interface EbsOcrApi {
 
     @Var(lifecycle = CLASS)
-    String $ = "#{#env('cairh.ebs.ocr')}";
+    String $ = "#{env('cairh.ebs.ocr')}";
 
     @Post("/ebscn/ai.portal/v/image/ocr/recognize_id_card")
     String idCardParse(@MultiFile String cardPath);

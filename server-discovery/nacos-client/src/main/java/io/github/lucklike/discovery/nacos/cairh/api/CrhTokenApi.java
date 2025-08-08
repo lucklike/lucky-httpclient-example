@@ -4,11 +4,13 @@ import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
+import io.github.lucklike.httpclient.discovery.HttpClient;
 
 import java.io.File;
 import java.util.Date;
 
 //@NacosClient(value = "base-backend", contextPath = "basedata")
+@HttpClient(service = "cpe-base-gateway-server", path = "basedata")
 public abstract class CrhTokenApi extends JsonFileTokenManager<Token> {
 
     @Post("/authless/token")

@@ -1,5 +1,6 @@
 package io.github.lucklike.luckyclient.api.cairh.htsec;
 
+import io.github.lucklike.luckyclient.api.cairh.htsec.resp.V2IdCardResult;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -15,7 +16,13 @@ class HtqhOcrApiTest {
 
     @Test
     void idCard() {
-        Map<String, Object> map = api.idCard("file:D:/id/card/20240712093345.jpg");
+        V2IdCardResult cardResult = api.idCard("file:D:/id/card/20240712093345.jpg");
+        System.out.println(cardResult);
+    }
+
+    @Test
+    void idInfo() {
+        String map = api.idInfo("file:D:/id/card/20240712093345.jpg");
         System.out.println(map);
     }
 

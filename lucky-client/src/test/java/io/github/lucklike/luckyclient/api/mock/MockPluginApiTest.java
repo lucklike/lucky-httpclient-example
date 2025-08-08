@@ -14,7 +14,7 @@ class MockPluginApiTest {
     private MockPluginApi mockPluginApi;
 
     @Test
-    void test1() {
+    void test1() throws Exception {
         System.out.println(mockPluginApi);
         String s = mockPluginApi.test1();
 

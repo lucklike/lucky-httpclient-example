@@ -6,8 +6,8 @@ import io.github.lucklike.luckyclient.api.mock.MockPluginApi;
 
 public class MockPluginApiImpl implements MockPluginApi {
     @Override
-    public String test1() {
-        throw new BizException("模拟异常");
+    public String test1() throws Exception {
+        throw new Exception("模拟异常");
     }
 
     @Override

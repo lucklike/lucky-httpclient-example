@@ -36,7 +36,7 @@ import java.util.Objects;
 @Inherited
 @SSL
 @HttpClient("${cairh.openapi.url}")
-@RespConvert(resultFunc = "crh_convert")
+@RespConvert(resultFunc = "crh.convert")
 @SpELImport({CairhCommonFunction.class})
 public @interface CRHApi {
 

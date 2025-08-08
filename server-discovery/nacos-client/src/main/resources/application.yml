@@ -19,5 +19,5 @@ lucky:
   http-client:
     logger:
       packages:
-        - io.github.lucklike.discovery.nacos.server.api
+        - io.github.lucklike.discovery.nacos.cairh.api
         - io.github.lucklike.common.api

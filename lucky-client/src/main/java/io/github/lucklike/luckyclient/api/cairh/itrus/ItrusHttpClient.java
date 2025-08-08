@@ -26,7 +26,7 @@ import static com.luckyframework.httpclient.proxy.CommonFunctions.macSha1Base64;
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-@RespConvert(resultFunc = "itrus_auto_convert")
+@RespConvert(resultFunc = "itrus.auto_convert")
 @SpELImport(ItrusHttpClient.ItrusFunctions.class)
 @HttpClient("#{@itrusCommonParam.url}")
 public @interface ItrusHttpClient {

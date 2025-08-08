@@ -9,13 +9,13 @@ import io.github.lucklike.httpclient.discovery.HttpClient;
 
 @SpELImport(KdxfFunctions.class)
 @HttpClient("#{@kdxfConfig.httpUrl}")
-@Condition(assertion = "#{$status$ != 200}", exception = "#{#kdxf_statusError($status$, $stringBody$)}")
-@Condition(assertion = "#{!$body$.code eq '0'}", exception = "#{#kdxf_codeError($body$.code, $body$.msg)}")
+@Condition(assertion = "#{$status$ != 200}", exception = "#{#kdxf.statusError($status$, $stringBody$)}")
+@Condition(assertion = "#{!$body$.code eq '0'}", exception = "#{#kdxf.codeError($body$.code, $body$.msg)}")
 public interface HttpApi {
 
     @JsonParam
     @Post("/initAccess")
-    @RespConvert("#{#kdxf_token($body$)}")
+    @RespConvert("#{#kdxf.token($body$)}")
     KdxfTokenManager.Token token(String appid, String appkey, String appsecret);
 
 }

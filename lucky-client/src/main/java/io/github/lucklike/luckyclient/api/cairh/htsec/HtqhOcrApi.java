@@ -4,21 +4,27 @@ import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.Table;
 import com.luckyframework.httpclient.generalapi.AutoVerifyHttpStatus;
 import com.luckyframework.httpclient.proxy.annotations.Post;
+import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.StaticForm;
+import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.Wrapper;
 import io.github.lucklike.httpclient.discovery.HttpClient;
+import io.github.lucklike.luckyclient.api.cairh.htsec.resp.V2IdCardResult;
 
 import java.util.Map;
 
-@AutoVerifyHttpStatus
 //@HttpClient("http://ydbsorc.httest.cairenhui.com:9092")
 @HttpClient("http://58.246.171.12:9999/api-debug/ocr_api/")
-@StaticForm("consumerCode=C5")
+@StaticHeader("consumerCode:C5")
 public interface HtqhOcrApi {
 
-    @Post("/ocr/v1/id_card")
+    @Post("/ocr/v2/id_card")
+    @RespConvert("#{$body$.result[0]}")
     @StaticForm({"image_base64=#{#base64(#resource(idCard))}"})
-    Map<String, Object> idCard(String idCard);
+    V2IdCardResult idCard(String idCard);
+
+    @Wrapper("#{#id_card_info(new com.luckyframework.common.ConfigurationMap($this$.idCard(p0).recognize_result))}")
+    String idInfo(String idCard);
 
     @Post("/ocr/v1/bank_card")
     @StaticForm({"image_base64=#{#base64(#resource(bankCard))}"})
