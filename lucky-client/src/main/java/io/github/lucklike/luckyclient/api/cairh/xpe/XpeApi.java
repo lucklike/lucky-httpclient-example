@@ -30,7 +30,7 @@ public interface XpeApi {
 
     @RespConvert(XPE_FILE_CONVERTER)
     @Post(MODEL_PATH)
-    @StaticForm({"agreement_download_type=0", "${server.port}=#{str('{}_{}', agreement_no, agreement_version)}"})
+    @StaticForm({"agreement_download_type=0", "${server.port}=#{str('{}_{}', $0, $1)}"})
     XpeFile getXpeModelFile(@FormParam String agreement_no, @FormParam String agreement_version);
 
     @RespConvert(XPE_FILE_CONVERTER)

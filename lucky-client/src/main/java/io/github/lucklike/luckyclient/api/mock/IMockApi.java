@@ -1,8 +1,10 @@
 package io.github.lucklike.luckyclient.api.mock;
 
 import com.luckyframework.common.ConfigurationMap;
+import com.luckyframework.common.StringUtils;
 import com.luckyframework.httpclient.core.meta.Response;
 import com.luckyframework.httpclient.generalapi.AutoVerifyHttpStatus;
+import com.luckyframework.httpclient.proxy.annotations.AutoRedirect;
 import com.luckyframework.httpclient.proxy.annotations.Condition;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.Post;
@@ -10,6 +12,7 @@ import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
+import com.luckyframework.httpclient.proxy.spel.Namespace;
 import com.luckyframework.reflect.Param;
 import io.github.lucklike.httpclient.config.HttpClientProxyObjectFactoryConfiguration;
 import io.github.lucklike.httpclient.discovery.HttpClient;
@@ -40,8 +43,12 @@ public interface IMockApi {
     String m404(String api);
 
     @Mock
-    @Get
+    @Get("#{str('M-{}', _307path())}")
     String m307();
+
+    static String _307path() {
+        return "307-mock";
+    }
 
     static Response m307$Mock(MethodContext context,
                               @Bind("lucky.http-client") HttpClientProxyObjectFactoryConfiguration config,
@@ -51,7 +58,7 @@ public interface IMockApi {
                               @Param("#{new java.io.File('D:/test').getAbsolutePath()}") String str) {
         return MockResponse
                 .create()
-                .status(502)
+                .status(307)
                 .header("Location", "http://www.baidu.com")
                 .txt("Temporary Redirect");
     }
