@@ -3,6 +3,7 @@ package io.github.lucklike.luckyclient.api.cairh.htsec;
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.Table;
 import com.luckyframework.httpclient.generalapi.AutoVerifyHttpStatus;
+import com.luckyframework.httpclient.proxy.annotations.HttpExec;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.StaticForm;

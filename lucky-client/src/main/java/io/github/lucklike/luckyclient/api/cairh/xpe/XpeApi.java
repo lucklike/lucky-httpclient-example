@@ -12,7 +12,7 @@ import io.github.lucklike.httpclient.discovery.HttpClient;
 import java.io.File;
 
 @SSL(enable = "#{$url$.startsWith('https')}")
-@HttpClient("${cairh.xpe.url}")
+@HttpClient("${cairh.xpe.url:http://localhost:8080}")
 public interface XpeApi {
 
     String MODEL_PATH = "/agreements/CRH-EA1022.json";

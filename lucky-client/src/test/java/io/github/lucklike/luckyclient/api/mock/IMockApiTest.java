@@ -1,9 +1,11 @@
 package io.github.lucklike.luckyclient.api.mock;
 
 import com.luckyframework.common.ConfigurationMap;
-import com.luckyframework.httpclient.generalapi.HttpStatus;
+import com.luckyframework.spel.LazyValue;
+import io.github.lucklike.httpclient.ApplicationContextUtils;
 import io.github.lucklike.httpclient.injection.Bind;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
@@ -24,17 +26,11 @@ class IMockApiTest {
 
     @Test
     void m404() {
-        HttpStatus status = HttpStatus.getStatus(4444);
-        System.out.println(status);
     }
 
     @Test
     void m307() {
-        try {
-            String s = api.m307();
-            System.out.println(s);
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+        String s = api.m307();
+        System.out.println(s);
     }
 }

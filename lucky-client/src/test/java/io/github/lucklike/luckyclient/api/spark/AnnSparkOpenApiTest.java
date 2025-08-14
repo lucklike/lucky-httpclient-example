@@ -26,13 +26,14 @@ public class AnnSparkOpenApiTest {
 
     @Test
     void completionsTest() {
-        Scanner src = new Scanner(System.in);
-        while (true) {
-            Console.printlnGreen("ME:");
-            String input = src.nextLine();
-            Console.printlnMulberry("\nAI:");
-            annSparkOpenApi.completions(input);
-        }
+        annSparkOpenApi.completions("你是谁？");
+//        Scanner src = new Scanner(System.in);
+//        while (true) {
+//            Console.printlnGreen("ME:");
+//            String input = src.nextLine();
+//            Console.printlnMulberry("\nAI:");
+//            annSparkOpenApi.completions(input);
+//        }
     }
 
     @Test

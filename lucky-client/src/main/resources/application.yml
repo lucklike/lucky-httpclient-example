@@ -91,7 +91,6 @@ lucky:
         - clazz: io.github.lucklike.luckyclient.util.SM4Function
       type-alias:
         Str: java.lang.String
-        Int: java.lang.Integer
       type-black-list:
         - java.lang.Runtime
         - java.lang.System

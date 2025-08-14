@@ -1,8 +1,8 @@
 package io.github.lucklike.luckyclient.api.plugin;
 
 import com.luckyframework.common.Console;
+import com.luckyframework.common.FontUtil;
 import com.luckyframework.common.UnitUtils;
-import com.luckyframework.httpclient.proxy.logging.FontUtil;
 import com.luckyframework.httpclient.proxy.plugin.Around;
 import com.luckyframework.httpclient.proxy.plugin.ExecuteMeta;
 import com.luckyframework.httpclient.proxy.plugin.ProxyDecorator;

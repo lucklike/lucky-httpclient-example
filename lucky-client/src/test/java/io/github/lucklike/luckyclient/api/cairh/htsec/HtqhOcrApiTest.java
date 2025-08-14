@@ -16,13 +16,7 @@ class HtqhOcrApiTest {
 
     @Test
     void idCard() {
-        V2IdCardResult cardResult = api.idCard("file:D:/id/card/20240712093345.jpg");
-        System.out.println(cardResult);
-    }
-
-    @Test
-    void idInfo() {
-        String map = api.idInfo("file:D:/id/card/20240712093345.jpg");
+        V2IdCardResult map = api.idCard("file:/Users/fukang/Pictures/1234.jpg");
         System.out.println(map);
     }
 

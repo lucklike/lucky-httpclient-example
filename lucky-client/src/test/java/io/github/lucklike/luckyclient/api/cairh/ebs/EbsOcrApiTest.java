@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.luckyframework.httpclient.proxy.CommonFunctions.typeOf;
-import static io.github.lucklike.httpclient.BeanFunction.env;
+import static io.github.lucklike.httpclient.function.BeanFunction.env;
 
 @SpringBootTest
 class EbsOcrApiTest {
