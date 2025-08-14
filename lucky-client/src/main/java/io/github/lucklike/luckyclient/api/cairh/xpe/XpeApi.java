@@ -1,5 +1,6 @@
 package io.github.lucklike.luckyclient.api.cairh.xpe;
 
+import com.luckyframework.common.StringUtils;
 import com.luckyframework.httpclient.proxy.annotations.DownloadToLocal;
 import com.luckyframework.httpclient.proxy.annotations.FormParam;
 import com.luckyframework.httpclient.proxy.annotations.Post;
@@ -30,8 +31,12 @@ public interface XpeApi {
 
     @RespConvert(XPE_FILE_CONVERTER)
     @Post(MODEL_PATH)
-    @StaticForm({"agreement_download_type=0", "${server.port}=#{str('{}_{}', $0, $1)}"})
-    XpeFile getXpeModelFile(@FormParam String agreement_no, @FormParam String agreement_version);
+    @StaticForm({"agreement_download_type=0", "#{uuid()}=#{str('{}_{}_{}', agreement_no, agreement_version, uuid)}"})
+    XpeFile getXpeModelFile(@FormParam String agreement_no, @FormParam String agreement_version, String uuid);
+
+    static String str(String temp, Object... args) {
+        return "#string@" + StringUtils.format(temp, args);
+    }
 
     @RespConvert(XPE_FILE_CONVERTER)
     @Post(ARCH_PATH)

@@ -1,5 +1,6 @@
 package io.github.lucklike.luckyclient.api.cairh.xpe;
 
+import com.luckyframework.common.NanoIdUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -29,7 +30,7 @@ class XpeApiTest {
 
     @Test
     void getXpeModelFileTest() {
-        XpeFile xpeModelFile = api.getXpeModelFile("2323", "1.0");
+        XpeFile xpeModelFile = api.getXpeModelFile("2323", "1.0", NanoIdUtils.randomNanoId());
         System.out.println(xpeModelFile.getFileName());
     }
 
