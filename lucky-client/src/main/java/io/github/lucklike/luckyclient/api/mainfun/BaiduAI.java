@@ -29,7 +29,7 @@ import static io.github.lucklike.luckyclient.api.mainfun.BaiduAIMain.CONFIG_MAP;
  * @version 1.0.0
  * @date 2024/9/4 20:48
  */
-@Retryable(retryCount = 5, waitMillis = 1000L)
+@Retryable(retryCount = "5", waitMillis = "1000")
 @DomainName("https://aip.baidubce.com")
 @StaticHeader("Content-Type: application/json")
 @StaticQuery("@if(#{$method$.getName() != 'token'}): access_token=#{$this$.getAccessToken()}")

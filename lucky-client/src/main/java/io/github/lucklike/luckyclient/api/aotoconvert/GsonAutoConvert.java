@@ -19,8 +19,7 @@ public class GsonAutoConvert implements Response.AutoConvert{
 
     @Override
     public boolean can(Response resp, Type type) {
-        String mimeType = resp.getContentType().getMimeType();
-        return ContentType.APPLICATION_JSON.getMimeType().equalsIgnoreCase(mimeType);
+        return ContentType.APPLICATION_JSON.isCompatibleWith(resp.getContentType());
     }
 
     @Override

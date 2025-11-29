@@ -14,9 +14,12 @@ lucky:
       url: http://localhost:8864
 
   http-client:
-    http-connection-pool:
-      max-idle-connections: 15
-      keep-alive-duration: 7
+    #重试相关配置
+    retry:
+      count: 5
+      enable: false
+      strict-model: true
+    #重定向相关配置
     redirect:
       # 开启重定向功能
       enable: false
@@ -28,18 +31,8 @@ lucky:
       location: "#{$repHeader$.Location}"
       # 决定是否进行重定向的SpEL表达式，注：该配置的优先级要大于status
       condition: "#{You Condition}"
-    # 连接超时时间
-    connection-timeout: 200000
-    # 读取超时时间
-    read-timeout: 200000
-    # 写入超时时间
-    write-timeout: 200000
-    async-thread-pool:
-#      core-pool-size: 2
-#      blocking-queue-size: 100
-#      maximum-pool-size: 20
-#      keep-alive-time: 1000
-#      name-format: http-
+    thread-pool:
+      async-model: java_thread
       alternative:
         pool1:
           core-pool-size: 15
@@ -51,26 +44,33 @@ lucky:
           core-pool-size: 6
           blocking-queue-size: 12
           maximum-pool-size: 12
-          name-format:  pool2-
+          name-format: pool2-
           keep-alive-time: 1000
+    #HTTP执行器相关的配置
+    http-executor:
+      global:
+        executor: http_client5
+      alternative:
+        http1:
+          executor: http_client5
+          http-client:
+            max-total: 5
+            max-per-route: 4
 
 
-    #使用JDK执行器
-    http-executor: jdk
-    # 异步模型配置，支持【Kotlin协程模型】和【Java线程模型（默认）】
-    async-model: java_thread
-    # 默认执行器的最大并发数
-    default-executor-concurrency: 10
+
     #日志相关的配置
     logger:
+      type: beautiful
       packages:
         - io.github.lucklike.luckyclient.api
         - com.luckyframework.httpclient.generalapi
-      body-max-length: -1
-
+      warn-time: 400
+      slow-time: 1500
+    #Cookie管理器相关配置
     cookie-manage:
-      enable: false
-
+      enable: true
+    #SSL相关配置
     ssl:
       key-stores:
         - id: test
@@ -86,6 +86,7 @@ lucky:
           key-store-type: JKS
           key-store-password: TrustStore@2024
           key-store-file: classpath:ssl/truststore.jks
+    #SpEL表达式相关配置
     spring-el:
       classes:
         - clazz: io.github.lucklike.luckyclient.util.SM4Function
@@ -94,6 +95,7 @@ lucky:
       type-black-list:
         - java.lang.Runtime
         - java.lang.System
+
 
 
 
@@ -159,3 +161,36 @@ mock:
 logging:
   level:
     root: info
+
+init:
+  bind:
+    InitBindApi:
+      config:
+        app-id: 1234
+        app-key: MY-APP-KEY
+        app-secret: MY-APP-SECRET
+        fun-code: 32
+      query:
+        app-key: MY-APP-KEY-QUERY-202511072318
+        app-secret: MY-APP-SECRET-QUERY-202511072318
+
+env-json:
+  object:
+    id: 1
+    name: Jack
+    age: 28
+    email: jack@gmail.com
+    phone: 17363312985
+  array:
+    - id: 2
+      name: lucy
+      age: 18
+      email: lucy@gmail.com
+      phone: 1212123
+    - id: 2
+      name: Tom
+      age: 24
+      email: tom@gmail.com
+      phone: 434545
+
+

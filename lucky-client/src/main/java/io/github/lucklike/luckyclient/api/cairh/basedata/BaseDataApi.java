@@ -7,7 +7,6 @@ import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.JsonParam;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
-import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.Wrapper;
 import io.github.lucklike.luckyclient.api.cairh.annotations.CRHApi;
 import io.github.lucklike.luckyclient.api.cairh.basedata.resp.OperInfoQry;

@@ -61,7 +61,26 @@
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpmime</artifactId>
-                <version>4.5.13</version>
+                <version>4.5.14</version>
+            </dependency>
+
+            <!-- HttpClient5网络资源访问 -->
+            <dependency>
+                <groupId>org.apache.httpcomponents.client5</groupId>
+                <artifactId>httpclient5</artifactId>
+                <version>5.5.1</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>httpcore5-h2</artifactId>
+                <groupId>org.apache.httpcomponents.core5</groupId>
+                <version>5.3.6</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>httpcore5</artifactId>
+                <groupId>org.apache.httpcomponents.core5</groupId>
+                <version>5.3.6</version>
             </dependency>
 
             <!-- OkHttp网络资源访问 -->
@@ -69,6 +88,12 @@
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
                 <version>4.10.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+                <version>3.4.31</version>
             </dependency>
 
             <dependency>

@@ -2,7 +2,7 @@ package io.github.lucklike.luckyclient.api.cairh.xpe;
 
 import com.luckyframework.common.StringUtils;
 import com.luckyframework.httpclient.proxy.annotations.DownloadToLocal;
-import com.luckyframework.httpclient.proxy.annotations.FormParam;
+import com.luckyframework.httpclient.proxy.annotations.Form;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.SSL;
@@ -22,17 +22,17 @@ public interface XpeApi {
     @DownloadToLocal
     @Post(MODEL_PATH)
     @StaticForm("agreement_download_type=0")
-    File downloadModelFile(@FormParam String agreement_no, @FormParam String agreement_version);
+    File downloadModelFile(@Form String agreement_no, @Form String agreement_version);
 
     @DownloadToLocal
     @Post(ARCH_PATH)
-    @FormParam
+    @Form
     File downloadArchFile(String archfileinfo_id, String file_md5);
 
     @RespConvert(XPE_FILE_CONVERTER)
     @Post(MODEL_PATH)
     @StaticForm({"agreement_download_type=0", "#{uuid()}=#{str('{}_{}_{}', agreement_no, agreement_version, uuid)}"})
-    XpeFile getXpeModelFile(@FormParam String agreement_no, @FormParam String agreement_version, String uuid);
+    XpeFile getXpeModelFile(@Form String agreement_no, @Form String agreement_version, String uuid);
 
     static String str(String temp, Object... args) {
         return "#string@" + StringUtils.format(temp, args);
@@ -40,7 +40,7 @@ public interface XpeApi {
 
     @RespConvert(XPE_FILE_CONVERTER)
     @Post(ARCH_PATH)
-    @FormParam
+    @Form
     XpeFile getXpeArchFile(String archfileinfo_id, String file_md5);
 
 }

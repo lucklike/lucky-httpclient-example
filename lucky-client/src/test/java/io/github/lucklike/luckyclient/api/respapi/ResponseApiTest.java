@@ -43,7 +43,7 @@ class ResponseApiTest {
 
         /*-----------------------获取Content-Type信息------------------------------*/
         ContentType contentType = response.getContentType();
-        String mimeType = contentType.getMimeType();
+        String mimeType = contentType.getMimeType().toString();
         Charset charset = contentType.getCharset();
 
         /*-----------------------获取响应头信息------------------------------*/

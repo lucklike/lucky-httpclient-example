@@ -3,7 +3,7 @@ package io.github.lucklike.luckyclient.api.cairh.comp;
 import com.luckyframework.httpclient.core.meta.Response;
 import com.luckyframework.httpclient.proxy.annotations.MultiFile;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import com.luckyframework.httpclient.proxy.annotations.QueryParam;
+import com.luckyframework.httpclient.proxy.annotations.Query;
 import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
 import com.luckyframework.reflect.Param;
@@ -15,7 +15,7 @@ public interface FundSumaryPublishApi {
 
     @Mock
     @Post("fundSumaryPublish")
-    FundSumaryPublishResult publish(@QueryParam String agreement_type, @MultiFile String files);
+    FundSumaryPublishResult publish(@Query String agreement_type, @MultiFile String files);
 
 
     static Response publish$Mock(@Param("#{agreement_type}") String agreement_type) {

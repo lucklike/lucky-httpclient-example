@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>用户信息</comment>
+    <entry key="[0].id">1</entry>
+    <entry key="[0].name">lucy</entry>
+    <entry key="[0].age">18</entry>
+    <entry key="[0].email">lucy@gmail.com</entry>
+    <entry key="[0].phone">1212123</entry>
+
+    <entry key="[1].id">2</entry>
+    <entry key="[1].name">tom猫-2</entry>
+    <entry key="[1].age">26</entry>
+    <entry key="[1].email">tom@gmail.com</entry>
+    <entry key="[1].phone">555555</entry>
+
+    <entry key="[2].id">3</entry>
+    <entry key="[2].name">karl</entry>
+    <entry key="[2].age">31</entry>
+    <entry key="[2].email">karl@gmail.com</entry>
+    <entry key="[2].phone">00088997</entry>
+</properties>

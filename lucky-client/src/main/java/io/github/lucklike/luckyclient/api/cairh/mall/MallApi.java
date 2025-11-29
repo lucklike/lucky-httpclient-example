@@ -2,7 +2,7 @@ package io.github.lucklike.luckyclient.api.cairh.mall;
 
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.httpclient.proxy.annotations.Get;
-import com.luckyframework.httpclient.proxy.annotations.QueryParam;
+import com.luckyframework.httpclient.proxy.annotations.Query;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.Retryable;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
@@ -18,10 +18,10 @@ import java.util.Set;
 public interface MallApi {
 
     @Get("#{_v001_}")
-    List<ConfigurationMap> getAllSeries(@QueryParam("page_size") Integer pageSize);
+    List<ConfigurationMap> getAllSeries(@Query("page_size") Integer pageSize);
 
     @Get("#{_v002_}")
-    List<ConfigurationMap> getProdList(@QueryParam("record_no") String record_no);
+    List<ConfigurationMap> getProdList(@Query("record_no") String record_no);
 
     @RespConvert("#{$body$.resultList.!['【' + serial_no + '】' + record_name]}")
     @Get("#{_v001_}?page_size=69")

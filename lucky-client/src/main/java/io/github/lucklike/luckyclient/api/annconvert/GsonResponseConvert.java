@@ -18,11 +18,11 @@ public class GsonResponseConvert implements ResponseConvert {
         // 获取GsonDecoder注解实例
         GsonDecoder gsonDecoderAnn = context.toAnnotation(GsonDecoder.class);
 
-        Type methodReturnType = context.getRealMethodReturnType();
+        Type methodReturnType = context.getContext().getResultType();
         String select = gsonDecoderAnn.select();
         if (StringUtils.hasText(select)) {
             // 获取转换元类型
-            Class<?> convertMetaType = context.getConvertMetaType();
+            Type convertMetaType = context.getConvertMetaType();
             // 向上下文变量中添加一个Root变量$gdata$
             context.getContextVar().addRootVariable("$gdata$", LazyValue.of(() -> gson.fromJson(response.getStringResult(), convertMetaType)));
             // 运行结果选择表达式，返回结果

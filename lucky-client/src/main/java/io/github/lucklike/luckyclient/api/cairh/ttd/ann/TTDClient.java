@@ -18,8 +18,6 @@ import io.github.lucklike.httpclient.discovery.HttpClient;
 import io.github.lucklike.luckyclient.api.cairh.BizException;
 import io.github.lucklike.luckyclient.api.cairh.ttd.TTDApi;
 import io.github.lucklike.luckyclient.api.cairh.ttd.TTDConfig;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -32,8 +30,12 @@ import java.lang.annotation.Target;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
+import static com.luckyframework.httpclient.proxy.CommonFunctions._base64;
 import static com.luckyframework.httpclient.proxy.CommonFunctions._json;
+import static com.luckyframework.httpclient.proxy.CommonFunctions.base64;
 import static com.luckyframework.httpclient.proxy.CommonFunctions.json;
+import static com.luckyframework.httpclient.proxy.CommonFunctions.md5Hex;
+import static com.luckyframework.httpclient.proxy.CommonFunctions.sha256Hex;
 import static com.luckyframework.httpclient.proxy.CommonFunctions.time;
 import static io.github.lucklike.luckyclient.api.cairh.ttd.ann.TTDClient.EncodeUtils.aesEncipherString;
 import static io.github.lucklike.luckyclient.api.cairh.ttd.ann.TTDClient.EncodeUtils.decryptString;
@@ -45,7 +47,7 @@ import static io.github.lucklike.luckyclient.api.cairh.ttd.ann.TTDClient.EncodeU
 @Inherited
 @SpELImport(TTDClient.TTDCallback.class)
 @HttpClient("#{@TTDConfig.url}")
-@Timeout(connectionTimeoutExp = "#{@TTDConfig.connectionTimeout}", readTimeoutExp = "#{@TTDConfig.readTimeout}")
+@Timeout(connectTimeoutExp = "#{@TTDConfig.connectionTimeout}", readTimeoutExp = "#{@TTDConfig.readTimeout}")
 public @interface TTDClient {
 
     /**
@@ -74,7 +76,7 @@ public @interface TTDClient {
             String appId = ttdConfig.getAppId();
 
             String token = null;
-            if (DescribeFunction.needToken(mc)) {
+            if (!mc.getApiDescribe().isTokenApi()) {
                 token = api.getAccessToken();
                 req.addHeader("accesstoken", token);
                 req.addHeader("appid", aesEncipherString(getKey(token), getIv(token), appId));
@@ -93,7 +95,7 @@ public @interface TTDClient {
                 }
                 String json = json(cm);
                 req.addFormParameter("body", aesEncipherString(getKey(token), getIv(appId), json));
-                req.addHeader("cm", DigestUtils.md5Hex(json));
+                req.addHeader("cm", md5Hex(json));
             } else {
                 req.addFormParameter("appid", aesEncipherString(getKey(key), getIv(iv), appId));
             }
@@ -143,7 +145,7 @@ public @interface TTDClient {
             String appId = ttdConfig.getAppId();
 
             ConfigurationMap decryptRespMap;
-            if (DescribeFunction.needToken(mc)) {
+            if (!mc.getApiDescribe().isTokenApi()) {
                 String token = mc.getRootVar("$ttd_token", String.class);
                 decryptRespMap = _json(decryptString(getKey(token), getIv(appId), resp.getStringResult()), ConfigurationMap.class);
             } else {
@@ -172,23 +174,23 @@ public @interface TTDClient {
      */
     class EncodeUtils {
 
-        public static String getIv(String key) {
-            return DigestUtils.sha256Hex(getKey(key) + key).substring(0, 16);
+        public static String getIv(String key) throws Exception {
+            return sha256Hex(getKey(key) + key).substring(0, 16);
         }
 
-        public static String getKey(String iv) {
-            return DigestUtils.sha256Hex(iv).substring(0, 16);
+        public static String getKey(String iv) throws Exception {
+            return sha256Hex(iv).substring(0, 16);
         }
 
         public static String aesEncipherString(String key, String iv, String body) throws Exception {
-            String enc = Base64.encodeBase64String(aesEncipherByte(key, iv, body));
-            enc = Base64.encodeBase64String(enc.getBytes());
+            String enc = base64(aesEncipherByte(key, iv, body));
+            enc = base64(enc.getBytes());
             return enc.replaceAll("[\\s*\t\n\r]", "");
         }
 
         public static String decryptString(String key, String iv, String body) throws Exception {
             SecretKeySpec secreKey = getSecretKey(key.getBytes());
-            return new String(decrypt(Base64.decodeBase64(Base64.decodeBase64(body.getBytes())), secreKey, iv), StandardCharsets.UTF_8);
+            return new String(decrypt(_base64(_base64(body.getBytes())), secreKey, iv), StandardCharsets.UTF_8);
         }
 
         private static byte[] decrypt(byte[] data, Key key, String iv) throws Exception {

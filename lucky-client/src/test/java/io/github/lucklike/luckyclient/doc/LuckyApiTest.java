@@ -199,9 +199,7 @@ class LuckyApiTest {
         Thread.sleep(5000L);
 
         HttpClientProxyObjectFactory httpFactory = new HttpClientProxyObjectFactory();
-        httpFactory.setConnectionTimeout(2000);
-        httpFactory.setReadTimeout(2000);
-        httpFactory.setWriteTimeout(2000);
+
     }
 
 

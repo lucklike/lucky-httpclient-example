@@ -66,7 +66,7 @@ public @interface ItrusHttpClient {
                 throw new BizException("【{}】接口调用异常，错误的接口响应码：status={}, message={}", desc.getName(), configMap.getInt("status"), configMap.getString("message"));
             }
 
-            return configMap.getEntry("data", context.getRealMethodReturnResolvableType());
+            return configMap.getEntry("data", context.getMethodConvertReturnResolvableType());
         }
     }
 }

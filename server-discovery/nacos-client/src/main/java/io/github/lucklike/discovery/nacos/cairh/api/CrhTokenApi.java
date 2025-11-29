@@ -14,8 +14,8 @@ import java.util.Date;
 public abstract class CrhTokenApi extends JsonFileTokenManager<Token> {
 
     @Post("/authless/token")
-    @Describe(name = "获取访问Token", needToken = false)
-    @StaticJsonBody("#{#read('classpath:crh.json')}")
+    @Describe(name = "获取访问Token", tokenApi = true)
+    @StaticJsonBody("#{read('classpath:crh.json')}")
     public abstract Token token();
 
 

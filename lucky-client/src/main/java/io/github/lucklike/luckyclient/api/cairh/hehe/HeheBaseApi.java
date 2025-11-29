@@ -11,7 +11,7 @@ import com.luckyframework.httpclient.proxy.annotations.Retryable;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
-import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
+import com.luckyframework.httpclient.proxy.spel.hook.callback.Val;
 import io.github.lucklike.luckyclient.api.cairh.BizException;
 
 import java.util.Arrays;
@@ -25,7 +25,7 @@ public interface HeheBaseApi {
 
     List<String> errCodeList = Arrays.asList("40001", "40002", "40003", "40004", "40005", "40006", "40007", "40008", "40009", "40010", "50001", "50004", "90099");
 
-    @Var(lifecycle = Lifecycle.CLASS)
+    @Val(lifecycle = Lifecycle.CLASS)
     Map<String, Object> $hehe = new HashMap<String, Object>() {{
         put("url", "${cpe.service.HeheHttp.url}");
         put("appId", "${cpe.service.HeheHttp.appId}");

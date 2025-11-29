@@ -2,10 +2,10 @@ package io.github.lucklike.luckyclient.api.loosebind;
 
 import com.luckyframework.httpclient.core.meta.Response;
 import com.luckyframework.httpclient.proxy.annotations.Get;
-import com.luckyframework.httpclient.proxy.annotations.HeaderParam;
+import com.luckyframework.httpclient.proxy.annotations.Header;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import com.luckyframework.httpclient.proxy.annotations.QueryParam;
+import com.luckyframework.httpclient.proxy.annotations.Query;
 import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
 
@@ -17,7 +17,7 @@ public interface CommonT2ServiceApi {
     String test(@JsonBody BaseParam baseParam);
 
     @Get("query")
-    String queryTest(@QueryParam BaseParam baseParam, @HeaderParam BaseParam baseParam2);
+    String queryTest(@Query BaseParam baseParam, @Header BaseParam baseParam2);
 
 
     static Response test$Mock() {

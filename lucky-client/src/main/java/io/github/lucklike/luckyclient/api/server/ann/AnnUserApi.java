@@ -9,11 +9,10 @@ import com.luckyframework.httpclient.proxy.annotations.MultiData;
 import com.luckyframework.httpclient.proxy.annotations.MultiFile;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
-import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonArray;
 import com.luckyframework.httpclient.proxy.annotations.Retryable;
 import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
-import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
+import com.luckyframework.httpclient.proxy.spel.hook.callback.Val;
 import com.luckyframework.httpclient.proxy.unpack.RepeatableReadStream;
 import com.luckyframework.httpclient.proxy.unpack.StreamType;
 import io.github.lucklike.entity.request.User;
@@ -34,7 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Describe(author = "付康", version = "1.0.0", contactWay = "17363312985")
 public interface AnnUserApi extends LuckyServerApi {
 
-    @Var(lifecycle = Lifecycle.METHOD)
+    @Val(lifecycle = Lifecycle.METHOD)
     AtomicInteger counter = new AtomicInteger();
 
     @Describe("注册用户")
@@ -54,11 +53,11 @@ public interface AnnUserApi extends LuckyServerApi {
     void postTest(@JsonParam String name, @JsonParam Integer age);
 
 
-    @PropertiesJsonArray({
-            "$[0].a.b=12",
-            "$[0].a.c=llll",
-            "$[1].a.b=2212",
-            "$[1].a.c=gggg"})
+    @PropertiesJson({
+            "[0].a.b=12",
+            "[0].a.c=llll",
+            "[1].a.b=2212",
+            "[1].a.c=gggg"})
     @Post("/user/post")
     void postTest2(Integer b, String c);
 

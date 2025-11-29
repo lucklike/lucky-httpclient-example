@@ -1,17 +1,11 @@
 package io.github.lucklike.luckyclient.api.cairh.htsec;
 
-import com.luckyframework.httpclient.proxy.CommonFunctions;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintRequestLog;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
-import com.luckyframework.httpclient.proxy.annotations.Wrapper;
 import io.github.lucklike.httpclient.discovery.HttpClient;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.util.StringUtils;
 
-import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;

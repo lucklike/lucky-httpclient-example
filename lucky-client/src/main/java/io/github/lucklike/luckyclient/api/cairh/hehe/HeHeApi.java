@@ -3,17 +3,14 @@ package io.github.lucklike.luckyclient.api.cairh.hehe;
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.proxy.annotations.BinaryBody;
-import com.luckyframework.httpclient.proxy.annotations.FormParam;
+import com.luckyframework.httpclient.proxy.annotations.Form;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import io.github.lucklike.httpclient.annotation.HttpClientComponent;
 import io.github.lucklike.luckyclient.api.cairh.hehe.req.FaceCompareReq;
 import io.github.lucklike.luckyclient.api.cairh.hehe.resp.BankCardResponse;
 import io.github.lucklike.luckyclient.api.cairh.hehe.resp.BusinessLicenseResponse;
 import io.github.lucklike.luckyclient.api.cairh.hehe.resp.GATResidenceResponse;
 import io.github.lucklike.luckyclient.api.cairh.hehe.resp.HeheIdCardResponse;
-
-import java.util.Map;
 
 @HttpClientComponent
 public interface HeHeApi extends HeheBaseApi {
@@ -40,6 +37,6 @@ public interface HeHeApi extends HeheBaseApi {
 
     @Describe(id = "ycv1", name = "OCR人像对比")
     @Post("/face/similarity/image")
-    ConfigurationMap ocrFaceCompare(@FormParam FaceCompareReq req);
+    ConfigurationMap ocrFaceCompare(@Form FaceCompareReq req);
 
 }

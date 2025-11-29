@@ -1,9 +1,8 @@
 package io.github.lucklike.luckyclient.api.mock;
 
+import com.luckyframework.httpclient.generalapi.plugin.MockPlugin;
+import com.luckyframework.httpclient.generalapi.plugin.MockPluginProhibition;
 import com.luckyframework.httpclient.proxy.annotations.Get;
-import com.luckyframework.httpclient.proxy.handle.ExceptionFallback;
-import com.luckyframework.httpclient.proxy.plugin.MockPlugin;
-import com.luckyframework.httpclient.proxy.plugin.MockPluginProhibition;
 import io.github.lucklike.httpclient.discovery.HttpClient;
 import io.github.lucklike.luckyclient.api.mock.impl.mock.MockPluginApiImpl;
 

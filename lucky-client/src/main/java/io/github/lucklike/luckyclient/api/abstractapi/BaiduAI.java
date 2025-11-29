@@ -2,7 +2,7 @@ package io.github.lucklike.luckyclient.api.abstractapi;
 
 import com.luckyframework.common.Console;
 import com.luckyframework.httpclient.core.meta.Request;
-import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
+import com.luckyframework.httpclient.generalapi.describe.ApiDescribe;
 import com.luckyframework.httpclient.generalapi.describe.TokenApi;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
 import com.luckyframework.httpclient.proxy.annotations.Post;
@@ -10,7 +10,6 @@ import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.Retryable;
 import com.luckyframework.httpclient.proxy.annotations.StaticQuery;
-import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
 import com.luckyframework.httpclient.proxy.sse.Sse;
@@ -50,8 +49,8 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> {
     //---------------------------------------------------------------------
 
     @Callback(lifecycle = Lifecycle.REQUEST)
-    static void paramAddCallback(MethodContext context, Request request, BaiduAI baiduAI) {
-        if (DescribeFunction.needToken(context)) {
+    static void paramAddCallback(ApiDescribe apiDesc, Request request, BaiduAI baiduAI) {
+        if (!apiDesc.isTokenApi()) {
             request.addQueryParameter("access_token", baiduAI.getAccessToken());
         }
     }

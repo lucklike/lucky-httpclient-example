@@ -1,20 +1,14 @@
 package io.github.lucklike.luckyclient.api.server.ann;
 
-import com.luckyframework.common.ContainerUtils;
-import com.luckyframework.httpclient.generalapi.chunk.FileChunk;
-import com.luckyframework.httpclient.generalapi.chunk.FileChunkHandle;
 import com.luckyframework.httpclient.generalapi.describe.Describe;
-import com.luckyframework.httpclient.proxy.CommonFunctions;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.MultiData;
 import com.luckyframework.httpclient.proxy.annotations.MultiFile;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import com.luckyframework.httpclient.proxy.annotations.QueryParam;
+import com.luckyframework.httpclient.proxy.annotations.Query;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import io.github.lucklike.entity.response.Result;
 import io.github.lucklike.httpclient.discovery.HttpClient;
-import lombok.SneakyThrows;
-import org.springframework.lang.NonNull;
 
 import java.io.File;
 import java.util.Map;
@@ -42,7 +36,7 @@ public interface FileChunkUploadApi {
     @Get("uploadChunks")
     @RespConvert("#{$body$.data}")
     @Describe("查询服务器中已上传的文件分片信息")
-    Map<Integer, String> uploadChunks(@QueryParam String fileId);
+    Map<Integer, String> uploadChunks(@Query String fileId);
 
     @Post("/chunk")
     @MultiData
@@ -51,6 +45,6 @@ public interface FileChunkUploadApi {
 
     @Post("/merge")
     @Describe("通知服务器进行文件合并")
-    Result<String> mergeChunks(@QueryParam String fileId, @QueryParam String fileName);
+    Result<String> mergeChunks(@Query String fileId, @Query String fileName);
 
 }

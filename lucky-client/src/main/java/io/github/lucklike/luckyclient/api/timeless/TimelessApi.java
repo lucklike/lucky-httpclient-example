@@ -12,7 +12,7 @@ import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
-import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
+import com.luckyframework.httpclient.proxy.spel.hook.callback.Val;
 import com.luckyframework.io.FileUtils;
 import io.github.lucklike.httpclient.discovery.HttpClient;
 import org.springframework.util.FileCopyUtils;
@@ -32,7 +32,7 @@ import java.util.Scanner;
 @Condition(assertion = "#{$body$.errno != 0}", exception = "[Timeless Api]<#{$api.name}>接口调用异常，错误的响应码：'#{$body$.errno}' : #{$body$.errmsg} 接口地址：[#{$reqMethod$}] #{$url$}")
 public interface TimelessApi {
 
-    @Var(lifecycle = Lifecycle.METHOD_META)
+    @Val(lifecycle = Lifecycle.METHOD_META)
     String $api = "#{#describe($mec$)}";
 
     // 歌词文件保存路径

@@ -32,7 +32,7 @@ import io.github.lucklike.luckyclient.api.cairh.itrus.resp.Seal;
 import io.github.lucklike.luckyclient.api.cairh.itrus.resp.Stamp;
 
 @JsonBody
-@Retryable(retryCount = 5, multiplier = 2, exclude = {BizException.class})
+@Retryable(retryCount = "5", multiplier = "2", exclude = {BizException.class})
 @ItrusHttpClient
 public interface ItrusApi {
 

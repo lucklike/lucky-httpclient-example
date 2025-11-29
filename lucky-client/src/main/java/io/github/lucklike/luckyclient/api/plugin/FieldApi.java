@@ -1,6 +1,5 @@
 package io.github.lucklike.luckyclient.api.plugin;
 
-import com.luckyframework.httpclient.generalapi.plugin.TimeStatistics;
 import io.github.lucklike.httpclient.discovery.HttpClient;
 import lombok.Data;
 
@@ -11,7 +10,6 @@ import lombok.Data;
  */
 @Data
 @HttpClient
-@TimeStatistics(slow = 2)
 public abstract class FieldApi {
     private Integer id;
     private String name;

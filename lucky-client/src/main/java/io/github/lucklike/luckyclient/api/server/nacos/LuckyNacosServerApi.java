@@ -2,7 +2,7 @@ package io.github.lucklike.luckyclient.api.server.nacos;
 
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
-import com.luckyframework.httpclient.proxy.annotations.QueryParam;
+import com.luckyframework.httpclient.proxy.annotations.Query;
 import io.github.lucklike.httpclient.discovery.HttpClient;
 
 /**
@@ -18,5 +18,5 @@ public interface LuckyNacosServerApi {
     String hello();
 
     @Get("/user/get")
-    String getUser(@QueryParam int idLength);
+    String getUser(@Query int idLength);
 }

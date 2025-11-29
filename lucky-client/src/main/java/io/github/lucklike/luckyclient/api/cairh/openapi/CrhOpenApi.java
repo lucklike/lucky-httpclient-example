@@ -21,8 +21,8 @@ public abstract class CrhOpenApi extends JsonFileTokenManager<Token> {
 
     @Describe("获取访问Token")
     @PropertiesJson({
-            "secret_key=${cairh.openapi.secretKey}",
-            "app_id=${cairh.openapi.appId}"
+        "secret_key=${cairh.openapi.secretKey}",
+        "app_id=${cairh.openapi.appId}"
     })
     @TokenApi
     @Post("/authless/token")

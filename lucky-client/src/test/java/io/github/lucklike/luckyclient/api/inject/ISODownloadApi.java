@@ -2,7 +2,9 @@ package io.github.lucklike.luckyclient.api.inject;
 
 import com.luckyframework.httpclient.generalapi.download.RangeDownload;
 import com.luckyframework.httpclient.proxy.annotations.AsyncExecutor;
+import com.luckyframework.httpclient.proxy.annotations.AutoRedirect;
 import com.luckyframework.httpclient.proxy.annotations.Get;
+import com.luckyframework.httpclient.proxy.annotations.HttpExec;
 import com.luckyframework.httpclient.proxy.annotations.ResultHandlerMeta;
 import com.luckyframework.httpclient.proxy.async.Model;
 import com.luckyframework.httpclient.proxy.handle.ResultHandler;
@@ -20,8 +22,8 @@ import java.util.concurrent.CompletableFuture;
 @HttpClient("https://download.jetbrains.com")
 public interface ISODownloadApi {
 
-    @Get("https://download.jetbrains.com/idea/ideaIU-2025.1.exe?_gl=1*huep6z*_gcl_au*MTUyMzEwMjYwNS4xNzQxNzQ5MDYz*FPAU*MTUyMzEwMjYwNS4xNzQxNzQ5MDYz*_ga*MTY5MTk5NjU4Ny4xNzMzNzA5NDQ4*_ga_9J976DJZ68*MTc0NDkzOTc1MC4xMS4xLjE3NDQ5Mzk4OTguNjAuMC4w")
-    @RangeDownload(saveDir = "D:/test/bfile")
+    @Get("https://download.jetbrains.com/idea/ideaIU-2025.2.4.dmg?_gl=1*1rs411b*_gcl_au*MTk2ODYwOTU3OC4xNzU1MzMxOTQz*FPAU*MTk2ODYwOTU3OC4xNzU1MzMxOTQz*_ga*Mjg5ODIyODI3LjE3MzM2OTQyMTA.*_ga_9J976DJZ68*czE3NjIzNjMyMTckbzU2JGcxJHQxNzYyMzYzMjUyJGoyNSRsMCRoMA..")
+    @RangeDownload(saveDir = "/Users/fukang/Desktop/test/bfile")
     File download();
 
     @RangeDownload
@@ -66,4 +68,8 @@ public interface ISODownloadApi {
     @RangeDownload(saveDir = "D:/test/bfile/", filename = "kotlin-{_name_}{.ext}")
     @Get("idea/ideaIU-2024.3.dmg")
     CompletableFuture<File> asyncCoModelDownload();
+
+    @RangeDownload(saveDir = "/Users/fukang/Desktop/test/bfile/")
+    @Get("https://download.jetbrains.com/idea/ideaIU-2025.1.4.1.dmg?_gl=1*oxzfst*_gcl_au*MTE3MTIyNjg2NS4xNzU1MzMxOTkx*_ga*MjE0NTY4MDk5OC4xNzU1MzMxOTkx*_ga_9J976DJZ68*czE3NTUzMzE5OTAkbzEkZzEkdDE3NTUzMzIwMDIkajQ4JGwwJGgw")
+    File idea2025_1_4_1();
 }

@@ -7,7 +7,7 @@ import com.luckyframework.httpclient.proxy.annotations.AutoRedirect;
 import com.luckyframework.httpclient.proxy.annotations.BinaryBody;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.GzipCompress;
-import com.luckyframework.httpclient.proxy.annotations.HeaderParam;
+import com.luckyframework.httpclient.proxy.annotations.Header;
 import com.luckyframework.httpclient.proxy.annotations.HttpProxy;
 import com.luckyframework.httpclient.proxy.annotations.JavaBody;
 import com.luckyframework.httpclient.proxy.annotations.JsonBody;
@@ -18,9 +18,8 @@ import com.luckyframework.httpclient.proxy.annotations.MultipartFormData;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLog;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
-import com.luckyframework.httpclient.proxy.annotations.PropertiesJsonArray;
 import com.luckyframework.httpclient.proxy.annotations.ProtobufBody;
-import com.luckyframework.httpclient.proxy.annotations.QueryParam;
+import com.luckyframework.httpclient.proxy.annotations.Query;
 import com.luckyframework.httpclient.proxy.annotations.RefParam;
 import com.luckyframework.httpclient.proxy.annotations.SSL;
 import com.luckyframework.httpclient.proxy.annotations.SocksProxy;
@@ -35,7 +34,7 @@ import com.luckyframework.httpclient.proxy.annotations.XmlBody;
 import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
-import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
+import com.luckyframework.httpclient.proxy.spel.hook.callback.Val;
 import io.github.lucklike.entity.request.proto.PersonOuterClass;
 import io.github.lucklike.httpclient.discovery.HttpClient;
 import io.github.lucklike.luckyclient.api.mock.User;
@@ -139,11 +138,11 @@ public interface LuckyApi {
     Map<String, Object> propertiesJson3(String email, @JsonParam String id, @JsonParam("userName") String name);
 
 
-    @PropertiesJsonArray({
-            "$[0].id=111",
-            "$[0].name=Jack",
-            "$[1].id=222",
-            "$[1].name=Tom",
+    @PropertiesJson({
+            "[0].id=111",
+            "[0].name=Jack",
+            "[1].id=222",
+            "[1].name=Tom",
     })
     @Post("http://localhost:8080/json")
     Map<String, Object> propertiesJsonArray();
@@ -187,10 +186,10 @@ public interface LuckyApi {
     String ref2(String section);
 
     @Post("http://localhost:8080/binary")
-    void binary(@BinaryBody byte[] bytes, @QueryParam String filename);
+    void binary(@BinaryBody byte[] bytes, @Query String filename);
 
     @Post("http://localhost:8080/binary")
-    void binary(@BinaryBody Byte[] bytes, @HeaderParam("X-FILE-NAME") String filename);
+    void binary(@BinaryBody Byte[] bytes, @Header("X-FILE-NAME") String filename);
 
     @Post("http://localhost:8080/binary")
     void binary(@BinaryBody String resourcePath);
@@ -220,7 +219,7 @@ public interface LuckyApi {
     @Get("/proxy/socks")
     String socksProxy();
 
-    @Var(lifecycle = Lifecycle.METHOD_META)
+    @Val(lifecycle = Lifecycle.METHOD_META)
     AtomicInteger redirectCount = new AtomicInteger(0);
 
     @Mock(enable = "#{redirectCount.getAndIncrement() == 0}")

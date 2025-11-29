@@ -66,12 +66,12 @@ public interface ImageGenerationApi {
                                 @Param("#{appId}") String appId,
                                 @Param("#{p0}") String content) {
         ConfigurationMapBodyObjectFactory jsonBodyFactory = ConfigurationMapBodyObjectFactory.json();
-        jsonBodyFactory.addProperty("header.app_id", appId);
-        jsonBodyFactory.addProperty("parameter.chat.domain", "general");
-        jsonBodyFactory.addProperty("parameter.chat.width", 512);
-        jsonBodyFactory.addProperty("parameter.chat.height", 512);
-        jsonBodyFactory.addProperty("payload.message.text[0].role", "user");
-        jsonBodyFactory.addProperty("payload.message.text[0].content", content);
+        jsonBodyFactory.addElement("header.app_id", appId);
+        jsonBodyFactory.addElement("parameter.chat.domain", "general");
+        jsonBodyFactory.addElement("parameter.chat.width", 512);
+        jsonBodyFactory.addElement("parameter.chat.height", 512);
+        jsonBodyFactory.addElement("payload.message.text[0].role", "user");
+        jsonBodyFactory.addElement("payload.message.text[0].content", content);
 
         request.setBodyFactory(jsonBodyFactory);
     }

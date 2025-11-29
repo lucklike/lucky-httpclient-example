@@ -1,12 +1,12 @@
 package io.github.lucklike.server.ai.crh;
 
 import com.luckyframework.httpclient.core.meta.HttpFile;
-import com.luckyframework.httpclient.proxy.annotations.HeaderParam;
+import com.luckyframework.httpclient.proxy.annotations.Header;
 import com.luckyframework.httpclient.proxy.annotations.MultiFile;
 import com.luckyframework.httpclient.proxy.annotations.MultipartFormData;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLog;
-import com.luckyframework.httpclient.proxy.annotations.QueryParam;
+import com.luckyframework.httpclient.proxy.annotations.Query;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import io.github.lucklike.httpclient.discovery.HttpClient;
 import io.github.lucklike.server.ai.crh.req.FundSumaryPublishRequest;
@@ -21,8 +21,8 @@ public interface ElecagreemodelApi {
 
     @Post("fundSumaryPublish")
     Map<String, Object> fundSumaryPublish(
-            @HeaderParam String authorization,
-            @QueryParam String agreement_type,
+            @Header String authorization,
+            @Query String agreement_type,
             @MultiFile MultipartFile[] files
     );
 

@@ -1,6 +1,7 @@
 package io.github.lucklike.luckyclient.api.mock;
 
 import com.luckyframework.httpclient.core.meta.HttpHeaders;
+import com.luckyframework.httpclient.generalapi.AutoVerifyHttpStatus;
 import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
@@ -25,11 +26,12 @@ import java.util.Map;
  * @version 1.0.0
  * @date 2025/3/2 08:58
  */
+//@AutoVerifyHttpStatus
 @HttpClient("http://localhost:8080")
 public interface MockApi {
 
     @Mock(
-            status = "200",
+            status = "429",
             header = "Content-Type: text/html",
             body = "<!DOCTYPE html><html><body><h1>Hello World</h1></body></html>"
     )

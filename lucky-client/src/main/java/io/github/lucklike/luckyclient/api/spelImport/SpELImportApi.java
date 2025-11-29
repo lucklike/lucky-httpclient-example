@@ -10,7 +10,7 @@ import com.luckyframework.httpclient.proxy.mock.Mock;
 import com.luckyframework.httpclient.proxy.mock.MockResponse;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
-import com.luckyframework.httpclient.proxy.spel.hook.callback.Var;
+import com.luckyframework.httpclient.proxy.spel.hook.callback.Val;
 import io.github.lucklike.httpclient.discovery.HttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -41,7 +41,7 @@ class MyTools {
      * 声明变量，变量来源为classpath下的books.json文件
      * 导入时机为ClassContent初始化后
      */
-    @Var(lifecycle = CLASS)
+    @Val(lifecycle = CLASS)
     private static final String $conf = "#{fmap('classpath:books.json')}";
 
     /**

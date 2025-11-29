@@ -2,15 +2,16 @@ package io.github.lucklike.luckyclient.api.roll;
 
 
 import com.luckyframework.httpclient.proxy.annotations.Get;
-import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
-import com.luckyframework.httpclient.proxy.annotations.QueryParam;
+import com.luckyframework.httpclient.proxy.annotations.HttpExec;
+import com.luckyframework.httpclient.proxy.annotations.Query;
 
 import java.util.Map;
 
 /**
  * 支持限流功能的流量查询接口
  */
-@PrintLogProhibition
+//@PrintLogProhibition
+@HttpExec(exec = "http1")
 @OilHttpClient
 public interface CurrentLimitationOilPriceApi {
 
@@ -22,7 +23,7 @@ public interface CurrentLimitationOilPriceApi {
      */
     @CurrentLimitation(limitQPS = 1)
     @Get("/api/oil/search")
-    Map<String, Object> limitQuery(@QueryParam String province);
+    Map<String, Object> limitQuery(@Query String province);
 
     /**
      * 原始油价查询方法
@@ -31,5 +32,5 @@ public interface CurrentLimitationOilPriceApi {
      * @return 油价信息
      */
     @Get("/api/oil/search")
-    Map<String, Object> query(@QueryParam String province);
+    Map<String, Object> query(@Query String province);
 }

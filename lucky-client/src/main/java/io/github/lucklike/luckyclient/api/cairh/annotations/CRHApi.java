@@ -3,6 +3,7 @@ package io.github.lucklike.luckyclient.api.cairh.annotations;
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.core.meta.Response;
+import com.luckyframework.httpclient.generalapi.describe.ApiDescribe;
 import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
 import com.luckyframework.httpclient.proxy.CommonFunctions;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
@@ -78,17 +79,17 @@ class CairhCommonFunction {
     /**
      * 设置默认参数的回调函数
      *
-     * @param mc      方法上下文
+     * @param apiDesc 接口信息
      * @param request 请求对象
      * @param openApi 获取Token的类对象
      */
     @Callback(lifecycle = Lifecycle.REQUEST)
     public static void addDefParamCallback(
-            MethodContext mc,
+            ApiDescribe apiDesc,
             Request request,
             CrhOpenApi openApi
     ) {
-        if (DescribeFunction.needToken(mc)) {
+        if (!apiDesc.isTokenApi()) {
             request.addHeader("Authorization", openApi.getAccessToken());
         }
     }

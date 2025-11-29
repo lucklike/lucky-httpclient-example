@@ -92,7 +92,6 @@ public class DownloadTest {
         Request request = Request
                 .head("https://mirrors.aliyun.com/centos-stream/10-stream/BaseOS/x86_64/iso/CentOS-Stream-10-20241104.0-x86_64-boot.iso")
                 .setConnectTimeout(120000)
-                .setWriterTimeout(60000)
                 .setReadTimeout(60000);
         boolean rangeInfo = downloadApi.isSupport(request);
         System.out.println(rangeInfo);
@@ -184,6 +183,12 @@ public class DownloadTest {
         CompletableFuture.allOf(threadModelDownload, coModelDownload).join();
         stopWatch.stopWatch();
         System.out.println(stopWatch.prettyPrintFormat());
+    }
+
+    @Test
+    void idea2025_1_4_1Test() {
+        File file = isoDownloadApi.idea2025_1_4_1();
+        System.out.println(file.getAbsolutePath());
     }
 
 }

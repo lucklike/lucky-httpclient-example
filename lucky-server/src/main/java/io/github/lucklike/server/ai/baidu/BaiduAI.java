@@ -2,10 +2,8 @@ package io.github.lucklike.server.ai.baidu;
 
 import com.luckyframework.httpclient.core.meta.ConfigurationMapBodyObjectFactory;
 import com.luckyframework.httpclient.core.meta.Request;
-import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
 import com.luckyframework.httpclient.generalapi.describe.TokenApi;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
-import com.luckyframework.httpclient.proxy.annotations.Async;
 import com.luckyframework.httpclient.proxy.annotations.JsonParam;
 import com.luckyframework.httpclient.proxy.annotations.Post;
 import com.luckyframework.httpclient.proxy.annotations.PrintLog;
@@ -38,12 +36,12 @@ public abstract class BaiduAI extends JsonFileTokenManager<Token> {
 
     @Callback(lifecycle = Lifecycle.REQUEST_INIT)
     static void paramAddCallback(MethodContext context, Request request, BaiduAI baiduAI) {
-        if (DescribeFunction.needToken(context)) {
+        if (!context.getApiDescribe().isTokenApi()) {
             request.addQueryParameter("access_token", baiduAI.getAccessToken());
             if (context.getCurrentAnnotatedElement().getName().equals("questionsAndAnswers")) {
                 ConfigurationMapBodyObjectFactory bodyObjectFactory = ConfigurationMapBodyObjectFactory.of(JSON_SCHEME, APPLICATION_JSON);
-                bodyObjectFactory.addProperty("messages[0].role", "user");
-                bodyObjectFactory.addProperty("stream", true);
+                bodyObjectFactory.addElement("messages[0].role", "user");
+                bodyObjectFactory.addElement("stream", true);
                 request.setContentType(APPLICATION_JSON);
                 request.setBodyFactory(bodyObjectFactory);
             }
