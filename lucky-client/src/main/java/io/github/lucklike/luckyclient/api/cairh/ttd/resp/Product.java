@@ -5,7 +5,8 @@ import lombok.Data;
 
 import java.util.List;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions._json;
+import static com.luckyframework.httpclient.proxy.function.SerializationFunctions._json;
+
 
 /**
  * @author fukang

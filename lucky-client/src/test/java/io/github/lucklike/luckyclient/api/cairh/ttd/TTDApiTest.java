@@ -1,6 +1,5 @@
 package io.github.lucklike.luckyclient.api.cairh.ttd;
 
-import com.luckyframework.common.Console;
 import com.luckyframework.common.FlatBean;
 import com.luckyframework.httpclient.generalapi.download.FileApi;
 import com.luckyframework.httpclient.proxy.spel.SpelBean;
@@ -12,14 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions._url;
+import static com.luckyframework.httpclient.proxy.function.SerializationFunctions._url;
+
 
 @SpringBootTest
 class TTDApiTest {

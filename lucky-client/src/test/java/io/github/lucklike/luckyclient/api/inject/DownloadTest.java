@@ -5,7 +5,7 @@ import com.luckyframework.common.UnitUtils;
 import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.generalapi.BaseApi;
 import com.luckyframework.httpclient.generalapi.download.RangeDownloadApi;
-import com.luckyframework.httpclient.proxy.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.CommonFunctions;
 import com.luckyframework.threadpool.ThreadPoolFactory;
 import com.luckyframework.threadpool.ThreadPoolParam;
 import io.github.lucklike.httpclient.injection.HttpReference;
@@ -18,6 +18,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
+
+import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.md5Hex;
 
 /**
  * @author fukang
@@ -142,8 +144,8 @@ public class DownloadTest {
 //        System.out.println(length4);
 //        System.out.println(UnitUtils.byteTo(length4));
 
-        String md5 = CommonFunctions.md5Hex(file);
-        String md51 = CommonFunctions.md5Hex(file1);
+        String md5 = md5Hex(file);
+        String md51 = md5Hex(file1);
 //        String md52 = CommonFunctions.md5(file2);
 //        String md53 = CommonFunctions.md5(file3);
 //        String md54 = CommonFunctions.md5(file4);

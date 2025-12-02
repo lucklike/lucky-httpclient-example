@@ -5,17 +5,18 @@ import com.luckyframework.common.StringUtils;
 import com.luckyframework.httpclient.core.meta.BodyObject;
 import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.core.meta.Response;
-import com.luckyframework.httpclient.proxy.CommonFunctions;
 import com.luckyframework.httpclient.proxy.annotations.Post;
-import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.Timeout;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
+import com.luckyframework.httpclient.proxy.function.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.SerializationFunctions;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
 import com.luckyframework.reflect.Param;
 import io.github.lucklike.httpclient.discovery.HttpClient;
+import io.github.lucklike.luckyclient.api.deepseek.functioncalling.lserver.LDeepSeekApi;
 import io.github.lucklike.luckyclient.api.deepseek.functioncalling.reequest.CompletionRequest;
 import io.github.lucklike.luckyclient.api.deepseek.functioncalling.reequest.MessageUtils;
 import io.github.lucklike.luckyclient.api.roll.CurrentLimitationOilPriceApi;
@@ -36,11 +37,7 @@ public interface DeepSeekApiFunctionCallingApi {
     String completions(String content);
 
     static String  completions$Convert(MethodContext mc) {
-        String content = mc.getRootVar("$body$.choices[0].message.content", String.class);
-        if (StringUtils.hasText(content)) {
-            return content;
-        }
-        return mc.getRootVar("$finalResult", String.class);
+        return LDeepSeekApi.completions$Convert(mc);
     }
 
 
@@ -87,7 +84,7 @@ public interface DeepSeekApiFunctionCallingApi {
             messages.add(message);
 
             ConfigurationMap tool = message.getMap("tool_calls[0]");
-            ConfigurationMap arguments = CommonFunctions._json(tool.getString("function.arguments"), ConfigurationMap.class);
+            ConfigurationMap arguments = SerializationFunctions._json(tool.getString("function.arguments"), ConfigurationMap.class);
             String toolId = tool.getString("id");
             String location = arguments.getString("location");
 

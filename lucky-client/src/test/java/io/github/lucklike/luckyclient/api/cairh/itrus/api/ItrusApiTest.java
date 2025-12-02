@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.cairh.itrus.api;
 
-import com.luckyframework.httpclient.proxy.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.CommonFunctions;
 import io.github.lucklike.luckyclient.api.cairh.itrus.ItrusCommonParam;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.CreateEnterpriseSealRequest;
 import io.github.lucklike.luckyclient.api.cairh.itrus.req.QueryEnterpriseRequest;
@@ -14,16 +14,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.FileCopyUtils;
 
 import javax.annotation.Resource;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions.base64;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.resource;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.luckyframework.httpclient.proxy.function.CommonFunctions.resource;
+import static com.luckyframework.httpclient.proxy.function.SerializationFunctions._base64;
+import static com.luckyframework.httpclient.proxy.function.SerializationFunctions.base64;
+
 
 @SpringBootTest
 class ItrusApiTest {
@@ -76,7 +76,7 @@ class ItrusApiTest {
         for (Seal seal : sealList) {
             if (Objects.nonNull(seal.getSealFile())) {
                 File file = new File("D:/test/ca/seal", seal.getId() + ".jpg");
-                FileCopyUtils.copy(CommonFunctions._base64(seal.getSealFile()), file);
+                FileCopyUtils.copy(_base64(seal.getSealFile()), file);
             }
         }
         System.out.println(queryResp);

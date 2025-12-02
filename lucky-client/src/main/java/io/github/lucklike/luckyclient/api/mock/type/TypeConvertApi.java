@@ -14,7 +14,8 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions.typeOf;
+import static com.luckyframework.httpclient.proxy.function.CommonFunctions.typeOf;
+
 
 /**
  * @author fukang

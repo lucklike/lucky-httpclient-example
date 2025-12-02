@@ -2,7 +2,6 @@ package io.github.lucklike.luckyclient.api.cairh.hehe;
 
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.reflect.AnnotationUtils;
-import io.github.lucklike.luckyclient.api.cairh.hehe.req.FaceCompareReq;
 import io.github.lucklike.luckyclient.api.cairh.hehe.resp.BusinessLicenseResponse;
 import io.github.lucklike.luckyclient.api.cairh.hehe.resp.GATResidenceResponse;
 import io.github.lucklike.luckyclient.api.cairh.hehe.resp.HeheIdCardResponse;
@@ -13,10 +12,10 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.List;
-import java.util.Map;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions.base64;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.resource;
+import static com.luckyframework.httpclient.proxy.function.CommonFunctions.resource;
+import static com.luckyframework.httpclient.proxy.function.SerializationFunctions.base64;
+
 
 @SpringBootTest
 class HeHeApiTest {

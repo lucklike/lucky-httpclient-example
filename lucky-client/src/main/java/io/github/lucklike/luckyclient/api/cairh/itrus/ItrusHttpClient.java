@@ -21,7 +21,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions.macSha1Base64;
+import static com.luckyframework.httpclient.proxy.function.MacFunctions.macSha1Base64;
+
 
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)

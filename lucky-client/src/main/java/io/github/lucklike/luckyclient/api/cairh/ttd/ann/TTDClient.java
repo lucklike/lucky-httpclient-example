@@ -11,6 +11,8 @@ import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
 import com.luckyframework.httpclient.proxy.annotations.Timeout;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.context.ParameterContext;
+import com.luckyframework.httpclient.proxy.function.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.SerializationFunctions;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
@@ -30,13 +32,12 @@ import java.lang.annotation.Target;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions._base64;
-import static com.luckyframework.httpclient.proxy.CommonFunctions._json;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.base64;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.json;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.md5Hex;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.sha256Hex;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.time;
+import static com.luckyframework.httpclient.proxy.function.CommonFunctions.time;
+import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.md5Hex;
+import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.sha256Hex;
+import static com.luckyframework.httpclient.proxy.function.SerializationFunctions._base64;
+import static com.luckyframework.httpclient.proxy.function.SerializationFunctions._json;
+import static com.luckyframework.httpclient.proxy.function.SerializationFunctions.base64;
 import static io.github.lucklike.luckyclient.api.cairh.ttd.ann.TTDClient.EncodeUtils.aesEncipherString;
 import static io.github.lucklike.luckyclient.api.cairh.ttd.ann.TTDClient.EncodeUtils.decryptString;
 import static io.github.lucklike.luckyclient.api.cairh.ttd.ann.TTDClient.EncodeUtils.getIv;
@@ -93,7 +94,7 @@ public @interface TTDClient {
                         }
                     }
                 }
-                String json = json(cm);
+                String json = SerializationFunctions.json(cm);
                 req.addFormParameter("body", aesEncipherString(getKey(token), getIv(appId), json));
                 req.addHeader("cm", md5Hex(json));
             } else {

@@ -2,18 +2,15 @@ package io.github.lucklike.luckyclient.api.spark;
 
 import com.luckyframework.common.StringUtils;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions.base64;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.macSha256Base64;
+import static com.luckyframework.httpclient.proxy.function.MacFunctions.macSha256Base64;
+import static com.luckyframework.httpclient.proxy.function.SerializationFunctions.base64;
+
 
 /**
  * @author fukang

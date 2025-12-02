@@ -1,13 +1,12 @@
 package io.github.lucklike.luckyclient.api.websocket;
 
-import com.luckyframework.httpclient.proxy.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.CommonFunctions;
 import io.github.lucklike.luckyclient.api.websocket.kdxf.WsApi;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.FileCopyUtils;
 
 import javax.annotation.Resource;
-import java.io.File;
 import java.io.IOException;
 
 @SpringBootTest

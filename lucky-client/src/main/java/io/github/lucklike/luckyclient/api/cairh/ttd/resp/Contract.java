@@ -3,7 +3,8 @@ package io.github.lucklike.luckyclient.api.cairh.ttd.resp;
 import com.luckyframework.common.ConfigurationMap;
 import lombok.Data;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions._json;
+import static com.luckyframework.httpclient.proxy.function.SerializationFunctions._json;
+
 
 /**
  * @author fukang

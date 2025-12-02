@@ -4,7 +4,7 @@ import com.luckyframework.common.ContainerUtils;
 import com.luckyframework.httpclient.generalapi.chunk.FileChunk;
 import com.luckyframework.httpclient.generalapi.chunk.FileChunkHandle;
 import com.luckyframework.httpclient.generalapi.chunk.ResultClassify;
-import com.luckyframework.httpclient.proxy.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.CommonFunctions;
 import com.luckyframework.httpclient.proxy.plugin.ExecuteMeta;
 import com.luckyframework.httpclient.proxy.plugin.ProxyDecorator;
 import com.luckyframework.httpclient.proxy.plugin.ProxyPlugin;
@@ -18,6 +18,8 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.util.Map;
 import java.util.Objects;
+
+import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.md5Hex;
 
 /**
  * 分片文件上传插件
@@ -43,7 +45,7 @@ public class FileChunkPlugin implements ProxyPlugin {
 
 
         // 获取文件名和文件hash
-        String fileId = CommonFunctions.md5Hex(file);
+        String fileId = md5Hex(file);
         String fileName = file.getName();
 
         // 获取已经上传到服务器中的分片文件信息
@@ -103,6 +105,6 @@ public class FileChunkPlugin implements ProxyPlugin {
             return false;
         }
 
-        return hash.equals(CommonFunctions.md5Hex(fileChunk.getContent()));
+        return hash.equals(md5Hex(fileChunk.getContent()));
     }
 }

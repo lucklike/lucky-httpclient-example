@@ -19,8 +19,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions._base64;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.nanoid;
+import static com.luckyframework.httpclient.proxy.function.RandomFunctions.nanoid;
+import static com.luckyframework.httpclient.proxy.function.SerializationFunctions._base64;
 import static io.github.lucklike.luckyclient.api.spark.AuthUtils.getAuthUrl;
 
 /**

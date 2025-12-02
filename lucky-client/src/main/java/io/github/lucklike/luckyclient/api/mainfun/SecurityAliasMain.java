@@ -1,6 +1,7 @@
 package io.github.lucklike.luckyclient.api.mainfun;
 
-import com.luckyframework.httpclient.proxy.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.SerializationFunctions;
 import com.luckyframework.serializable.SerializationTypeToken;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
@@ -18,7 +19,7 @@ public class SecurityAliasMain {
     public static void main(String[] args) throws Exception {
         String temp = FileCopyUtils.copyToString(new InputStreamReader(Files.newInputStream(Paths.get("D:\\test\\SecurityAlias.txt")), StandardCharsets.UTF_8));
 
-        List<Map<String, String>> list = CommonFunctions._json(new File("D:\\test\\SecurityAlias.json"), new SerializationTypeToken<List<Map<String, String>>>() {
+        List<Map<String, String>> list = SerializationFunctions._json(new File("D:\\test\\SecurityAlias.json"), new SerializationTypeToken<List<Map<String, String>>>() {
         });
 
         StringBuilder ssb = new StringBuilder();

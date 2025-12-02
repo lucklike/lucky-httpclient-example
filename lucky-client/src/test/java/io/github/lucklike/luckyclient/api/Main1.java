@@ -16,14 +16,15 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Stream;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions.hex;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.md5;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.md5Hex;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.resourceAsStream;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.sha224;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.sha256;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.sha384;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.sha512;
+import static com.luckyframework.httpclient.proxy.function.CommonFunctions.resourceAsStream;
+import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.md5;
+import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.md5Hex;
+import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.sha224;
+import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.sha256;
+import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.sha384;
+import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.sha512;
+import static com.luckyframework.httpclient.proxy.function.SerializationFunctions.hex;
+
 
 public class Main1 {
 

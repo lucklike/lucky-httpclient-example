@@ -3,7 +3,8 @@ package io.github.lucklike.common.api.util;
 import com.luckyframework.common.ConfigurationMap;
 import com.luckyframework.common.ContainerUtils;
 import com.luckyframework.common.StringUtils;
-import com.luckyframework.httpclient.proxy.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.SerializationFunctions;
 import com.luckyframework.reflect.AnnotationUtils;
 import com.luckyframework.reflect.ClassUtils;
 import com.luckyframework.reflect.MethodUtils;
@@ -82,8 +83,8 @@ public class FunctionCallMange {
 
                 toolCall = args -> {
                     try {
-                        Object paramObj = CommonFunctions._json(args, ResolvableType.forMethodParameter(method, 0));
-                        return CommonFunctions.json(MethodUtils.invoke(tool, method, paramObj));
+                        Object paramObj = SerializationFunctions._json(args, ResolvableType.forMethodParameter(method, 0));
+                        return SerializationFunctions.json(MethodUtils.invoke(tool, method, paramObj));
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -91,7 +92,7 @@ public class FunctionCallMange {
             } else if (parameterCount == 0) {
                 toolCall = args -> {
                     try {
-                        return CommonFunctions.json(MethodUtils.invoke(tool, method));
+                        return SerializationFunctions.json(MethodUtils.invoke(tool, method));
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

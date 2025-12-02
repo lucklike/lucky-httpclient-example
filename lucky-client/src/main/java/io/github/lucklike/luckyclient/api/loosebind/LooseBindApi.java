@@ -11,8 +11,8 @@ import io.github.lucklike.httpclient.discovery.HttpClient;
 import java.io.IOException;
 import java.util.List;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions.read;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.resource;
+import static com.luckyframework.httpclient.proxy.function.CommonFunctions.resource;
+import static com.luckyframework.httpclient.proxy.function.CommonFunctions.read;
 
 
 @HttpClient("http://127.0.0.1:8080")

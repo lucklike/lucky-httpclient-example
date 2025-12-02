@@ -10,9 +10,8 @@ import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
 
-import static com.luckyframework.httpclient.proxy.CommonFunctions.base64;
-import static com.luckyframework.httpclient.proxy.CommonFunctions.resource;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.luckyframework.httpclient.proxy.function.CommonFunctions.resource;
+import static com.luckyframework.httpclient.proxy.function.SerializationFunctions.base64;
 
 @SpringBootTest
 class ItrusCompanyCaServiceTest {

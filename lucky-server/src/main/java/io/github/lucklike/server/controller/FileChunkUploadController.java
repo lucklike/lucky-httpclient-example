@@ -1,10 +1,9 @@
 package io.github.lucklike.server.controller;
 
-import com.luckyframework.httpclient.proxy.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.MessageDigestFunctions;
 import io.github.lucklike.entity.response.Result;
 import lombok.SneakyThrows;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -138,6 +137,6 @@ public class FileChunkUploadController {
 
     @SneakyThrows
     private String fileHash(File file) {
-        return CommonFunctions.md5Hex(file);
+        return MessageDigestFunctions.md5Hex(file);
     }
 }

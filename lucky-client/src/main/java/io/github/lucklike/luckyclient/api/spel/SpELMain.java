@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.spel;
 
-import com.luckyframework.httpclient.proxy.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.CommonFunctions;
 import com.luckyframework.httpclient.proxy.spel.ClassStaticElement;
 import com.luckyframework.spel.EvaluationContextFactory;
 import com.luckyframework.spel.ParamWrapper;
