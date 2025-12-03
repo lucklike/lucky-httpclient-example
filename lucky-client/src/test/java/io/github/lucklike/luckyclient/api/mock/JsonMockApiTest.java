@@ -1,11 +1,17 @@
 package io.github.lucklike.luckyclient.api.mock;
 
+import com.luckyframework.httpclient.proxy.function.ResourceFunctions;
+import com.luckyframework.spel.SimpleSpelBean;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
 import io.github.lucklike.luckyclient.api.mock.type.User;
+
+import java.util.List;
+
+import static com.luckyframework.httpclient.proxy.function.CommonFunctions.typeOf;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -57,5 +63,17 @@ class JsonMockApiTest {
         user.setId(5);
         user.setName("Jack");
         api.resJsonArrayProp(user);
+    }
+
+    @Test
+    void readSpelBean() {
+        SimpleSpelBean<?> simpleSpelBean = ResourceFunctions.readSpelBean("classpath:/param-temp/users.xml");
+        System.out.println(simpleSpelBean);
+    }
+
+    @Test
+    void readAsBean() {
+        List<User> users = ResourceFunctions.readAsBean("classpath:/param-temp/users.yaml", typeOf(List.class, User.class));
+        System.out.println(users);
     }
 }
