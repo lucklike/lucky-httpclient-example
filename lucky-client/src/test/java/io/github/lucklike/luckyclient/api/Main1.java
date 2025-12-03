@@ -16,13 +16,13 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Stream;
 
-import static com.luckyframework.httpclient.proxy.function.CommonFunctions.resourceAsStream;
-import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.md5;
-import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.md5Hex;
-import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.sha224;
-import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.sha256;
-import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.sha384;
-import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.sha512;
+import static com.luckyframework.httpclient.proxy.function.DigestFunctions.md5;
+import static com.luckyframework.httpclient.proxy.function.DigestFunctions.md5Hex;
+import static com.luckyframework.httpclient.proxy.function.DigestFunctions.sha224;
+import static com.luckyframework.httpclient.proxy.function.DigestFunctions.sha256;
+import static com.luckyframework.httpclient.proxy.function.DigestFunctions.sha384;
+import static com.luckyframework.httpclient.proxy.function.DigestFunctions.sha512;
+import static com.luckyframework.httpclient.proxy.function.ResourceFunctions.resourceAsStream;
 import static com.luckyframework.httpclient.proxy.function.SerializationFunctions.hex;
 
 

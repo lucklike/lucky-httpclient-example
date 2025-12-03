@@ -11,6 +11,7 @@ import com.luckyframework.httpclient.proxy.annotations.Get;
 import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.RespConvert;
 import com.luckyframework.httpclient.proxy.function.CommonFunctions;
+import com.luckyframework.httpclient.proxy.function.ResourceFunctions;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Val;
 import com.luckyframework.io.FileUtils;
@@ -63,7 +64,7 @@ public interface TimelessApi {
         String lyrics = StringUtils.format("{}.txt", song);
         File file = new File(SAVE_DIR, lyrics);
         if (file.exists() && file.isFile()) {
-            return CommonFunctions.read(file);
+            return ResourceFunctions.read(file);
         }
 
         String lyricsContext = qryLyricsFindCache(song);

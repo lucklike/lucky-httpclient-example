@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import java.io.File;
 
 import static com.luckyframework.httpclient.generalapi.download.RangeDownloadApi.DEFAULT_RANGE_SIZE;
-import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.md5Hex;
+import static com.luckyframework.httpclient.proxy.function.DigestFunctions.md5Hex;
 
 @Slf4j
 @SpringBootTest

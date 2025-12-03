@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.luckyframework.httpclient.proxy.function.CommonFunctions.resource;
+import static com.luckyframework.httpclient.proxy.function.ResourceFunctions.resource;
 import static com.luckyframework.httpclient.proxy.function.SerializationFunctions._base64;
 import static com.luckyframework.httpclient.proxy.function.SerializationFunctions.base64;
 

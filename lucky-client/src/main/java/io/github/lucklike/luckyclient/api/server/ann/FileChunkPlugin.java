@@ -19,7 +19,8 @@ import java.io.File;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.md5Hex;
+import static com.luckyframework.httpclient.proxy.function.DigestFunctions.md5Hex;
+
 
 /**
  * 分片文件上传插件

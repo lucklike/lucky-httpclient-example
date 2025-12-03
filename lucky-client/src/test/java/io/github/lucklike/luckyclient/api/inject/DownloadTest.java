@@ -19,7 +19,8 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
-import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.md5Hex;
+import static com.luckyframework.httpclient.proxy.function.DigestFunctions.md5Hex;
+
 
 /**
  * @author fukang

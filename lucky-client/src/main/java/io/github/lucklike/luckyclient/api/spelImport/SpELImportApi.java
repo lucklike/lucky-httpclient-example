@@ -42,7 +42,7 @@ class MyTools {
      * 导入时机为ClassContent初始化后
      */
     @Val(lifecycle = CLASS)
-    private static final String $conf = "#{fmap('classpath:books.json')}";
+    private static final String $conf = "#{read_flat_bean('classpath:books.json').getBean()}";
 
     /**
      * 声明回调函数，用来添加公共参数到请求中

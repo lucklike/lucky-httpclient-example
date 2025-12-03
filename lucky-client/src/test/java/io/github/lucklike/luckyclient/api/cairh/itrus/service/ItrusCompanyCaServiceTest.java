@@ -10,7 +10,7 @@ import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
 
-import static com.luckyframework.httpclient.proxy.function.CommonFunctions.resource;
+import static com.luckyframework.httpclient.proxy.function.ResourceFunctions.resource;
 import static com.luckyframework.httpclient.proxy.function.SerializationFunctions.base64;
 
 @SpringBootTest

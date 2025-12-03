@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 @Inherited
 @SSL
 @DomainName("#{ann($cc$, 'io.github.lucklike.luckyclient.api.lucky.LAPI').url}")
-@SpELImport(root = {"768976=#{_base64ToStr('572X6Imz546y')}"})
+@SpELImport(root = {"768976=#{_base64_str('572X6Imz546y')}"})
 @HttpClientComponent
 public @interface LAPI {
 

@@ -26,7 +26,7 @@ public interface LuckyApi {
     @StaticHeader({
         "date: 2024-12-01",
         "name: #{['768976']}",
-        "say_: #{_base64ToStr('772e55Sf5pel5b+r5LmQ772e')}"
+        "say_: #{_base64_str('772e55Sf5pel5b+r5LmQ772e')}"
     })
     @Retryable
     @Post("/benediction")

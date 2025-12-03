@@ -33,8 +33,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
 import static com.luckyframework.httpclient.proxy.function.CommonFunctions.time;
-import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.md5Hex;
-import static com.luckyframework.httpclient.proxy.function.MessageDigestFunctions.sha256Hex;
+import static com.luckyframework.httpclient.proxy.function.DigestFunctions.md5Hex;
+import static com.luckyframework.httpclient.proxy.function.DigestFunctions.sha256Hex;
 import static com.luckyframework.httpclient.proxy.function.SerializationFunctions._base64;
 import static com.luckyframework.httpclient.proxy.function.SerializationFunctions._json;
 import static com.luckyframework.httpclient.proxy.function.SerializationFunctions.base64;

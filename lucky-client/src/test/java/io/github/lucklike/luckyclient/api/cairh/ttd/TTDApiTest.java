@@ -45,13 +45,12 @@ class TTDApiTest {
     @Test
     void productListSpelBean() {
         SpelBean<?> spelBean = ttdApi.productListSpelBean(Page.of(1, 10));
-        System.out.println(spelBean.getString("$bean$[5].contractUrl"));
-        System.out.println(spelBean.getString("$bean$[5].contractUrl2?.ok"));
+        System.out.println(spelBean.getString("[5].contractUrl"));
+        System.out.println(spelBean.getString("[5].contractUrl2?.ok"));
 
-        System.out.println(spelBean.getString("_json($bean$[0].watermarkContractSignUrl).url"));
-        String[] urls = spelBean.getStringArray("$bean$.![_json(contractUrl).objectKey]");
+        System.out.println(spelBean.getString("_json([0].watermarkContractSignUrl).url"));
+        String[] urls = spelBean.getStringArray("![_json(contractUrl).objectKey]");
         Stream.of(urls).forEach(System.out::println);
-//        System.out.println(spelbean.tryGetString("[5].contractUrl$Map.url"));
     }
 
 

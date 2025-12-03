@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
-import static com.luckyframework.httpclient.proxy.function.CommonFunctions.resource;
+import static com.luckyframework.httpclient.proxy.function.ResourceFunctions.resource;
 import static com.luckyframework.httpclient.proxy.function.SerializationFunctions.base64;
 
 
