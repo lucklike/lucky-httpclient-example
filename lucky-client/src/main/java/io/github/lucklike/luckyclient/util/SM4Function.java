@@ -15,4 +15,8 @@ public class SM4Function {
         return SM4Util.encryptEcb(s);
     }
 
+
+    public static void main(String[] args) throws Exception {
+        System.out.println(_sm4_("e6b928b3b31e4ca38304695a91729406"));
+    }
 }

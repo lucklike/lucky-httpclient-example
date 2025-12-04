@@ -12,6 +12,9 @@ lucky:
   http-server:
     common:
       url: http://localhost:8864
+    yun-xi:
+      url: http://api.zhyunxi.com/api.php
+      key: "#{sm4('a2bc538b43472d88bb681eb0475d0afabcf5a1bcd306de047de0d8abb4ae2ba580097781df3b0e52d5b9af3b2f1efdf4')}"
 
   http-client:
     #重试相关配置
@@ -67,6 +70,7 @@ lucky:
         - com.luckyframework.httpclient.generalapi
       warn-time: 400
       slow-time: 1500
+      resp-body-max-length: 1024
     #Cookie管理器相关配置
     cookie-manage:
       enable: true
@@ -90,6 +94,7 @@ lucky:
     spring-el:
       classes:
         - clazz: io.github.lucklike.luckyclient.util.SM4Function
+        - clazz: io.github.lucklike.luckyclient.api.cairh.BizException
       type-alias:
         Str: java.lang.String
       type-black-list:

@@ -23,4 +23,8 @@ public class BizException extends LuckyRuntimeException {
         super(ex, messageTemplate, args);
     }
 
+
+    public static BizException bizErr(String message, Object... args) {
+        return new BizException(message, args);
+    }
 }
