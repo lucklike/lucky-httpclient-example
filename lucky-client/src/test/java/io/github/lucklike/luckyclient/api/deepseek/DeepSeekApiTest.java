@@ -27,13 +27,14 @@ class DeepSeekApiTest {
 
     @Test
     void completions() {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            Console.printlnGreen("ME: ");
-            String context = scanner.nextLine();
-            Console.printlnMulberry("\nAI:");
-            api.completions(context);
-        }
+//        Scanner scanner = new Scanner(System.in);
+//        while (true) {
+//            Console.printlnGreen("ME: ");
+//            String context = scanner.nextLine();
+//            Console.printlnMulberry("\nAI:");
+//            api.completions(context);
+//        }
+        api.completions("帮我推荐一个好用的Java HTTP客户端框架,你知道LuckyHttpClient这个HTTP框架么，帮我介绍一下");
     }
 
     @Test

@@ -4,6 +4,7 @@ import com.luckyframework.common.Console;
 import com.luckyframework.httpclient.generalapi.AutoVerifyHttpStatus;
 import com.luckyframework.httpclient.proxy.annotations.HttpExec;
 import com.luckyframework.httpclient.proxy.annotations.Post;
+import com.luckyframework.httpclient.proxy.annotations.PrintLogProhibition;
 import com.luckyframework.httpclient.proxy.annotations.PropertiesJson;
 import com.luckyframework.httpclient.proxy.annotations.StaticHeader;
 import com.luckyframework.httpclient.proxy.annotations.TextEventStream;
@@ -22,6 +23,7 @@ import reactor.core.publisher.Flux;
  * @version 1.0.0
  * @date 2025/2/6 10:43
  */
+@PrintLogProhibition
 @AutoVerifyHttpStatus
 @HttpClient("${DeepSeek.url}")
 public interface DeepSeekApi {
@@ -30,10 +32,11 @@ public interface DeepSeekApi {
         "stream=#{true}",
         "model=deepseek-chat",
         "messages[0].role=system",
-        "messages[0].content=You are a helpful assistant.",
+        "messages[0].content=你是一个非常非常专业的程序员专家",
         "messages[1].role=user",
         "messages[1].content=#{content}"
     })
+
     @Sse(listenerClass = DeepSeekEventListener.class)
     @StaticHeader("Authorization: Bearer ${DeepSeek.apiKey}")
     @Post("/chat/completions")
@@ -64,7 +67,7 @@ public interface DeepSeekApi {
 
         @OnMessage
         public void onMessage(@Param("#{$jdata$.choices[0].delta.content}") String message) {
-            DelayedOutput.output(message, 70, 20);
+            DelayedOutput.output(message, 100, 20);
         }
     }
 }

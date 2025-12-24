@@ -92,14 +92,14 @@ lucky:
           key-store-file: classpath:ssl/truststore.jks
     #SpEL表达式相关配置
     spring-el:
-      classes:
-        - clazz: io.github.lucklike.luckyclient.util.SM4Function
-        - clazz: io.github.lucklike.luckyclient.api.cairh.BizException
       type-alias:
         Str: java.lang.String
       type-black-list:
         - java.lang.Runtime
         - java.lang.System
+      function-classes:
+        - clazz: io.github.lucklike.luckyclient.util.SM4Function
+        - clazz: io.github.lucklike.luckyclient.api.cairh.BizException
 
 
 
