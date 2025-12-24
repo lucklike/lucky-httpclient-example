@@ -17,6 +17,7 @@ import io.github.lucklike.luckyclient.api.cairh.basedata.req.RareWordRequest;
 import io.github.lucklike.luckyclient.api.cairh.basedata.resp.PageResponse;
 import io.github.lucklike.luckyclient.api.cairh.comp.resp.QueryOperatorInfoResponse;
 import io.github.lucklike.luckyclient.api.cairh.basedata.resp.RareWordResponse;
+import io.github.lucklike.luckyclient.api.cairh.openapi.Token;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -57,6 +58,12 @@ class CairhApiTest {
         System.out.println(crhOpenApi.queryProduct(86));
         sw.stopWatch();
         System.out.println(sw.prettyPrintFormat());
+    }
+
+    @Test
+    void token() {
+        Token token = crhOpenApi.token();
+        System.out.println(token);
     }
 
     @Test

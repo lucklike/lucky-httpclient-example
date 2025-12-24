@@ -13,7 +13,7 @@ public class KuaiTongApiTest {
 
     @Test
     void ocrTest() {
-        String path = "file:D:/id/card/20240712093345.jpg";
+        String path = "file:/Users/fukang/Desktop/test/ca/seal/157308489251687784.jpg";
         IdentityInfo identityInfo = kuaiTongApi.identityCardOcr(path);
         System.out.println(identityInfo);
     }

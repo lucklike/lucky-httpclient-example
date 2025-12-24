@@ -89,7 +89,7 @@ class CairhCommonFunction {
             CrhOpenApi openApi
     ) {
         if (!apiDesc.isTokenApi()) {
-            request.addHeader("Authorization", openApi.getAccessToken());
+            request.addHeader("Authorization", openApi.token().getAccessToken());
         }
     }
 

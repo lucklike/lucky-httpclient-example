@@ -4,6 +4,7 @@ import com.luckyframework.common.FlatBean;
 import com.luckyframework.httpclient.generalapi.download.FileApi;
 import com.luckyframework.httpclient.proxy.spel.SpelBean;
 import com.luckyframework.io.MultipartFile;
+import com.luckyframework.spel.SimpleSpelBean;
 import io.github.lucklike.httpclient.injection.HttpReference;
 import io.github.lucklike.luckyclient.api.cairh.ttd.req.Page;
 import io.github.lucklike.luckyclient.api.cairh.ttd.resp.Product;
@@ -43,6 +44,13 @@ class TTDApiTest {
     }
 
     @Test
+    void productListSimpleSpelBean() {
+        SimpleSpelBean<?> flatBean = ttdApi.productListSimpleSpelBean(Page.of(1, 10));
+        System.out.println(flatBean.getString("[5].contractUrl"));
+        System.out.println(flatBean.getString("[5]?.contractUrl$Map?.url"));
+    }
+
+    @Test
     void productListSpelBean() {
         SpelBean<?> spelBean = ttdApi.productListSpelBean(Page.of(1, 10));
         System.out.println(spelBean.getString("[5].contractUrl"));
@@ -55,8 +63,11 @@ class TTDApiTest {
 
 
     @Test
-    void getAccessToken() {
-        System.out.println(ttdApi.getAccessToken());
+    void token() {
+        System.out.println(ttdApi.token());
+        System.out.println(ttdApi.token());
+        System.out.println(ttdApi.token());
+        System.out.println(ttdApi.token());
     }
 
     @Test

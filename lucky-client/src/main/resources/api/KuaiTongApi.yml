@@ -9,7 +9,7 @@ io.github.lucklike.luckyclient.api.kuaitong.KuaiTongApi:
     result: "#{$body$.data}"
 
   #----------------------------------【快瞳】-获取Token的接口---------------------------------#
-  getAccessToken:
+  token:
     url: /getAccessToken
     method: GET
     query:
@@ -21,6 +21,6 @@ io.github.lucklike.luckyclient.api.kuaitong.KuaiTongApi:
     url: /ocr/identityCard
     multipart-form-data:
       txt:
-        token: "#{@kuaiTongTokenManager.getAccessToken()}"
+        token: "#{@kuaiTongApi.token().access_token}"
       file:
         file: "#{idCardPath}"

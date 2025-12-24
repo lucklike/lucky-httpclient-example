@@ -2,7 +2,9 @@ package io.github.lucklike.discovery.nacos.cairh.api;
 
 import com.luckyframework.httpclient.generalapi.describe.Describe;
 import com.luckyframework.httpclient.generalapi.token.JsonFileTokenManager;
+import com.luckyframework.httpclient.generalapi.token.UseTokenManager;
 import com.luckyframework.httpclient.proxy.annotations.Post;
+import com.luckyframework.httpclient.proxy.annotations.ResourceJson;
 import com.luckyframework.httpclient.proxy.annotations.StaticJsonBody;
 import io.github.lucklike.httpclient.discovery.HttpClient;
 
@@ -11,35 +13,11 @@ import java.util.Date;
 
 //@NacosClient(value = "base-backend", contextPath = "basedata")
 @HttpClient(service = "cpe-base-gateway-server", path = "basedata")
-public abstract class CrhTokenApi extends JsonFileTokenManager<Token> {
+public interface CrhTokenApi {
 
     @Post("/authless/token")
     @Describe(name = "获取访问Token", tokenApi = true)
-    @StaticJsonBody("#{read('classpath:crh.json')}")
-    public abstract Token token();
-
-
-    //---------------------------------------------------------------------------
-    //                              Token Manager
-    //---------------------------------------------------------------------------
-
-    public String getAccessToken() {
-        return getToken().getAccessToken();
-    }
-
-
-    @Override
-    protected File getJsonFile() {
-        return new File(System.getProperty("user.dir"), "crh_nacos_token.json");
-    }
-
-    @Override
-    protected Token refreshToken(Token oldToken) {
-        return token();
-    }
-
-    @Override
-    protected boolean isExpires(Token token) {
-        return token.getExpiresAt().before(new Date());
-    }
+    @ResourceJson("classpath:crh.json")
+    @UseTokenManager("${user.dir}/crh_nacos_token.json")
+    Token token();
 }

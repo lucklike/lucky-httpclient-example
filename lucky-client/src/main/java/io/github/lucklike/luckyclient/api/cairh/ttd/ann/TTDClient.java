@@ -1,6 +1,6 @@
 package io.github.lucklike.luckyclient.api.cairh.ttd.ann;
 
-import com.luckyframework.common.ConfigurationMap;
+import com.luckyframework.common.FlatBean;
 import com.luckyframework.common.StringUtils;
 import com.luckyframework.httpclient.core.meta.Request;
 import com.luckyframework.httpclient.core.meta.Response;
@@ -8,11 +8,12 @@ import com.luckyframework.httpclient.generalapi.HttpStatus;
 import com.luckyframework.httpclient.generalapi.HttpStatusException;
 import com.luckyframework.httpclient.generalapi.describe.ApiDescribe;
 import com.luckyframework.httpclient.generalapi.describe.DescribeFunction;
+import com.luckyframework.httpclient.proxy.annotations.PrintLog;
 import com.luckyframework.httpclient.proxy.annotations.Timeout;
 import com.luckyframework.httpclient.proxy.context.MethodContext;
 import com.luckyframework.httpclient.proxy.context.ParameterContext;
-import com.luckyframework.httpclient.proxy.function.CommonFunctions;
 import com.luckyframework.httpclient.proxy.function.SerializationFunctions;
+import com.luckyframework.httpclient.proxy.spel.Rar;
 import com.luckyframework.httpclient.proxy.spel.SpELImport;
 import com.luckyframework.httpclient.proxy.spel.hook.Lifecycle;
 import com.luckyframework.httpclient.proxy.spel.hook.callback.Callback;
@@ -48,13 +49,17 @@ import static io.github.lucklike.luckyclient.api.cairh.ttd.ann.TTDClient.EncodeU
 @Inherited
 @SpELImport(TTDClient.TTDCallback.class)
 @HttpClient("#{@TTDConfig.url}")
+@PrintLog(respBodyExp = "#{$decryption_resp_body}", allowRespBodyMaxLength = -2)
 @Timeout(connectTimeoutExp = "#{@TTDConfig.connectionTimeout}", readTimeoutExp = "#{@TTDConfig.readTimeout}")
 public @interface TTDClient {
 
     /**
-     * TTD回调函数集合类
+     * TTD 回调函数集合类
      */
     class TTDCallback {
+
+        private static final String TOKEN_VAR = "$ttd_token";
+        private static final String DECRYPTION_RESP_BODY_KEY = "$decryption_resp_body";
 
         /**
          * 用于添加公共参数的回调函数
@@ -62,15 +67,15 @@ public @interface TTDClient {
          * @param req       当前请求对象
          * @param mc        当前方法上下文对象
          * @param api       TTD API
-         * @param ttdConfig TTD配置对象
-         * @return 非Token方法时会将调用Token接口所产生的token返回
+         * @param ttdConfig TTD 配置对象
+         * @return 非Token方法调用时会将调用Token接口所产生的token，Token 方法会直接返回 Token
          * @throws Exception 添加过程中可能会出现异常
          */
-        @Callback(lifecycle = Lifecycle.REQUEST, storeOrNot = true, storeName = "$ttd_token")
-        public static String addCommonParam(Request req,
-                                            MethodContext mc,
-                                            TTDApi api,
-                                            TTDConfig ttdConfig) throws Exception {
+        @Callback(lifecycle = Lifecycle.REQUEST, storeOrNot = true, storeName = TOKEN_VAR)
+        public static String paramFill(Request req,
+                                       MethodContext mc,
+                                       TTDApi api,
+                                       TTDConfig ttdConfig) throws Exception {
 
             String key = ttdConfig.getKey();
             String iv = ttdConfig.getIv();
@@ -78,23 +83,23 @@ public @interface TTDClient {
 
             String token = null;
             if (!mc.getApiDescribe().isTokenApi()) {
-                token = api.getAccessToken();
+                token = api.token().getAccess_token();
                 req.addHeader("accesstoken", token);
                 req.addHeader("appid", aesEncipherString(getKey(token), getIv(token), appId));
                 req.addHeader("serialnumber", time());
 
-                ConfigurationMap cm = new ConfigurationMap();
+                FlatBean<?> flatBean = FlatBean.mapBean();
                 for (ParameterContext pc : mc.getParameterContexts()) {
                     TTDJForm ttdJFAnn = pc.getMergedAnnotationCheckParent(TTDJForm.class);
                     if (ttdJFAnn != null) {
                         if (pc.isSimpleBaseType()) {
-                            cm.put(pc.getName(), pc.getValue());
+                            flatBean.set(pc.getName(), pc.getValue());
                         } else {
-                            cm = new ConfigurationMap(pc.getValue());
+                            flatBean = FlatBean.of(pc.getValue());
                         }
                     }
                 }
-                String json = SerializationFunctions.json(cm);
+                String json = SerializationFunctions.json(flatBean.getBean());
                 req.addFormParameter("body", aesEncipherString(getKey(token), getIv(appId), json));
                 req.addHeader("cm", md5Hex(json));
             } else {
@@ -105,17 +110,18 @@ public @interface TTDClient {
 
 
         /**
-         * 响应解码与校验
+         * 将加密的响应体解密之后存入上下文中
          *
-         * @param mc        当前方法上下文对象
-         * @param resp      当前响应对象
-         * @param ttdConfig TTD配置对象
-         * @return 解码之后的响应体
+         * @param mc        方法上下文
+         * @param resp      响应对象
+         * @param ttdConfig 配置类
+         * @return 解密之后的响应体
+         * @throws Exception 转换过程中可能出现的异常
          */
-        @Callback(lifecycle = Lifecycle.RESPONSE, storeOrNot = true, storeName = "$ttd_data")
-        public static Object responseDecryptAndCheck(MethodContext mc,
-                                                     Response resp,
-                                                     TTDConfig ttdConfig) throws Exception {
+        @Callback(lifecycle = Lifecycle.RESPONSE_INIT, storeOrNot = true, storeName = DECRYPTION_RESP_BODY_KEY)
+        public static String decryptionRespBody(MethodContext mc,
+                                                Response resp,
+                                                TTDConfig ttdConfig) throws Exception {
             ApiDescribe apiDesc = DescribeFunction.describe(mc);
             Request request = resp.getRequest();
 
@@ -145,26 +151,41 @@ public @interface TTDClient {
             String iv = ttdConfig.getIv();
             String appId = ttdConfig.getAppId();
 
-            ConfigurationMap decryptRespMap;
             if (!mc.getApiDescribe().isTokenApi()) {
-                String token = mc.getRootVar("$ttd_token", String.class);
-                decryptRespMap = _json(decryptString(getKey(token), getIv(appId), resp.getStringResult()), ConfigurationMap.class);
+                String token = mc.getRootVar(TOKEN_VAR, String.class);
+                return decryptString(getKey(token), getIv(appId), resp.getStringResult());
             } else {
-                decryptRespMap = _json(decryptString(getKey(key), getIv(iv), resp.getStringResult()), ConfigurationMap.class);
+                return decryptString(getKey(key), getIv(iv), resp.getStringResult());
             }
+        }
 
-            if (decryptRespMap.getInt("code") != 0) {
+
+        /**
+         * 将解密后的响应体反序列化为对象并存入上下文
+         *
+         * @param apiDesc            API 描述信息
+         * @param request            请求实例
+         * @param decryptionRespBody 解密后的响应体
+         * @return 转换后的对象
+         * @throws Exception 转换过程中可能出现的异常
+         */
+        @Callback(lifecycle = Lifecycle.RESPONSE, storeOrNot = true, storeName = "$ttd_data")
+        public static Object responseDecryptAndCheck(ApiDescribe apiDesc,
+                                                     Request request,
+                                                     @Rar(DECRYPTION_RESP_BODY_KEY) String decryptionRespBody) throws Exception {
+
+            FlatBean<?> flatBean = FlatBean.of(_json(decryptionRespBody));
+            if (flatBean.getInt("code") != 0) {
                 throw new BizException(
-                        "The interface status code is error!, [code: {}], [api: {}], [message: {}], [{}] {}",
-                        decryptRespMap.getInt("code"),
+                        " The interface status code is error!, [code: {}], [api: {}], [message: {}], [{}] {}",
+                        flatBean.getInt("code"),
                         apiDesc.getName(),
-                        decryptRespMap.getString("msg"),
+                        flatBean.getString("msg"),
                         request.getRequestMethod(),
                         request.getUrl()
                 );
             }
-
-            return decryptRespMap.getMap("data");
+            return flatBean.get("data");
         }
 
     }

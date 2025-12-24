@@ -1,6 +1,7 @@
 package io.github.lucklike.luckyclient.api.yunxi;
 
 import com.luckyframework.httpclient.proxy.spel.SpelBean;
+import com.luckyframework.spel.SimpleSpelBean;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -26,5 +27,27 @@ class YunXiApiTest {
     void weiboTop() {
         String[] tops = yunXiApi.weiboTop();
         Stream.of(tops).forEach(System.out::println);
+    }
+
+    @Test
+    void getProxyIp() {
+        String[] proxyIps = yunXiApi.getProxyIp();
+        Stream.of(proxyIps).forEach(System.out::println);
+    }
+
+    @Test
+    void getProxyIpSimpleSpelBean() {
+        SimpleSpelBean<?> spelBean = yunXiApi.getProxyIpSimpleSpelBean();
+        System.out.println(spelBean.getInt("code"));
+        System.out.println(spelBean.getBoolean("msg"));
+        System.out.println(spelBean.getString("data[0].time"));
+    }
+
+    @Test
+    void getProxyIpSpelBean() {
+        SpelBean<?> spelBean = yunXiApi.getProxyIpSpelBean();
+        System.out.println(spelBean.getInt("code"));
+        System.out.println(spelBean.getBoolean("msg"));
+        System.out.println(spelBean.getString("data[0].time"));
     }
 }
